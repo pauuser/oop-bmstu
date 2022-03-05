@@ -46,7 +46,7 @@ int multiply_row_by_column_matrix(double &res, const double (&row)[dimension + 1
     return rc;
 }
 
-int set_value_matrix(matrix_t &m1, const double val, const int i, const int j)
+int set_elem_matrix(matrix_t &m1, const double val, const int i, const int j)
 {
     int rc = OK;
 
@@ -60,18 +60,18 @@ int set_value_matrix(matrix_t &m1, const double val, const int i, const int j)
 
 int create_scale_matrix(matrix_t &matr, const int kx, const int ky, const int kz)
 {
-    set_value_matrix(matr, kx, 0, 0);
-    set_value_matrix(matr, ky, 1, 1);
-    set_value_matrix(matr, kz, 2, 2);
+    set_elem_matrix(matr, kx, 0, 0);
+    set_elem_matrix(matr, ky, 1, 1);
+    set_elem_matrix(matr, kz, 2, 2);
 
     return OK;
 }
 
 int create_move_matrix(matrix_t &matr, const int dx, const int dy, const int dz)
 {
-    set_value_matrix(matr, dx, 0, dimension);
-    set_value_matrix(matr, dy, 1, dimension);
-    set_value_matrix(matr, dz, 2, dimension);
+    set_elem_matrix(matr, dx, 0, dimension);
+    set_elem_matrix(matr, dy, 1, dimension);
+    set_elem_matrix(matr, dz, 2, dimension);
 
     return OK;
 }
@@ -82,10 +82,10 @@ int create_rotate_x_matrix(matrix_t &matr, const int ax)
 
     double angle = pi * ax / 180;
 
-    set_value_matrix(matr, cos(angle), 1, 1);
-    set_value_matrix(matr, -sin(angle), 1, 2);
-    set_value_matrix(matr, sin(angle), 2, 1);
-    set_value_matrix(matr,cos(angle), 2, 2);
+    set_elem_matrix(matr, cos(angle), 1, 1);
+    set_elem_matrix(matr, -sin(angle), 1, 2);
+    set_elem_matrix(matr, sin(angle), 2, 1);
+    set_elem_matrix(matr,cos(angle), 2, 2);
 
     return OK;
 }
@@ -96,10 +96,10 @@ int create_rotate_y_matrix(matrix_t &matr, const int ay)
 
     double angle = pi * ay / 180;
 
-    set_value_matrix(matr, cos(angle), 0, 0);
-    set_value_matrix(matr, -sin(angle), 0, 2);
-    set_value_matrix(matr, sin(angle), 2, 0);
-    set_value_matrix(matr,cos(angle), 2, 2);
+    set_elem_matrix(matr, cos(angle), 0, 0);
+    set_elem_matrix(matr, -sin(angle), 0, 2);
+    set_elem_matrix(matr, sin(angle), 2, 0);
+    set_elem_matrix(matr,cos(angle), 2, 2);
 
     return OK;
 }
@@ -110,10 +110,10 @@ int create_rotate_z_matrix(matrix_t &matr, const int az)
 
     double angle = pi * az / 180;
 
-    set_value_matrix(matr, cos(angle), 0, 0);
-    set_value_matrix(matr, -sin(angle), 0, 2);
-    set_value_matrix(matr, sin(angle), 2, 0);
-    set_value_matrix(matr,cos(angle), 2, 2);
+    set_elem_matrix(matr, cos(angle), 0, 0);
+    set_elem_matrix(matr, -sin(angle), 0, 2);
+    set_elem_matrix(matr, sin(angle), 2, 0);
+    set_elem_matrix(matr,cos(angle), 2, 2);
 
     return OK;
 }
@@ -144,7 +144,7 @@ int multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2)
         {
             double val = 0;
             multiply_row_by_column_matrix(val, m1.matr[i], m2, j);
-            set_value_matrix(mres, val, i, j);
+            set_elem_matrix(mres, val, i, j);
         }
     }
 
