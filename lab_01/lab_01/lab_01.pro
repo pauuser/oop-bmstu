@@ -15,7 +15,8 @@ SOURCES += \
     mainwindow.cpp \
     matrix.cpp \
     model.cpp \
-    point.cpp
+    point.cpp \
+    projection.cpp
 
 HEADERS += \
     errors.h \
@@ -25,7 +26,8 @@ HEADERS += \
     mainwindow.h \
     matrix.h \
     model.h \
-    point.h
+    point.h \
+    projection.h
 
 FORMS += \
     mainwindow.ui
@@ -39,3 +41,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    test.txt

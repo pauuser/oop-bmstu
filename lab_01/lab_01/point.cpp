@@ -42,7 +42,7 @@ int get_elem_point(double &elem, const point_t &point, const int i)
     return rc;
 }
 
-int set_elem_point(point_t &point, const double &elem, const int i)
+int set_elem_point(point_t &point, const double elem, const int i)
 {
     int rc = OK;
 
@@ -50,6 +50,18 @@ int set_elem_point(point_t &point, const double &elem, const int i)
         rc = IND_OUT_OF_RANGE;
     else
         point.row[i] = elem;
+
+    return rc;
+}
+
+int set_point(point_t &point, const double x, const double y, const double z)
+{
+    int rc = OK;
+
+    set_elem_point(point, x, 0);
+    set_elem_point(point, y, 1);
+    set_elem_point(point, z, 2);
+    set_elem_point(point, 1, 3);
 
     return rc;
 }

@@ -32,7 +32,7 @@ int get_elem_line(point_t &point, const line_t &line, const int i)
     return rc;
 }
 
-int set_elem_line(line_t &line, const point_t &point1, const point_t &point2)
+int set_line(line_t &line, const point_t &point1, const point_t &point2)
 {
     int rc = OK;
 
@@ -53,7 +53,7 @@ int transform_line(line_t &new_line, const line_t &line, const matrix_t &matrix)
     transform_point(new_point1, point1, matrix);
     transform_point(new_point2, point2, matrix);
 
-    set_elem_line(new_line, new_point1, new_point2);
+    set_line(new_line, new_point1, new_point2);
 
     return rc;
 }

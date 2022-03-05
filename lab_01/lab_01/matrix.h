@@ -5,7 +5,7 @@
 #include "math.h"
 
 const int dimension = 3;
-const double pi = acos(-1);
+static const double pi = acos(-1);
 
 /*
 Структура хранения матрицы преобразований
@@ -29,5 +29,10 @@ int set_elem_matrix(matrix_t &m1, const double val, const int i, const int j);
 
 int multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2);
 
+int create_rotate_matrix(matrix_t &matrix, const int ax, const int ay, const int az);
+
+int create_move_matrix(matrix_t &matr, const int dx, const int dy, const int dz);
+
+int create_scale_matrix(matrix_t &matr, const int kx, const int ky, const int kz);
 
 #endif // MATRIX_H

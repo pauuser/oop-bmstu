@@ -29,7 +29,9 @@ bool index_is_valid_point(const int i);
 
 int get_elem_point(double &elem, const point_t &point, const int i);
 
-int set_elem_point(point_t &point, const double &elem, const int i);
+int set_point(point_t &point, const double x, const double y, const double z);
+
+int set_elem_point(point_t &point, const double elem, const int i);
 
 int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
 

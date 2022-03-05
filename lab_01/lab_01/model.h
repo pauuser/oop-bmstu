@@ -24,8 +24,10 @@ struct model_t
     int m;
     line_t *lines;
 
-    matrix_t *transform_matrix;
+    matrix_t transform_matrix;
 };
+
+void init_model(model_t &model);
 
 
 #endif // MODEL_H
