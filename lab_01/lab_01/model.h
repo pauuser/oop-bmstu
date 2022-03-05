@@ -29,5 +29,14 @@ struct model_t
 
 void init_model(model_t &model);
 
+void free_model(model_t &model);
+
+int transform_model(model_t &model, const matrix_t &matr);
+
+int move_model(model_t &model, const double dx, const double dy, const double dz);
+
+int scale_model(model_t &model, const double kx, const double ky, const double kz);
+
+int rotate_model(model_t &model, const double ax, const double ay, const double az);
 
 #endif // MODEL_H

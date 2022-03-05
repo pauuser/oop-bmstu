@@ -6,5 +6,6 @@
 #define IND_OUT_OF_RANGE    -2
 #define INVALID_INPUT       -3
 #define INAPPROPRIATE_INPUT -4
+#define NULL_POINTER        -5
 
 #endif // ERRORS_H

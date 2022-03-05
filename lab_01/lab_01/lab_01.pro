@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    draw.cpp \
     file_io.cpp \
     line.cpp \
     main.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     projection.cpp
 
 HEADERS += \
+    draw.h \
     errors.h \
     event.h \
     file_io.h \
