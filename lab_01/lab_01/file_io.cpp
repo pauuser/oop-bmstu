@@ -157,8 +157,6 @@ int add_lines_to_mas(model_t &model, FILE *stream)
             rc = INAPPROPRIATE_INPUT;
         else
             set_line(model.lines[i], model.points[src - 1], model.points[dest - 1]);
-
-        fprintf(stdout, "%d %d\n", src, dest);
     }
 
     return rc;
@@ -174,8 +172,24 @@ int upload_model_to_file(const char *filename, const model_t &model)
         rc = NO_FILE;
     else
     {
-        fprintf(f, "%d\n", model.n);
+        write_points_to_file(f, model);
+        write_lines_to_file(f, model);
 
+        fclose(f);
+    }
+
+    return rc;
+}
+
+int write_points_to_file(FILE *f, const model_t &model)
+{
+    int rc = OK;
+
+    if (f == NULL)
+        rc = NO_FILE;
+    else
+    {
+        fprintf(f, "%d\n", model.n);
         for (int i = 0; i < model.n; i++)
         {
             point_t new_point, cur_point;
@@ -183,22 +197,43 @@ int upload_model_to_file(const char *filename, const model_t &model)
             init_point(new_point);
             init_point(cur_point);
 
+            cur_point = model.points[i];
             transform_point(new_point, cur_point, model.transform_matrix);
 
-            double x = get_x_point(new_point);
-            double y = get_y_point(new_point);
-            double z = get_z_point(new_point);
-
+            double x = get_x_point(new_point),
+                        y = get_y_point(new_point),
+                            z = get_z_point(new_point);
             fprintf(f, "%f %f %f\n", x, y, z);
         }
-
-        for (int i = 0; i < model.m; i++)
-        {
-
-        }
-
-        fclose(f);
     }
 
     return rc;
 }
+
+int write_lines_to_file(FILE *f, const model_t &model)
+{
+    int rc = OK;
+
+    if (f == NULL)
+        rc = NULL;
+    else
+    {
+        fprintf(f, "%d\n", model.m);
+        for (int i = 0; i < model.m; i++)
+        {
+            point_t point1, point2;
+
+            get_elem_line(point1, model.lines[i], 0);
+            get_elem_line(point2, model.lines[i], 1);
+
+            int start = find_point_in_mas(point1, model.points, model.n) + 1;
+            int dest = find_point_in_mas(point2, model.points, model.n) + 1;
+
+            fprintf(f, "%d %d\n", start, dest);
+        }
+    }
+
+    return rc;
+}
+
+

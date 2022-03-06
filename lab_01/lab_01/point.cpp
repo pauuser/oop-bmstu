@@ -67,7 +67,6 @@ int set_point(point_t &point, const double x, const double y, const double z)
 }
 
 // подумать над тем что делать если данные испортились посередине...
-// обернуть точку - сделать обёртку
 int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix)
 {
     int rc = OK;
@@ -89,3 +88,29 @@ int transform_point(point_t &new_point, const point_t &point, const matrix_t &ma
 
     return rc;
 }
+
+bool points_match(point_t &point1, point_t &point2)
+{
+    bool ans = 0;
+
+    double x1 = get_x_point(point1), y1 = get_y_point(point1), z1 = get_z_point(point1);
+    double x2 = get_x_point(point2), y2 = get_y_point(point2), z2 = get_z_point(point2);
+
+    if (x1 == x2 && y1 == y2 && z1 == z2)
+        ans = 1;
+
+    return ans;
+}
+
+int find_point_in_mas(point_t &point, point_t *points, int n)
+{
+    int ans = -1;
+
+    for (int i = 0; i < n && ans == -1; i++)
+        if (points_match(point, points[i]))
+            ans = i;
+
+    return ans;
+}
+
+

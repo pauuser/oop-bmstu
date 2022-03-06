@@ -35,5 +35,8 @@ int set_elem_point(point_t &point, const double elem, const int i);
 
 int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
 
+int find_point_in_mas(point_t &point, point_t *points, int n);
+
+bool points_match(point_t &point1, point_t &point2);
 
 #endif // POINT_H

@@ -86,7 +86,7 @@ void MainWindow::on_pushButton_rotate_clicked()
 
 void MainWindow::on_pushButton_save_current_clicked()
 {
-
+    upload_model_to_file("out.txt", model);
 }
 
 void MainWindow::on_pushButton_return_default_clicked()
