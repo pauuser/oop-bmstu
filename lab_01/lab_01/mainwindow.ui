@@ -273,8 +273,14 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
      <property name="minimum">
       <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>5000.000000000000000</double>
      </property>
      <property name="value">
       <double>0.000000000000000</double>
@@ -294,8 +300,14 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
      <property name="minimum">
       <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>5000.000000000000000</double>
      </property>
      <property name="value">
       <double>0.000000000000000</double>
@@ -315,8 +327,14 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
      <property name="minimum">
       <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>5000.000000000000000</double>
      </property>
      <property name="value">
       <double>0.000000000000000</double>
@@ -426,6 +444,9 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
      <property name="minimum">
       <double>-360.000000000000000</double>
      </property>
@@ -450,6 +471,9 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
      <property name="minimum">
       <double>-360.000000000000000</double>
      </property>
@@ -473,6 +497,9 @@
       <font>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="decimals">
+      <number>5</number>
      </property>
      <property name="minimum">
       <double>-360.000000000000000</double>

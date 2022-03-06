@@ -58,7 +58,7 @@ int set_elem_matrix(matrix_t &m1, const double val, const int i, const int j)
     return rc;
 }
 
-int create_scale_matrix(matrix_t &matr, const int kx, const int ky, const int kz)
+int create_scale_matrix(matrix_t &matr, const double kx, const double ky, const double kz)
 {
     set_elem_matrix(matr, kx, 0, 0);
     set_elem_matrix(matr, ky, 1, 1);
@@ -67,7 +67,7 @@ int create_scale_matrix(matrix_t &matr, const int kx, const int ky, const int kz
     return OK;
 }
 
-int create_move_matrix(matrix_t &matr, const int dx, const int dy, const int dz)
+int create_move_matrix(matrix_t &matr, const double dx, const double dy, const double dz)
 {
     set_elem_matrix(matr, dx, 0, dimension);
     set_elem_matrix(matr, dy, 1, dimension);
@@ -76,7 +76,7 @@ int create_move_matrix(matrix_t &matr, const int dx, const int dy, const int dz)
     return OK;
 }
 
-int create_rotate_x_matrix(matrix_t &matr, const int ax)
+int create_rotate_x_matrix(matrix_t &matr, const double ax)
 {
     init_matrix(matr);
 
@@ -90,7 +90,7 @@ int create_rotate_x_matrix(matrix_t &matr, const int ax)
     return OK;
 }
 
-int create_rotate_y_matrix(matrix_t &matr, const int ay)
+int create_rotate_y_matrix(matrix_t &matr, const double ay)
 {
     init_matrix(matr);
 
@@ -104,29 +104,29 @@ int create_rotate_y_matrix(matrix_t &matr, const int ay)
     return OK;
 }
 
-int create_rotate_z_matrix(matrix_t &matr, const int az)
+int create_rotate_z_matrix(matrix_t &matr, const double az)
 {
     init_matrix(matr);
 
     double angle = pi * az / 180;
 
     set_elem_matrix(matr, cos(angle), 0, 0);
-    set_elem_matrix(matr, -sin(angle), 0, 2);
-    set_elem_matrix(matr, sin(angle), 2, 0);
-    set_elem_matrix(matr,cos(angle), 2, 2);
+    set_elem_matrix(matr, -sin(angle), 0, 1);
+    set_elem_matrix(matr, sin(angle), 1, 0);
+    set_elem_matrix(matr,cos(angle), 1, 1);
 
     return OK;
 }
 
-int create_rotate_matrix(matrix_t &matrix, const int ax, const int ay, const int az)
+int create_rotate_matrix(matrix_t &matrix, const double ax, const double ay, const double az)
 {
     matrix_t xrot_matr, yrot_matr, zrot_matr, mtemp;
 
     init_matrix(mtemp);
 
     create_rotate_x_matrix(xrot_matr, ax);
-    create_rotate_x_matrix(yrot_matr, ay);
-    create_rotate_x_matrix(zrot_matr, az);
+    create_rotate_y_matrix(yrot_matr, ay);
+    create_rotate_z_matrix(zrot_matr, az);
 
     multiply_matrices(mtemp, xrot_matr, yrot_matr);
     multiply_matrices(matrix, mtemp, zrot_matr);

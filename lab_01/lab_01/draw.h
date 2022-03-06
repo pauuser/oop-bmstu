@@ -15,4 +15,6 @@ int draw_model(scene_t scene, model_t &model);
 
 int draw_line(scene_t scene, const line_t &line);
 
+void clear_scene(scene_t scene);
+
 #endif // DRAW_H

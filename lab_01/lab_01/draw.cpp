@@ -1,5 +1,7 @@
 #include "draw.h"
 
+#include <iostream>
+
 int draw_line(scene_t scene, const line_t &line)
 {
     int rc = OK;
@@ -26,11 +28,14 @@ int draw_line(scene_t scene, const line_t &line)
 int draw_model(scene_t scene, model_t &model)
 {
     int rc = OK;
+    clear_scene(scene);
 
     for (int i = 0; i < model.m; i++)
     {
         line_t transformed_line, cur_line;
         init_line(transformed_line);
+
+        std::cout << "HERE!!!!!!!!!!!!\n";
 
         init_line(cur_line);
         cur_line = model.lines[i];
@@ -38,11 +43,16 @@ int draw_model(scene_t scene, model_t &model)
         matrix_t mtr = model.transform_matrix;
 
         transform_line(transformed_line, cur_line, mtr);
-        project_line(cur_line, cur_line);
+        project_line(transformed_line, transformed_line);
 
 
-        draw_line(scene, cur_line);
+        draw_line(scene, transformed_line);
     }
 
     return rc;
+}
+
+void clear_scene(scene_t scene)
+{
+    scene->clear();
 }

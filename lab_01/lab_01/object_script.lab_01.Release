@@ -1,0 +1,12 @@
+release/draw.o
+release/errors.o
+release/file_io.o
+release/line.o
+release/main.o
+release/mainwindow.o
+release/matrix.o
+release/model.o
+release/point.o
+release/projection.o
+release/qrc_qmake_qmake_qm_files.o
+release/moc_mainwindow.o

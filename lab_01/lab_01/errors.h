@@ -7,5 +7,8 @@
 #define INVALID_INPUT       -3
 #define INAPPROPRIATE_INPUT -4
 #define NULL_POINTER        -5
+#define NO_FILE             -6
+
+void print_error(int error);
 
 #endif // ERRORS_H

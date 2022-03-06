@@ -8,6 +8,8 @@
 #include "model.h"
 #include "error.h"
 
+int input_model_from_file(model_t &model, const char *filename);
+
 int read_points(model_t &model, FILE *stream);
 
 int add_points_to_mas(model_t &model, FILE *stream);

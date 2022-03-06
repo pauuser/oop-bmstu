@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     draw.cpp \
+    errors.cpp \
     file_io.cpp \
     line.cpp \
     main.cpp \
@@ -22,7 +23,6 @@ SOURCES += \
 HEADERS += \
     draw.h \
     errors.h \
-    event.h \
     file_io.h \
     line.h \
     mainwindow.h \

@@ -6,8 +6,8 @@
 #include "point.h"
 #include "line.h"
 
-static const double sin30 = sin(pi * 30 / 180);
-static const double cos30 = cos(pi * 30 / 180);
+static const double sin45 = sin(pi * 45 / 180);
+static const double cos45 = cos(pi * 45 / 180);
 
 int project_point(point_t &pout, const point_t &pin);
 
