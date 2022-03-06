@@ -1,6 +1,4 @@
-#include "draw.h"
-
-#include <iostream>
+#include "../inc/draw.h"
 
 int draw_line(scene_t scene, const line_t &line)
 {
@@ -34,8 +32,6 @@ int draw_model(scene_t scene, model_t &model)
     {
         line_t transformed_line, cur_line;
         init_line(transformed_line);
-
-        std::cout << "HERE!!!!!!!!!!!!\n";
 
         init_line(cur_line);
         cur_line = model.lines[i];

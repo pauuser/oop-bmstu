@@ -1,4 +1,4 @@
-#include "line.h"
+#include "../inc/line.h"
 
 int init_line(line_t &line)
 {

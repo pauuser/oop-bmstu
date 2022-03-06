@@ -34,10 +34,7 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-TRANSLATIONS += \
-    lab_01_en_US.ts
 CONFIG += lrelease
-CONFIG += embed_translations
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

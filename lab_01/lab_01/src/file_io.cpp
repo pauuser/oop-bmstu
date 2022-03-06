@@ -1,5 +1,4 @@
-#include "file_io.h"
-#include <iostream>
+#include "../inc/file_io.h"
 
 /*
   На вход подаётся файл формата:
@@ -32,6 +31,7 @@ int input_model_from_file(model_t &model, const char *filename)
         rc = NO_FILE;
     else
     {
+        free_model(model);
         rc = read_model(model, f);
         fclose(f);
     }

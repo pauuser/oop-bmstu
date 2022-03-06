@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "model.h"
+#include "../inc/model.h"
 
 void init_model(model_t &model)
 {

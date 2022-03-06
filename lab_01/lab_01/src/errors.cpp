@@ -1,6 +1,6 @@
 #include <QMessageBox>
 
-#include "errors.h"
+#include "../inc/errors.h"
 
 void print_error(int error)
 {

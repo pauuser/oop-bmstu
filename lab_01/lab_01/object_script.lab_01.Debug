@@ -8,5 +8,4 @@ debug/matrix.o
 debug/model.o
 debug/point.o
 debug/projection.o
-debug/qrc_qmake_qmake_qm_files.o
 debug/moc_mainwindow.o

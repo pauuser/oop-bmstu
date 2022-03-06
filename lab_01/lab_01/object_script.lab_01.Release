@@ -8,5 +8,4 @@ release/matrix.o
 release/model.o
 release/point.o
 release/projection.o
-release/qrc_qmake_qmake_qm_files.o
 release/moc_mainwindow.o

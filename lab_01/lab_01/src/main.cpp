@@ -1,6 +1,5 @@
-#include "mainwindow.h"
-#include "file_io.h"
-#include <iostream>
+#include "../inc/mainwindow.h"
+#include "../inc/file_io.h"
 
 #include <QApplication>
 

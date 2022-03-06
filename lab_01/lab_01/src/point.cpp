@@ -1,4 +1,4 @@
-#include "point.h"
+#include "../inc/point.h"
 
 int init_point(point_t &point)
 {

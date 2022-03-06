@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "../inc/matrix.h"
 
 int init_matrix(matrix_t &matr)
 {

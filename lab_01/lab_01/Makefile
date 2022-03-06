@@ -274,9 +274,7 @@ Makefile: lab_01.pro C:/msys64/mingw64/share/qt5/mkspecs/win32-g++/qmake.conf C:
 		C:/msys64/mingw64/share/qt5/mkspecs/features/lex.prf \
 		lab_01.pro \
 		C:/msys64/mingw64/lib/qtmain.prl \
-		C:/msys64/mingw64/share/qt5/mkspecs/features/build_pass.prf \
-		release/qmake_qmake_qm_files.qrc \
-		debug/qmake_qmake_qm_files.qrc
+		C:/msys64/mingw64/share/qt5/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile lab_01.pro
 C:/msys64/mingw64/share/qt5/mkspecs/features/spec_pre.prf:
 C:/msys64/mingw64/share/qt5/mkspecs/qdevice.pri:
@@ -483,8 +481,6 @@ C:/msys64/mingw64/share/qt5/mkspecs/features/lex.prf:
 lab_01.pro:
 C:/msys64/mingw64/lib/qtmain.prl:
 C:/msys64/mingw64/share/qt5/mkspecs/features/build_pass.prf:
-release/qmake_qmake_qm_files.qrc:
-debug/qmake_qmake_qm_files.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile lab_01.pro
 
