@@ -9,27 +9,27 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    draw.cpp \
-    errors.cpp \
-    file_io.cpp \
-    line.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    matrix.cpp \
-    model.cpp \
-    point.cpp \
-    projection.cpp
+    ./src/draw.cpp \
+    ./src/errors.cpp \
+    ./src/file_io.cpp \
+    ./src/line.cpp \
+    ./src/main.cpp \
+    ./src/mainwindow.cpp \
+    ./src/matrix.cpp \
+    ./src/model.cpp \
+    ./src/point.cpp \
+    ./src/projection.cpp
 
 HEADERS += \
-    draw.h \
-    errors.h \
-    file_io.h \
-    line.h \
-    mainwindow.h \
-    matrix.h \
-    model.h \
-    point.h \
-    projection.h
+    ./inc/draw.h \
+    ./inc/errors.h \
+    ./inc/file_io.h \
+    ./inc/line.h \
+    ./inc/mainwindow.h \
+    ./inc/matrix.h \
+    ./inc/model.h \
+    ./inc/point.h \
+    ./inc/projection.h
 
 FORMS += \
     mainwindow.ui
