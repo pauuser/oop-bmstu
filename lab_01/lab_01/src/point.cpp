@@ -66,7 +66,6 @@ int set_point(point_t &point, const double x, const double y, const double z)
     return rc;
 }
 
-// подумать над тем что делать если данные испортились посередине...
 int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix)
 {
     int rc = OK;
@@ -89,7 +88,7 @@ int transform_point(point_t &new_point, const point_t &point, const matrix_t &ma
     return rc;
 }
 
-bool points_match(point_t &point1, point_t &point2)
+bool points_match(const point_t &point1, const point_t &point2)
 {
     bool ans = 0;
 
@@ -102,7 +101,7 @@ bool points_match(point_t &point1, point_t &point2)
     return ans;
 }
 
-int find_point_in_mas(point_t &point, point_t *points, int n)
+int find_point_in_mas(const point_t &point, const point_t *points, const int n)
 {
     int ans = -1;
 

@@ -1,9 +1,6 @@
 #include "../inc/mainwindow.h"
 #include "../ui_mainwindow.h"
 
-
-#include <iostream>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -86,7 +83,13 @@ void MainWindow::on_pushButton_rotate_clicked()
 
 void MainWindow::on_pushButton_save_current_clicked()
 {
-    upload_model_to_file("./out/out.txt", model);
+    int rc = upload_model_to_file("./out/out.txt", model);
+
+    if (rc == OK)
+        QMessageBox::information(NULL, "Информация.",
+                                      "Текущее положение сохранено в " \
+                                      "файле out.txt, который располагается в папке out.");
+    print_error(rc);
 }
 
 void MainWindow::on_pushButton_return_default_clicked()

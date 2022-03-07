@@ -247,6 +247,7 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         groupBox_upload->setTitle(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\272\320\260 \320\274\320\276\320\264\320\265\320\273\320\270 \320\270\320\267 \321\204\320\260\320\271\320\273\320\260", nullptr));
         label_filename->setText(QCoreApplication::translate("MainWindow", "\320\230\320\274\321\217 \321\204\320\260\320\271\320\273\320\260:", nullptr));
+        lineEdit_filename->setText(QCoreApplication::translate("MainWindow", "./test/coub.txt", nullptr));
         pushButton_upload->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214 \320\274\320\276\320\264\320\265\320\273\321\214", nullptr));
         groupBox_scale->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\260\321\201\321\210\321\202\320\260\320\261\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265", nullptr));
         label_kx->setText(QCoreApplication::translate("MainWindow", "kx", nullptr));

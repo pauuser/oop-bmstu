@@ -47,13 +47,7 @@ int read_model(model_t &model, FILE *stream)
         rc = NO_FILE;
     else if ((rc = read_points(model, stream))
             || (rc = read_lines(model, stream)))
-    {
-        free(model.points);
-        model.points = NULL;
-
-        free(model.lines);
-        model.lines = NULL;
-    }
+        free_model(model);
 
     return rc;
 }
@@ -170,6 +164,8 @@ int upload_model_to_file(const char *filename, const model_t &model)
 
     if (f == NULL)
         rc = NO_FILE;
+    else if (model.n == 0)
+        rc = NO_MODEL;
     else
     {
         write_points_to_file(f, model);
@@ -187,6 +183,8 @@ int write_points_to_file(FILE *f, const model_t &model)
 
     if (f == NULL)
         rc = NO_FILE;
+    else if (model.n == 0)
+        rc = NO_MODEL;
     else
     {
         fprintf(f, "%d\n", model.n);
@@ -216,6 +214,8 @@ int write_lines_to_file(FILE *f, const model_t &model)
 
     if (f == NULL)
         rc = NULL;
+    else if (model.n == 0)
+        rc = NO_MODEL;
     else
     {
         fprintf(f, "%d\n", model.m);

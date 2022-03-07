@@ -68,6 +68,9 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="text">
+      <string>./test/coub.txt</string>
+     </property>
     </widget>
     <widget class="QPushButton" name="pushButton_upload">
      <property name="geometry">

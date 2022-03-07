@@ -13,8 +13,10 @@ typedef QGraphicsScene* scene_t;
 
 int draw_model(scene_t scene, model_t &model);
 
-int draw_line(scene_t scene, const line_t &line);
+int draw_line(scene_t scene, const line_t &line, const QPen pen);
 
 void clear_scene(scene_t scene);
+
+int draw_coordinates(scene_t scene, const matrix_t &matr);
 
 #endif // DRAW_H
