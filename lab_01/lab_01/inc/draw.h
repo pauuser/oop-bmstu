@@ -2,6 +2,7 @@
 #define DRAW_H
 
 #include <QGraphicsView>
+#include <QPen>
 
 #include "errors.h"
 #include "line.h"
@@ -11,12 +12,13 @@
 
 typedef QGraphicsScene* scene_t;
 
-int draw_model(scene_t scene, model_t &model);
+int draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const QPen pen);
 
-int draw_line(scene_t scene, const line_t &line, const QPen pen);
+int show_line_on_scene(scene_t scene, const point_t &point1, const point_t &point2, const QPen pen);
+
+int draw_model(scene_t scene, model_t &model);
 
 void clear_scene(scene_t scene);
 
-int draw_coordinates(scene_t scene, const matrix_t &matr);
 
 #endif // DRAW_H

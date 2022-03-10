@@ -1,5 +1,6 @@
 #include "../inc/mainwindow.h"
 #include "../ui_mainwindow.h"
+#include <stdio.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,13 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     scene->setSceneRect(-WINDOW_X / 2, -WINDOW_Y / 2, WINDOW_X / 2, WINDOW_Y / 2);
-
-    init_model(model);
 }
 
 MainWindow::~MainWindow()
 {
-    free_model(model);
     delete ui;
 }
 
@@ -30,12 +28,13 @@ void MainWindow::on_pushButton_upload_clicked()
     std::string str = text.toStdString();
     const char *filename = str.c_str();
 
-    int rc = input_model_from_file(model, filename);
-
-    if (rc == OK)
-        draw_model(scene, model);
+    request_t req = create_request(UPLOAD, 0, 0, 0, filename);
+    int rc = controller(scene, req);
 
     print_error(rc);
+
+    req.event = DRAW;
+    controller(scene, req);
 }
 
 
@@ -45,12 +44,13 @@ void MainWindow::on_pushButton_scale_clicked()
     double ky = ui->doubleSpinBox_scale_y->value();
     double kz = ui->doubleSpinBox_scale_z->value();
 
-    int rc = scale_model(model, kx, ky, kz);
+    request_t req = create_request(SCALE, kx, ky, kz);
 
-    if (rc == OK)
-        draw_model(scene, model);
-
+    int rc = controller(scene, req);
     print_error(rc);
+
+    req = create_request(DRAW);
+    controller(scene, req);
 }
 
 void MainWindow::on_pushButton_move_clicked()
@@ -59,12 +59,13 @@ void MainWindow::on_pushButton_move_clicked()
     double dy = ui->doubleSpinBox_move_y->value();
     double dz = ui->doubleSpinBox_move_z->value();
 
-    int rc = move_model(model, dx, dy, dz);
+    request_t req = create_request(MOVE, dx, dy, dz);
 
-    if (rc == OK)
-        draw_model(scene, model);
-
+    int rc = controller(scene, req);
     print_error(rc);
+
+    req = create_request(DRAW);
+    controller(scene, req);
 }
 
 void MainWindow::on_pushButton_rotate_clicked()
@@ -73,27 +74,20 @@ void MainWindow::on_pushButton_rotate_clicked()
     double ay = ui->doubleSpinBox_rotate_y->value();
     double az = ui->doubleSpinBox_rotate_z->value();
 
-    int rc = rotate_model(model, ax, ay, az);
+    request_t req = create_request(ROTATE, ax, ay, az);
 
-    if (rc == OK)
-        draw_model(scene, model);
-
+    int rc = controller(scene, req);
     print_error(rc);
+
+    req = create_request(DRAW);
+    controller(scene, req);
 }
 
 void MainWindow::on_pushButton_save_current_clicked()
 {
-    int rc = upload_model_to_file("./out/out.txt", model);
+    request_t req = create_request(SAVE, 0, 0, 0, "./out/out.txt");
 
-    if (rc == OK)
-        QMessageBox::information(NULL, "Информация.",
-                                      "Текущее положение сохранено в " \
-                                      "файле out.txt, который располагается в папке out.");
+    int rc = controller(scene, req);
     print_error(rc);
 }
 
-void MainWindow::on_pushButton_return_default_clicked()
-{
-    init_matrix(model.transform_matrix);
-    draw_model(scene, model);
-}

@@ -2,15 +2,19 @@
 
 #include "../inc/model.h"
 
-void init_model(model_t &model)
+model_t init_model()
 {
+    model_t model;
+
     model.n = 0;
     model.points = NULL;
 
     model.m = 0;
     model.lines = NULL;
 
-    init_matrix(model.transform_matrix);
+    model.transform_matrix = init_matrix();
+
+    return model;
 }
 
 void free_model(model_t &model)
@@ -23,7 +27,7 @@ void free_model(model_t &model)
     free(model.points);
     model.points = NULL;
 
-    init_matrix(model.transform_matrix);
+    model.transform_matrix = init_matrix();
 }
 
 int transform_model(model_t &model, const matrix_t &matr)
@@ -31,68 +35,91 @@ int transform_model(model_t &model, const matrix_t &matr)
     int rc = OK;
 
     if (model.n == 0)
+    {
         rc = NO_MODEL;
+    }
     else
     {
-        matrix_t mres;
-        init_matrix(mres);
+        matrix_t mres = init_matrix();
 
-        multiply_matrices(mres, model.transform_matrix, matr);
-        model.transform_matrix = mres;
+        int rc = multiply_matrices(mres, model.transform_matrix, matr);
+
+        if (rc == OK)
+        {
+            model.transform_matrix = mres;
+        }
+        fprintf(stdout, "------- %d\n", rc);
+        for (int i = 0; i < dimension + 1; i++)
+        {
+            for (int j = 0; j < dimension + 1; j++)
+                fprintf(stdout, "%f ", mres.data[i][j]);
+            fprintf(stdout, "\t");
+            for (int j = 0; j < dimension + 1; j++)
+                fprintf(stdout, "%f ", matr.data[i][j]);
+            fprintf(stdout, "\n");
+        }
     }
 
     return rc;
 }
 
-int move_model(model_t &model, const double dx, const double dy, const double dz)
+int move_model(model_t &model, data_t &data)
 {
     int rc = OK;
 
     if (model.n == 0)
+    {
         rc = NO_MODEL;
+    }
     else
     {
-        matrix_t move_matr;
-        init_matrix(move_matr);
+        double dx = data.cx, dy = data.cy, dz = data.cz;
 
-        create_move_matrix(move_matr, dx, dy, dz);
-        transform_model(model, move_matr);
+        fprintf(stdout, "HERE!!!!\n");
+
+        matrix_t move_matr = create_move_matrix(dx, dy, dz);
+
+        rc = transform_model(model, move_matr);
     }
 
     return rc;
 }
 
-int scale_model(model_t &model, const double kx, const double ky, const double kz)
+int scale_model(model_t &model, data_t &data)
 {
     int rc = OK;
 
     if (model.n == 0)
+    {
         rc = NO_MODEL;
+    }
     else
     {
-        matrix_t move_matr;
-        init_matrix(move_matr);
+        double kx = data.cx, ky = data.cy, kz = data.cz;
 
-        create_scale_matrix(move_matr, kx, ky, kz);
-        transform_model(model, move_matr);
+        matrix_t move_matr = create_scale_matrix(kx, ky, kz);
+
+        rc = transform_model(model, move_matr);
     }
 
     return rc;
 }
 
-int rotate_model(model_t &model, const double ax, const double ay, const double az)
+int rotate_model(model_t &model, data_t &data)
 {
     int rc = OK;
 
     if (model.n == 0)
+    {
         rc = NO_MODEL;
+    }
     else
     {
-        matrix_t move_matr;
-        init_matrix(move_matr);
+        double ax = data.cx, ay = data.cy, az = data.cz;
 
-        create_rotate_matrix(move_matr, ax, ay, az);
-        transform_model(model, move_matr);
+        matrix_t move_matr = create_rotate_matrix(ax, ay, az);
+
+        rc = transform_model(model, move_matr);
     }
 
     return rc;

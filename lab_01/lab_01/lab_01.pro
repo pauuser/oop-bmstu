@@ -18,7 +18,9 @@ SOURCES += \
     ./src/matrix.cpp \
     ./src/model.cpp \
     ./src/point.cpp \
-    ./src/projection.cpp
+    ./src/projection.cpp \
+    src/controller.cpp \
+    src/request.cpp
 
 HEADERS += \
     ./inc/draw.h \
@@ -29,7 +31,9 @@ HEADERS += \
     ./inc/matrix.h \
     ./inc/model.h \
     ./inc/point.h \
-    ./inc/projection.h
+    ./inc/projection.h \
+    inc/controller.h \
+    inc/request.h
 
 FORMS += \
     mainwindow.ui

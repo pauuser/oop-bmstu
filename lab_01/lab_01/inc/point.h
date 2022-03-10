@@ -17,7 +17,7 @@ struct point_t
     double row[dimension + 1];
 };
 
-int init_point(point_t &point);
+point_t init_point();
 
 double get_x_point(const point_t &point);
 
@@ -34,6 +34,8 @@ int set_point(point_t &point, const double x, const double y, const double z);
 int set_elem_point(point_t &point, const double elem, const int i);
 
 int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
+
+bool points_match(const point_t &point1, const point_t &point2);
 
 int find_point_in_mas(const point_t &point, const point_t *points, const int n);
 

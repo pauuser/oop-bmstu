@@ -587,24 +587,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_return_default">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>690</y>
-      <width>321</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Вернуть начальное положение</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_save_current">
     <property name="geometry">
      <rect>

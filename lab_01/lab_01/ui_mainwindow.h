@@ -57,7 +57,6 @@ public:
     QLabel *label_ay;
     QLabel *label_az;
     QPushButton *pushButton_rotate;
-    QPushButton *pushButton_return_default;
     QPushButton *pushButton_save_current;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -220,10 +219,6 @@ public:
         pushButton_rotate->setObjectName(QString::fromUtf8("pushButton_rotate"));
         pushButton_rotate->setGeometry(QRect(30, 160, 261, 29));
         pushButton_rotate->setFont(font1);
-        pushButton_return_default = new QPushButton(centralwidget);
-        pushButton_return_default->setObjectName(QString::fromUtf8("pushButton_return_default"));
-        pushButton_return_default->setGeometry(QRect(380, 690, 321, 29));
-        pushButton_return_default->setFont(font1);
         pushButton_save_current = new QPushButton(centralwidget);
         pushButton_save_current->setObjectName(QString::fromUtf8("pushButton_save_current"));
         pushButton_save_current->setGeometry(QRect(710, 690, 321, 29));
@@ -264,7 +259,6 @@ public:
         label_ay->setText(QCoreApplication::translate("MainWindow", "ay", nullptr));
         label_az->setText(QCoreApplication::translate("MainWindow", "az", nullptr));
         pushButton_rotate->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\262\320\265\321\200\320\275\321\203\321\202\321\214", nullptr));
-        pushButton_return_default->setText(QCoreApplication::translate("MainWindow", "\320\222\320\265\321\200\320\275\321\203\321\202\321\214 \320\275\320\260\321\207\320\260\320\273\321\214\320\275\320\276\320\265 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\320\265", nullptr));
         pushButton_save_current->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", nullptr));
     } // retranslateUi
 

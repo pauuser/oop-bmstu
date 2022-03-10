@@ -1,13 +1,13 @@
 #include "../inc/point.h"
 
-int init_point(point_t &point)
+point_t init_point()
 {
-    int rc = OK;
+    point_t point;
 
     for (int i = 0; i < dimension + 1; i++)
         point.row[i] = 0;
 
-    return rc;
+    return point;
 }
 
 double get_x_point(const point_t &point)
@@ -75,41 +75,18 @@ int transform_point(point_t &new_point, const point_t &point, const matrix_t &ma
         double val = 0;
         for (int j = 0; j < dimension + 1 && rc == OK; j++)
         {
-            double matr_elem = 0.0, point_elem = 0.0;
+            double matr_elem = matrix.data[i][j], point_elem = 0.0;
 
-            if (get_elem_matrix(matr_elem, matrix, i, j) || get_elem_point(point_elem, point, j))
-                rc = IND_OUT_OF_RANGE;
-            else
+            rc = get_elem_point(point_elem, point, j);
+
+            if (rc == OK)
+            {
                 val += matr_elem * point_elem;
+            }
         }
         set_elem_point(new_point, val, i);
     }
 
     return rc;
 }
-
-bool points_match(const point_t &point1, const point_t &point2)
-{
-    bool ans = 0;
-
-    double x1 = get_x_point(point1), y1 = get_y_point(point1), z1 = get_z_point(point1);
-    double x2 = get_x_point(point2), y2 = get_y_point(point2), z2 = get_z_point(point2);
-
-    if (x1 == x2 && y1 == y2 && z1 == z2)
-        ans = 1;
-
-    return ans;
-}
-
-int find_point_in_mas(const point_t &point, const point_t *points, const int n)
-{
-    int ans = -1;
-
-    for (int i = 0; i < n && ans == -1; i++)
-        if (points_match(point, points[i]))
-            ans = i;
-
-    return ans;
-}
-
 

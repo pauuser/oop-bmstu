@@ -8,6 +8,8 @@
 #include "file_io.h"
 #include "draw.h"
 #include "errors.h"
+#include "request.h"
+#include "controller.h"
 
 #define WINDOW_X 701
 #define WINDOW_Y 671
@@ -30,10 +32,8 @@ private slots:
     void on_pushButton_move_clicked();
     void on_pushButton_rotate_clicked();
     void on_pushButton_save_current_clicked();
-    void on_pushButton_return_default_clicked();
 
 private:
-    model_t model;
     scene_t scene;
     Ui::MainWindow *ui;
 };

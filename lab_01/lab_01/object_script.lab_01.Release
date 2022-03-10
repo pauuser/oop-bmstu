@@ -8,4 +8,6 @@ release/matrix.o
 release/model.o
 release/point.o
 release/projection.o
+release/controller.o
+release/request.o
 release/moc_mainwindow.o
