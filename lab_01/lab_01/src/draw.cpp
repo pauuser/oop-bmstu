@@ -1,8 +1,8 @@
 #include "../inc/draw.h"
 
-int draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const QPen pen)
+error_t draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const QPen pen)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (scene == NULL)
         rc = NULL_POINTER;
@@ -27,9 +27,9 @@ int draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const
     return rc;
 }
 
-int show_line_on_scene(scene_t scene, const point_t &point1, const point_t &point2, const QPen pen)
+error_t show_line_on_scene(scene_t scene, const point_t &point1, const point_t &point2, const QPen pen)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (scene == NULL)
     {
@@ -49,9 +49,9 @@ int show_line_on_scene(scene_t scene, const point_t &point1, const point_t &poin
     return rc;
 }
 
-int draw_model(scene_t scene, model_t &model)
+error_t draw_model(scene_t scene, model_t &model)
 {
-    int rc = OK;
+    error_t rc = OK;
     QPen pen(Qt::black);
 
     if (scene == NULL)

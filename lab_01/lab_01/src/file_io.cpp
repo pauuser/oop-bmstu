@@ -21,9 +21,9 @@
   Координаты - действительные числа
 */
 
-int input_model_from_file(model_t &model, filename_t &data)
+error_t input_model_from_file(model_t &model, filename_t &data)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     FILE *f = fopen(data.filename, "r");
 
@@ -41,9 +41,9 @@ int input_model_from_file(model_t &model, filename_t &data)
     return rc;
 }
 
-int read_model(model_t &model, FILE *stream)
+error_t read_model(model_t &model, FILE *stream)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (stream == NULL)
     {
@@ -67,9 +67,9 @@ int read_model(model_t &model, FILE *stream)
     return rc;
 }
 
-int read_points(model_t &model, FILE *stream)
+error_t read_points(model_t &model, FILE *stream)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     int n = 0;
 
@@ -109,9 +109,9 @@ int read_points(model_t &model, FILE *stream)
     return rc;
 }
 
-int add_points_to_mas(model_t &model, FILE *stream)
+error_t add_points_to_mas(model_t &model, FILE *stream)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (stream == NULL)
     {
@@ -135,9 +135,9 @@ int add_points_to_mas(model_t &model, FILE *stream)
     return rc;
 }
 
-int read_lines(model_t &model, FILE *stream)
+error_t read_lines(model_t &model, FILE *stream)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     int m = 0;
 
@@ -177,9 +177,9 @@ int read_lines(model_t &model, FILE *stream)
     return rc;
 }
 
-int add_lines_to_mas(model_t &model, FILE *stream)
+error_t add_lines_to_mas(model_t &model, FILE *stream)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (stream == NULL)
     {
@@ -211,9 +211,9 @@ int add_lines_to_mas(model_t &model, FILE *stream)
     return rc;
 }
 
-int upload_model_to_file(filename_t &data, const model_t &model)
+error_t upload_model_to_file(filename_t &data, const model_t &model)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     FILE *f = fopen(data.filename, "w");
 
@@ -240,9 +240,9 @@ int upload_model_to_file(filename_t &data, const model_t &model)
     return rc;
 }
 
-int write_points_to_file(FILE *f, const model_t &model)
+error_t write_points_to_file(FILE *f, const model_t &model)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (f == NULL)
     {
@@ -274,13 +274,13 @@ int write_points_to_file(FILE *f, const model_t &model)
     return rc;
 }
 
-int write_lines_to_file(FILE *f, const model_t &model)
+error_t write_lines_to_file(FILE *f, const model_t &model)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (f == NULL)
     {
-        rc = NULL;
+        rc = NULL_POINTER;
     }
     else if (model.n == 0)
     {

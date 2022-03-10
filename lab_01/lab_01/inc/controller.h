@@ -7,6 +7,6 @@
 #include "request.h"
 #include "file_io.h"
 
-int controller(scene_t scene, request_t &request);
+error_t controller(scene_t scene, request_t &request);
 
 #endif // CONTROLLER_H

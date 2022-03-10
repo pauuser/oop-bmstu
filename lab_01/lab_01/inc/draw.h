@@ -12,11 +12,11 @@
 
 typedef QGraphicsScene* scene_t;
 
-int draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const QPen pen);
+error_t draw_model_edge(scene_t scene, const point_t &pt1, const point_t &pt2, const QPen pen);
 
-int show_line_on_scene(scene_t scene, const point_t &point1, const point_t &point2, const QPen pen);
+error_t show_line_on_scene(scene_t scene, const point_t &point1, const point_t &point2, const QPen pen);
 
-int draw_model(scene_t scene, model_t &model);
+error_t draw_model(scene_t scene, model_t &model);
 
 void clear_scene(scene_t scene);
 

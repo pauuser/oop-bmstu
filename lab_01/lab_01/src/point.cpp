@@ -30,9 +30,9 @@ bool index_is_valid_point(const int i)
     return !(i >= dimension + 1);
 }
 
-int get_elem_point(double &elem, const point_t &point, const int i)
+error_t get_elem_point(double &elem, const point_t &point, const int i)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (!index_is_valid_point(i))
         rc = IND_OUT_OF_RANGE;
@@ -42,9 +42,9 @@ int get_elem_point(double &elem, const point_t &point, const int i)
     return rc;
 }
 
-int set_elem_point(point_t &point, const double elem, const int i)
+error_t set_elem_point(point_t &point, const double elem, const int i)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (!index_is_valid_point(i))
         rc = IND_OUT_OF_RANGE;
@@ -54,9 +54,9 @@ int set_elem_point(point_t &point, const double elem, const int i)
     return rc;
 }
 
-int set_point(point_t &point, const double x, const double y, const double z)
+error_t set_point(point_t &point, const double x, const double y, const double z)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     set_elem_point(point, x, 0);
     set_elem_point(point, y, 1);
@@ -66,9 +66,9 @@ int set_point(point_t &point, const double x, const double y, const double z)
     return rc;
 }
 
-int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix)
+error_t transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     for (int i = 0; i < dimension + 1 && rc == OK; i++)
     {

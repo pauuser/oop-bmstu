@@ -27,17 +27,17 @@ double get_z_point(const point_t &point);
 
 bool index_is_valid_point(const int i);
 
-int get_elem_point(double &elem, const point_t &point, const int i);
+error_t get_elem_point(double &elem, const point_t &point, const int i);
 
-int set_point(point_t &point, const double x, const double y, const double z);
+error_t set_point(point_t &point, const double x, const double y, const double z);
 
-int set_elem_point(point_t &point, const double elem, const int i);
+error_t set_elem_point(point_t &point, const double elem, const int i);
 
-int transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
+error_t transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
 
 bool points_match(const point_t &point1, const point_t &point2);
 
-int find_point_in_mas(const point_t &point, const point_t *points, const int n);
+error_t find_point_in_mas(const point_t &point, const point_t *points, const int n);
 
 bool points_match(const point_t &point1, const point_t &point2);
 

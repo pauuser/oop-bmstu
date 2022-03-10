@@ -2,7 +2,7 @@
 
 #include "../inc/errors.h"
 
-void print_error(int error)
+void print_error(error_t error)
 {
     if (error == INVALID_INPUT)
         QMessageBox::critical(NULL, "Ошибка!",

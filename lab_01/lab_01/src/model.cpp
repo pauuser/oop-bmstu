@@ -30,9 +30,9 @@ void free_model(model_t &model)
     model.transform_matrix = init_matrix();
 }
 
-int transform_model(model_t &model, const matrix_t &matr)
+error_t transform_model(model_t &model, const matrix_t &matr)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (model.n == 0)
     {
@@ -48,24 +48,14 @@ int transform_model(model_t &model, const matrix_t &matr)
         {
             model.transform_matrix = mres;
         }
-        fprintf(stdout, "------- %d\n", rc);
-        for (int i = 0; i < dimension + 1; i++)
-        {
-            for (int j = 0; j < dimension + 1; j++)
-                fprintf(stdout, "%f ", mres.data[i][j]);
-            fprintf(stdout, "\t");
-            for (int j = 0; j < dimension + 1; j++)
-                fprintf(stdout, "%f ", matr.data[i][j]);
-            fprintf(stdout, "\n");
-        }
     }
 
     return rc;
 }
 
-int move_model(model_t &model, data_t &data)
+error_t move_model(model_t &model, data_t &data)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (model.n == 0)
     {
@@ -75,8 +65,6 @@ int move_model(model_t &model, data_t &data)
     {
         double dx = data.cx, dy = data.cy, dz = data.cz;
 
-        fprintf(stdout, "HERE!!!!\n");
-
         matrix_t move_matr = create_move_matrix(dx, dy, dz);
 
         rc = transform_model(model, move_matr);
@@ -85,9 +73,9 @@ int move_model(model_t &model, data_t &data)
     return rc;
 }
 
-int scale_model(model_t &model, data_t &data)
+error_t scale_model(model_t &model, data_t &data)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (model.n == 0)
     {
@@ -105,9 +93,9 @@ int scale_model(model_t &model, data_t &data)
     return rc;
 }
 
-int rotate_model(model_t &model, data_t &data)
+error_t rotate_model(model_t &model, data_t &data)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     if (model.n == 0)
     {

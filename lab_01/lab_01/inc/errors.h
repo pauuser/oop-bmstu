@@ -1,16 +1,19 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
-#define OK                   0
-#define NO_MEMORY           -1
-#define IND_OUT_OF_RANGE    -2
-#define INVALID_INPUT       -3
-#define INAPPROPRIATE_INPUT -4
-#define NULL_POINTER        -5
-#define NO_FILE             -6
-#define NO_MODEL            -7
-#define UNKNOWN_COMMAND     -8
+enum error_t
+{
+    OK,
+    NO_MEMORY,
+    IND_OUT_OF_RANGE,
+    INVALID_INPUT,
+    INAPPROPRIATE_INPUT,
+    NULL_POINTER,
+    NO_FILE,
+    UNKNOWN_COMMAND,
+    NO_MODEL
+};
 
-void print_error(int error);
+void print_error(error_t error);
 
 #endif // ERRORS_H

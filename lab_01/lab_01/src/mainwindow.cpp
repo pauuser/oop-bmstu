@@ -29,7 +29,7 @@ void MainWindow::on_pushButton_upload_clicked()
     const char *filename = str.c_str();
 
     request_t req = create_request(UPLOAD, 0, 0, 0, filename);
-    int rc = controller(scene, req);
+    error_t rc = controller(scene, req);
 
     print_error(rc);
 
@@ -46,7 +46,7 @@ void MainWindow::on_pushButton_scale_clicked()
 
     request_t req = create_request(SCALE, kx, ky, kz);
 
-    int rc = controller(scene, req);
+    error_t rc = controller(scene, req);
     print_error(rc);
 
     req = create_request(DRAW);
@@ -61,7 +61,7 @@ void MainWindow::on_pushButton_move_clicked()
 
     request_t req = create_request(MOVE, dx, dy, dz);
 
-    int rc = controller(scene, req);
+    error_t rc = controller(scene, req);
     print_error(rc);
 
     req = create_request(DRAW);
@@ -76,7 +76,7 @@ void MainWindow::on_pushButton_rotate_clicked()
 
     request_t req = create_request(ROTATE, ax, ay, az);
 
-    int rc = controller(scene, req);
+    error_t rc = controller(scene, req);
     print_error(rc);
 
     req = create_request(DRAW);
@@ -87,7 +87,7 @@ void MainWindow::on_pushButton_save_current_clicked()
 {
     request_t req = create_request(SAVE, 0, 0, 0, "./out/out.txt");
 
-    int rc = controller(scene, req);
+    error_t rc = controller(scene, req);
     print_error(rc);
 }
 

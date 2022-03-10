@@ -1,14 +1,13 @@
 #include "../inc/controller.h"
 #include <stdio.h>
 
-int controller(scene_t scene, request_t &request)
+error_t controller(scene_t scene, request_t &request)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     static model_t model = init_model();
 
     int req_type = request.event;
-    fprintf(stdout, "%d\n", req_type);
 
     if (req_type == UPLOAD)
     {
@@ -33,6 +32,10 @@ int controller(scene_t scene, request_t &request)
     else if (req_type == DRAW)
     {
         rc = draw_model(scene, model);
+    }
+    else
+    {
+        rc = UNKNOWN_COMMAND;
     }
 
     return rc;

@@ -12,9 +12,9 @@ matrix_t init_matrix()
     return matr;
 }
 
-int multiply_row_by_column_matrix(double &res, const double *row, const matrix_t &matr, int j)
+error_t multiply_row_by_column_matrix(double &res, const double *row, const matrix_t &matr, int j)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     res = 0;
 
@@ -40,8 +40,6 @@ matrix_t create_scale_matrix(const double kx, const double ky, const double kz)
 matrix_t create_move_matrix(const double dx, const double dy, const double dz)
 {    
     matrix_t matr = init_matrix();
-
-    fprintf(stdout, "%f %f %f\n", dx, dy, dz);
 
     matr.data[0][dimension] = dx;
     matr.data[1][dimension] = dy;
@@ -73,9 +71,9 @@ matrix_t create_rotate_matrix(const double ax, const double ay, const double az)
     return matrix;
 }
 
-int multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2)
+error_t multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2)
 {
-    int rc = OK;
+    error_t rc = OK;
 
     for (int i = 0; i < dimension + 1 && rc == OK; i++)
     {
@@ -97,5 +95,5 @@ int multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2)
 
 double radians(double angle)
 {
-    return angle * pi / 180;
+    return angle * M_PI / 180;
 }

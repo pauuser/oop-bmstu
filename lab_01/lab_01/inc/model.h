@@ -26,13 +26,13 @@ model_t init_model();
 
 void free_model(model_t &model);
 
-int transform_model(model_t &model, const matrix_t &matr);
+error_t transform_model(model_t &model, const matrix_t &matr);
 
-int move_model(model_t &model, data_t &data);
+error_t move_model(model_t &model, data_t &data);
 
-int scale_model(model_t &model, data_t &data);
+error_t scale_model(model_t &model, data_t &data);
 
-int rotate_model(model_t &model, data_t &data);
+error_t rotate_model(model_t &model, data_t &data);
 
 
 #endif // MODEL_H
