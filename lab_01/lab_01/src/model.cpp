@@ -53,11 +53,6 @@ error_t transform_model(model_t &model, const matrix_t &matr)
     else
     {
         rc = multiply_matrices(model.transform_matrix, matr);
-
-        if (rc == OK)
-        {
-            rc = transform_center(model.center, matr);
-        }
     }
 
     return rc;
@@ -76,6 +71,11 @@ error_t move_model(model_t &model, const data_t &data)
         matrix_t move_matr = create_move_matrix(data);
 
         rc = transform_model(model, move_matr);
+
+        if (rc == OK)
+        {
+            rc = transform_center(model.center, move_matr);
+        }
     }
 
     return rc;
