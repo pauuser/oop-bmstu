@@ -90,10 +90,10 @@ matrix_t create_rotate_with_center_matrix(const data_t &data, const point_t &cen
 matrix_t create_scale_with_center_matrix(const data_t &data, const point_t &center)
 {
     matrix_t m_tocenter = create_move_to_center_matrix(center);
-    matrix_t rotate_matr = create_scale_matrix(data);
+    matrix_t scale_matr = create_scale_matrix(data);
     matrix_t m_fromcenter = create_move_from_center_matrix(center);
 
-    multiply_matrices(m_tocenter, rotate_matr);
+    multiply_matrices(m_tocenter, scale_matr);
     multiply_matrices(m_tocenter, m_fromcenter);
 
     return m_tocenter;
@@ -200,7 +200,7 @@ data_t create_move_to_center_data(const point_t &point)
 {
     double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
 
-    data_t move_data = { .cx = x, .cy = y, .cz = z };
+    data_t move_data = { .cx = -x, .cy = -y, .cz = -z };
 
     return move_data;
 }
@@ -209,7 +209,7 @@ data_t create_move_from_center_data(const point_t &point)
 {
     double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
 
-    data_t move_data = { .cx = -x, .cy = -y, .cz = -z };
+    data_t move_data = { .cx = x, .cy = y, .cz = z };
 
     return move_data;
 }
