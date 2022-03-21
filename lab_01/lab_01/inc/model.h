@@ -42,6 +42,6 @@ error_t get_transformed_model(model_t &dst, const model_t &src);
 
 error_t move_center(point_t &center, const data_t &data);
 
-error_t transform_center(point_t &center, const matrix_t &transform_matr);
+error_t transform_model_center(model_t &model, const matrix_t &transform_matr);
 
 #endif // MODEL_H

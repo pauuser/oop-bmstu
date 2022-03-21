@@ -200,7 +200,7 @@ data_t create_move_to_center_data(const point_t &point)
 {
     double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
 
-    data_t move_data = { .cx = -x, .cy = -y, .cz = -z };
+    data_t move_data = { .cx = x, .cy = y, .cz = z };
 
     return move_data;
 }
@@ -209,7 +209,7 @@ data_t create_move_from_center_data(const point_t &point)
 {
     double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
 
-    data_t move_data = { .cx = x, .cy = y, .cz = z };
+    data_t move_data = { .cx = -x, .cy = -y, .cz = -z };
 
     return move_data;
 }

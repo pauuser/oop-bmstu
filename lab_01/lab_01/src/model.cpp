@@ -74,7 +74,7 @@ error_t move_model(model_t &model, const data_t &data)
 
         if (rc == OK)
         {
-            rc = transform_center(model.center, move_matr);
+            rc = transform_model_center(model, move_matr);
         }
     }
 
@@ -132,6 +132,7 @@ error_t copy_model(model_t &dst, const model_t &model)
         if (rc == OK)
         {
             tmp.center = model.center;
+
             dst = tmp;
         }
     }
@@ -163,17 +164,17 @@ error_t get_transformed_model(model_t &dst, const model_t &src)
 }
 
 
-error_t transform_center(point_t &center, const matrix_t &transform_matr)
+error_t transform_model_center(model_t &model, const matrix_t &transform_matr)
 {
     error_t rc = OK;
 
     point_t new_center = init_point();
 
-    rc = transform_point(new_center, center, transform_matr);
+    rc = transform_point(new_center, model.center, transform_matr);
 
     if (rc == OK)
     {
-        center = new_center;
+        model.center = new_center;
     }
 
     return rc;
