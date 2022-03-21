@@ -4,12 +4,8 @@
 #include <stdlib.h>
 
 #include "errors.h"
-#include "matrix.h"
+#include "request.h"
 
-/*
-Структура для хранения точки
-Координаты - вещественные числа
-*/
 typedef struct point_t point_t;
 
 struct point_t
@@ -17,7 +13,19 @@ struct point_t
     double row[dimension + 1];
 };
 
+typedef struct pointarr_t pointarr_t;
+
+struct pointarr_t
+{
+    int n;
+    point_t *array;
+};
+
 point_t init_point();
+
+pointarr_t init_pointarr();
+
+void free_pointarr(pointarr_t &points);
 
 double get_x_point(const point_t &point);
 
@@ -33,12 +41,20 @@ error_t set_point(point_t &point, const double x, const double y, const double z
 
 error_t set_elem_point(point_t &point, const double elem, const int i);
 
-error_t transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix);
-
 bool points_match(const point_t &point1, const point_t &point2);
 
 error_t find_point_in_mas(const point_t &point, const point_t *points, const int n);
 
 bool points_match(const point_t &point1, const point_t &point2);
+
+error_t copy_pointarr(pointarr_t &dst, const pointarr_t &src);
+
+error_t allocate_points_mas(pointarr_t &points, const int n);
+
+error_t calc_avg_point_in_mas(point_t &point, const pointarr_t &points);
+
+error_t calculate_center(point_t &res, const pointarr_t &points);
+
+error_t move_point(point_t &point, const data_t &data);
 
 #endif // POINT_H

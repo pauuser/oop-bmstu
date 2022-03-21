@@ -1,6 +1,5 @@
 #include "../inc/mainwindow.h"
 #include "../ui_mainwindow.h"
-#include <stdio.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,8 +32,11 @@ void MainWindow::on_pushButton_upload_clicked()
 
     print_error(rc);
 
-    req.event = DRAW;
-    controller(scene, req);
+    if (rc == OK)
+    {
+        req.event = DRAW;
+        controller(scene, req);
+    }
 }
 
 

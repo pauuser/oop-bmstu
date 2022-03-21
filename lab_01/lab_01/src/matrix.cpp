@@ -18,7 +18,7 @@ error_t multiply_row_by_column_matrix(double &res, const double *row, const matr
 
     res = 0;
 
-    for (int k = 0; k < dimension + 1 && rc == OK; k++)
+    for (int k = 0; rc == OK && k < dimension + 1; k++)
     {
         res += row[k] * matr.data[k][j];
     }
@@ -26,9 +26,11 @@ error_t multiply_row_by_column_matrix(double &res, const double *row, const matr
     return rc;
 }
 
-matrix_t create_scale_matrix(const double kx, const double ky, const double kz)
+matrix_t create_scale_matrix(const data_t &data)
 {
     matrix_t matr = init_matrix();
+
+    double kx = data.cx, ky = data.cy, kz = data.cz;
 
     matr.data[0][0] = kx;
     matr.data[1][1] = ky;
@@ -37,9 +39,11 @@ matrix_t create_scale_matrix(const double kx, const double ky, const double kz)
     return matr;
 }
 
-matrix_t create_move_matrix(const double dx, const double dy, const double dz)
+matrix_t create_move_matrix(const data_t &data)
 {    
     matrix_t matr = init_matrix();
+
+    double dx = data.cx, dy = data.cy, dz = data.cz;
 
     matr.data[0][dimension] = dx;
     matr.data[1][dimension] = dy;
@@ -48,36 +52,62 @@ matrix_t create_move_matrix(const double dx, const double dy, const double dz)
     return matr;
 }
 
-matrix_t create_rotate_matrix(const double ax, const double ay, const double az)
+matrix_t create_rotate_matrix(const data_t &data)
 {
     matrix_t matrix = init_matrix();
+
+    double ax = data.cx, ay = data.cy, az = data.cz;
 
     double x = radians(ax), y = radians(ay), z = radians(az);
 
     matrix.data[0][0] = cos(y) * cos(z);
     matrix.data[0][1] = -cos(y) * sin(z);
-    matrix.data[0][2] = -sin(y);
+    matrix.data[0][2] = sin(y);
 
-    matrix.data[1][0] = cos(x) * sin(z) - sin(x) * sin(y) * cos(z);
-    matrix.data[1][1] = sin(x) * sin(y) * sin(z) + cos(x) * cos(z);
-    matrix.data[1][2] = -cos(y) * sin(x);
+    matrix.data[1][0] = sin(x) * sin(y) * cos(z) + cos(x) * sin(z);
+    matrix.data[1][1] = cos(x) * cos(z) - sin(x) * sin(y) * sin(z);
+    matrix.data[1][2] = -sin(x) * cos(y);
 
-    matrix.data[2][0] = cos(x) * sin(y) * cos(z) + sin(x) * sin(z);
-    matrix.data[2][1] = sin(x) * cos(z) - cos(x) * sin(y) * sin(z);
+    matrix.data[2][0] = sin(x) * sin(z) - cos(x) * sin(y) * cos(z);
+    matrix.data[2][1] = cos(x) * sin(y) * sin(z) + sin(x) * cos(z);
     matrix.data[2][2] = cos(x) * cos(y);
-
-    matrix.data[3][3] = 1;
 
     return matrix;
 }
 
-error_t multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2)
+matrix_t create_rotate_with_center_matrix(const data_t &data, const point_t &center)
+{
+    matrix_t m_tocenter = create_move_to_center_matrix(center);
+    matrix_t rotate_matr = create_rotate_matrix(data);
+    matrix_t m_fromcenter = create_move_from_center_matrix(center);
+
+    multiply_matrices(m_tocenter, rotate_matr);
+    multiply_matrices(m_tocenter, m_fromcenter);
+
+    return m_tocenter;
+}
+
+matrix_t create_scale_with_center_matrix(const data_t &data, const point_t &center)
+{
+    matrix_t m_tocenter = create_move_to_center_matrix(center);
+    matrix_t rotate_matr = create_scale_matrix(data);
+    matrix_t m_fromcenter = create_move_from_center_matrix(center);
+
+    multiply_matrices(m_tocenter, rotate_matr);
+    multiply_matrices(m_tocenter, m_fromcenter);
+
+    return m_tocenter;
+}
+
+error_t multiply_matrices(matrix_t &m1, const matrix_t &m2)
 {
     error_t rc = OK;
 
-    for (int i = 0; i < dimension + 1 && rc == OK; i++)
+    matrix_t mres = m1;
+
+    for (int i = 0; rc == OK && i < dimension + 1; i++)
     {
-        for (int j = 0; j < dimension + 1 && rc == OK; j++)
+        for (int j = 0; rc == OK && j < dimension + 1; j++)
         {
             double val = 0;
 
@@ -90,10 +120,96 @@ error_t multiply_matrices(matrix_t &mres, const matrix_t &m1, const matrix_t &m2
         }
     }
 
+    if (rc == OK)
+    {
+        m1 = mres;
+    }
+
     return rc;
 }
 
 double radians(double angle)
 {
     return angle * M_PI / 180;
+}
+
+error_t get_transformed_points(pointarr_t &dst, const pointarr_t &src, const matrix_t &transform_matrix)
+{
+    error_t rc = OK;
+
+    pointarr_t tmp = init_pointarr();
+
+    rc = copy_pointarr(tmp, src);
+
+    for (int i = 0; rc == OK && i < tmp.n; i++)
+    {
+        rc = transform_point(tmp.array[i], src.array[i], transform_matrix);
+    }
+
+    if (rc == OK)
+    {
+        dst = tmp;
+    }
+
+    return rc;
+}
+
+error_t transform_point(point_t &new_point, const point_t &point, const matrix_t &matrix)
+{
+    error_t rc = OK;
+
+    for (int i = 0; rc == OK && i < dimension + 1; i++)
+    {
+        double val = 0;
+        for (int j = 0; rc == OK && j < dimension + 1; j++)
+        {
+            double matr_elem = matrix.data[i][j], point_elem = 0.0;
+
+            rc = get_elem_point(point_elem, point, j);
+
+            if (rc == OK)
+            {
+                val += matr_elem * point_elem;
+            }
+        }
+        set_elem_point(new_point, val, i);
+    }
+
+    return rc;
+}
+
+matrix_t create_move_to_center_matrix(const point_t &center)
+{
+    data_t data = create_move_to_center_data(center);
+
+    matrix_t matr = create_move_matrix(data);
+
+    return matr;
+}
+
+matrix_t create_move_from_center_matrix(const point_t &center)
+{
+    data_t data = create_move_from_center_data(center);
+
+    matrix_t matr = create_move_matrix(data);
+
+    return matr;
+}
+
+data_t create_move_to_center_data(const point_t &point)
+{
+    double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
+
+    data_t move_data = { .cx = x, .cy = y, .cz = z };
+
+    return move_data;
+}
+
+data_t create_move_from_center_data(const point_t &point)
+{
+    double x = get_x_point(point), y = get_y_point(point), z = get_z_point(point);
+
+    data_t move_data = { .cx = -x, .cy = -y, .cz = -z };
+
+    return move_data;
 }

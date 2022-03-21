@@ -10,7 +10,6 @@ enum event_t
     SCALE,
     ROTATE,
     SAVE,
-    DEFAULT,
     DRAW
 };
 

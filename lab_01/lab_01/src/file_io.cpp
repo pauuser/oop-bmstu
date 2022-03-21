@@ -33,8 +33,21 @@ error_t input_model_from_file(model_t &model, filename_t &data)
     }
     else
     {
-        free_model(model);
-        rc = read_model(model, f);
+        model_t tmp_model = init_model();
+
+        rc = read_model(tmp_model, f);
+
+        if (rc == OK)
+        {
+            free_model(model);
+
+            model = tmp_model;
+        }
+        else
+        {
+            free_model(tmp_model);
+        }
+
         fclose(f);
     }
 
@@ -51,11 +64,16 @@ error_t read_model(model_t &model, FILE *stream)
     }
     else
     {
-        rc = read_points(model, stream);
+        rc = read_points(model.points, stream);
 
         if (rc == OK)
         {
-            rc = read_lines(model, stream);
+            rc = read_lines(model.lines, stream);
+
+            if (rc == OK)
+            {
+                rc = calculate_center(model.center, model.points);
+            }
         }
 
         if (rc != OK)
@@ -67,49 +85,31 @@ error_t read_model(model_t &model, FILE *stream)
     return rc;
 }
 
-error_t read_points(model_t &model, FILE *stream)
+error_t read_points_count(int &n, FILE *stream)
 {
     error_t rc = OK;
 
-    int n = 0;
+    int tmp_n = 0;
 
-    if (stream == NULL)
-    {
-        rc = NO_FILE;
-    }
-    else if (fscanf(stream, "%d", &n) != 1)
+    int read = fscanf(stream, "%d", &tmp_n);
+
+    if (read != 1)
     {
         rc = INVALID_INPUT;
     }
-    else if (n < 1)
+    else if (tmp_n < 1)
     {
         rc = INAPPROPRIATE_INPUT;
     }
     else
     {
-        model.n = n;
-        model.points = (point_t *)malloc(sizeof(point_t) * n);
-
-        if (model.points == NULL)
-        {
-            rc = NO_MEMORY;
-        }
-        else
-        {
-            rc = add_points_to_mas(model, stream);
-
-            if (rc != OK)
-            {
-                free(model.points);
-                model.points = NULL;
-            }
-        }
+        n = tmp_n;
     }
 
     return rc;
 }
 
-error_t add_points_to_mas(model_t &model, FILE *stream)
+error_t read_point(point_t &point, FILE *stream)
 {
     error_t rc = OK;
 
@@ -117,8 +117,7 @@ error_t add_points_to_mas(model_t &model, FILE *stream)
     {
         rc = NO_FILE;
     }
-
-    for (int i = 0; i < model.n && rc == OK; i++)
+    else
     {
         double x = 0.0, y = 0.0, z = 0.0;
 
@@ -128,48 +127,32 @@ error_t add_points_to_mas(model_t &model, FILE *stream)
         }
         else
         {
-            rc = set_point(model.points[i], x, y, z);
+            rc = set_point(point, x, y, z);
         }
     }
 
     return rc;
 }
 
-error_t read_lines(model_t &model, FILE *stream)
+error_t read_points(pointarr_t &points, FILE *stream)
 {
     error_t rc = OK;
-
-    int m = 0;
 
     if (stream == NULL)
     {
         rc = NO_FILE;
     }
-    else if (fscanf(stream, "%d", &m) != 1)
-    {
-        rc = INVALID_INPUT;
-    }
-    else if (m < 1)
-    {
-        rc = INAPPROPRIATE_INPUT;
-    }
     else
     {
-        model.m = m;
-        model.lines = (line_t *)malloc(sizeof(line_t) * m);
+        rc = read_points_count(points.n, stream);
 
-        if (model.lines == NULL)
+        if (rc == OK)
         {
-            rc = NO_MEMORY;
-        }
-        else
-        {
-            rc = add_lines_to_mas(model, stream);
+            rc = allocate_points_mas(points, points.n);
 
-            if (rc != OK)
+            if (rc == OK)
             {
-                free(model.lines);
-                model.lines = NULL;
+                rc = add_points_to_mas(points, stream);
             }
         }
     }
@@ -177,7 +160,8 @@ error_t read_lines(model_t &model, FILE *stream)
     return rc;
 }
 
-error_t add_lines_to_mas(model_t &model, FILE *stream)
+
+error_t add_points_to_mas(pointarr_t &points, FILE *stream)
 {
     error_t rc = OK;
 
@@ -185,8 +169,72 @@ error_t add_lines_to_mas(model_t &model, FILE *stream)
     {
         rc = NO_FILE;
     }
+    else if (points.n == 0)
+    {
+        rc = NULL_POINTER;
+    }
 
-    for (int i = 0; i < model.m && rc == OK; i++)
+    for (int i = 0; rc == OK && i < points.n; i++)
+    {
+        rc = read_point(points.array[i], stream);
+    }
+
+    return rc;
+}
+
+/*
+ Работа с чтением линий
+*/
+
+error_t read_lines_count(int &m, FILE *stream)
+{
+    error_t rc = OK;
+
+    int tmp_m = 0;
+
+    int read = fscanf(stream, "%d", &tmp_m);
+
+    if (read != 1)
+    {
+        rc = INVALID_INPUT;
+    }
+    else if (tmp_m < 1)
+    {
+        rc = INAPPROPRIATE_INPUT;
+    }
+    else
+    {
+        m = tmp_m;
+    }
+
+    return rc;
+}
+
+bool connection_is_valid(const int src, const int dest)
+{
+    bool res = 1;
+
+    if (src < 0 || dest < 0)
+    {
+        res = 0;
+    }
+    else if (src == dest)
+    {
+        res = 0;
+    }
+
+    return res;
+}
+
+error_t read_line(line_t &line, FILE *stream)
+{
+    error_t rc = OK;
+
+    if (stream == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else
     {
         int src = 0, dest = 0;
 
@@ -194,23 +242,79 @@ error_t add_lines_to_mas(model_t &model, FILE *stream)
         {
             rc = INVALID_INPUT;
         }
-        else if (src < 0 || src >= model.n || dest < 0 || dest >= model.n)
-        {
-            rc = INAPPROPRIATE_INPUT;
-        }
-        else if (src == dest)
+        else if (connection_is_valid(src, dest) == 0)
         {
             rc = INAPPROPRIATE_INPUT;
         }
         else
         {
-            rc = set_line(model.lines[i], src, dest);
+            line_t tmp = init_line();
+
+            rc = set_line(tmp, src, dest);
+
+            if (rc == OK)
+            {
+                line = tmp;
+            }
         }
     }
 
     return rc;
 }
 
+
+error_t read_lines(linearr_t &lines, FILE *stream)
+{
+    error_t rc = OK;
+
+    if (stream == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else
+    {
+        rc = read_lines_count(lines.n, stream);
+
+        if (rc == OK)
+        {
+            rc = allocate_lines_mas(lines, lines.n);
+
+            if (rc == OK)
+            {
+                rc = add_lines_to_mas(lines, stream);
+            }
+        }
+    }
+
+    return rc;
+}
+
+
+error_t add_lines_to_mas(linearr_t &lines, FILE *stream)
+{
+    error_t rc = OK;
+
+    if (stream == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else if (lines.n == 0 || lines.array == NULL)
+    {
+        rc = NO_LINEARR;
+    }
+
+    for (int i = 0; rc == OK && i < lines.n; i++)
+    {
+        rc = read_line(lines.array[i], stream);
+    }
+
+    return rc;
+}
+
+
+/*
+Функции для вывода в файл
+*/
 error_t upload_model_to_file(filename_t &data, const model_t &model)
 {
     error_t rc = OK;
@@ -221,17 +325,17 @@ error_t upload_model_to_file(filename_t &data, const model_t &model)
     {
         rc = NO_FILE;
     }
-    else if (model.n == 0)
+    else if (model_exists(model.points, model.lines) == 0)
     {
         rc = NO_MODEL;
     }
     else
     {
-        rc = write_points_to_file(f, model);
+        rc = write_points_to_file(f, model.points);
 
         if (rc == OK)
         {
-            rc = write_lines_to_file(f, model);
+            rc = write_lines_to_file(f, model.lines);
         }
 
         fclose(f);
@@ -240,7 +344,7 @@ error_t upload_model_to_file(filename_t &data, const model_t &model)
     return rc;
 }
 
-error_t write_points_to_file(FILE *f, const model_t &model)
+error_t write_point_to_file(FILE *f, const point_t &point)
 {
     error_t rc = OK;
 
@@ -248,33 +352,78 @@ error_t write_points_to_file(FILE *f, const model_t &model)
     {
         rc = NO_FILE;
     }
-    else if (model.n == 0)
+    else
     {
-        rc = NO_MODEL;
+        double x = get_x_point(point),
+                    y = get_y_point(point),
+                        z = get_z_point(point);
+
+        fprintf(f, "%f %f %f\n", x, y, z);
+    }
+
+    return rc;
+}
+
+error_t write_count_to_file(FILE *f, const int n)
+{
+    error_t rc = OK;
+
+    if (f == NULL)
+    {
+        rc = NO_FILE;
     }
     else
     {
-        fprintf(f, "%d\n", model.n);
+       fprintf(f, "%d\n", n);
+    }
 
-        for (int i = 0; i < model.n && rc == OK; i++)
+    return rc;
+}
+
+
+error_t write_points_to_file(FILE *f, const pointarr_t &points)
+{
+    error_t rc = OK;
+
+    if (f == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else if (points.n < 1 || points.array == NULL)
+    {
+        rc = NO_POINTARR;
+    }
+    else
+    {
+        rc = write_count_to_file(f, points.n);
+
+        for (int i = 0; rc == OK && i < points.n; i++)
         {
-            point_t new_point = init_point();
-            point_t cur_point = model.points[i];
-
-            rc = transform_point(new_point, cur_point, model.transform_matrix);
-
-            double x = get_x_point(new_point),
-                        y = get_y_point(new_point),
-                            z = get_z_point(new_point);
-
-            fprintf(f, "%f %f %f\n", x, y, z);
+            rc = write_point_to_file(f, points.array[i]);
         }
     }
 
     return rc;
 }
 
-error_t write_lines_to_file(FILE *f, const model_t &model)
+error_t write_line_to_file(FILE *f, const line_t &line)
+{
+    error_t rc = OK;
+
+    if (f == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else
+    {
+        fprintf(f, "%d %d\n", line.point1, line.point2);
+    }
+
+    return rc;
+}
+
+
+error_t write_lines_to_file(FILE *f, const linearr_t &lines)
 {
     error_t rc = OK;
 
@@ -282,23 +431,19 @@ error_t write_lines_to_file(FILE *f, const model_t &model)
     {
         rc = NULL_POINTER;
     }
-    else if (model.n == 0)
+    else if (lines.n < 1 || lines.array == NULL)
     {
         rc = NO_MODEL;
     }
     else
     {
-        fprintf(f, "%d\n", model.m);
+        rc = write_count_to_file(f, lines.n);
 
-        for (int i = 0; i < model.m; i++)
+        for (int i = 0; rc == OK && i < lines.n; i++)
         {
-            line_t line = model.lines[i];
-
-            fprintf(f, "%d %d\n", line.point1, line.point2);
+            rc = write_line_to_file(f, lines.array[i]);
         }
     }
 
     return rc;
 }
-
-

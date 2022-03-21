@@ -1,5 +1,4 @@
 #include "../inc/controller.h"
-#include <stdio.h>
 
 error_t controller(scene_t scene, request_t &request)
 {

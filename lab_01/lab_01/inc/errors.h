@@ -1,6 +1,8 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
+const int dimension = 3;
+
 enum error_t
 {
     OK,
@@ -11,7 +13,9 @@ enum error_t
     NULL_POINTER,
     NO_FILE,
     UNKNOWN_COMMAND,
-    NO_MODEL
+    NO_MODEL,
+    NO_LINEARR,
+    NO_POINTARR
 };
 
 void print_error(error_t error);

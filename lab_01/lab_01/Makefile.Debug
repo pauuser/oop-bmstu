@@ -154,8 +154,8 @@ debug/moc_mainwindow.cpp: inc/mainwindow.h \
 		inc/errors.h \
 		inc/matrix.h \
 		inc/point.h \
-		inc/line.h \
 		inc/request.h \
+		inc/line.h \
 		inc/file_io.h \
 		inc/draw.h \
 		inc/projection.h \
@@ -191,9 +191,9 @@ debug/draw.o: src/draw.cpp inc/draw.h \
 		inc/errors.h \
 		inc/line.h \
 		inc/point.h \
+		inc/request.h \
 		inc/matrix.h \
 		inc/model.h \
-		inc/request.h \
 		inc/projection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/draw.o src/draw.cpp
 
@@ -203,15 +203,16 @@ debug/errors.o: src/errors.cpp inc/errors.h
 debug/file_io.o: src/file_io.cpp inc/file_io.h \
 		inc/point.h \
 		inc/errors.h \
-		inc/matrix.h \
+		inc/request.h \
 		inc/line.h \
-		inc/model.h \
-		inc/request.h
+		inc/matrix.h \
+		inc/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/file_io.o src/file_io.cpp
 
 debug/line.o: src/line.cpp inc/line.h \
 		inc/point.h \
 		inc/errors.h \
+		inc/request.h \
 		inc/matrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/line.o src/line.cpp
 
@@ -220,8 +221,8 @@ debug/main.o: src/main.cpp inc/mainwindow.h \
 		inc/errors.h \
 		inc/matrix.h \
 		inc/point.h \
-		inc/line.h \
 		inc/request.h \
+		inc/line.h \
 		inc/file_io.h \
 		inc/draw.h \
 		inc/projection.h \
@@ -233,8 +234,8 @@ debug/mainwindow.o: src/mainwindow.cpp inc/mainwindow.h \
 		inc/errors.h \
 		inc/matrix.h \
 		inc/point.h \
-		inc/line.h \
 		inc/request.h \
+		inc/line.h \
 		inc/file_io.h \
 		inc/draw.h \
 		inc/projection.h \
@@ -243,27 +244,31 @@ debug/mainwindow.o: src/mainwindow.cpp inc/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/mainwindow.o src/mainwindow.cpp
 
 debug/matrix.o: src/matrix.cpp inc/matrix.h \
-		inc/errors.h
+		inc/errors.h \
+		inc/point.h \
+		inc/request.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/matrix.o src/matrix.cpp
 
 debug/model.o: src/model.cpp inc/model.h \
 		inc/errors.h \
 		inc/matrix.h \
 		inc/point.h \
-		inc/line.h \
-		inc/request.h
+		inc/request.h \
+		inc/line.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/model.o src/model.cpp
 
 debug/point.o: src/point.cpp inc/point.h \
 		inc/errors.h \
-		inc/matrix.h
+		inc/request.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/point.o src/point.cpp
 
 debug/projection.o: src/projection.cpp inc/projection.h \
 		inc/point.h \
 		inc/errors.h \
+		inc/request.h \
+		inc/line.h \
 		inc/matrix.h \
-		inc/line.h
+		inc/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/projection.o src/projection.cpp
 
 debug/controller.o: src/controller.cpp inc/controller.h \
@@ -271,9 +276,9 @@ debug/controller.o: src/controller.cpp inc/controller.h \
 		inc/errors.h \
 		inc/line.h \
 		inc/point.h \
+		inc/request.h \
 		inc/matrix.h \
 		inc/model.h \
-		inc/request.h \
 		inc/projection.h \
 		inc/file_io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/controller.o src/controller.cpp
