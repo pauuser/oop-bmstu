@@ -95,7 +95,7 @@ error_t set_point(point_t &point, const double x, const double y, const double z
     return rc;
 }
 
-error_t allocate_points_mas(pointarr_t &points, const int n)
+error_t create_points_mas(pointarr_t &points, const int n)
 {
     error_t rc = OK;
 
@@ -114,6 +114,7 @@ error_t allocate_points_mas(pointarr_t &points, const int n)
         else
         {
             points.n = n;
+
             points.array = tmp;
         }
     }
@@ -127,16 +128,11 @@ error_t copy_pointarr(pointarr_t &dst, const pointarr_t &src)
 
     pointarr_t tmp = init_pointarr();
 
-    rc = allocate_points_mas(tmp, src.n);
+    rc = create_points_mas(tmp, get_pointarr_n(src));
 
     if (rc == OK)
     {
-        tmp.n = src.n;
-
-        for (int i = 0; i < src.n; i++)
-        {
-            tmp.array[i] = src.array[i];
-        }
+        rc = copy_elements_pointarr(tmp, src);
 
         dst = tmp;
     }
@@ -144,46 +140,15 @@ error_t copy_pointarr(pointarr_t &dst, const pointarr_t &src)
     return rc;
 }
 
-error_t calculate_center(point_t &res, const pointarr_t &points)
+error_t copy_elements_pointarr(pointarr_t &dst, const pointarr_t &src)
 {
     error_t rc = OK;
 
-    if (points.n < 1 || points.array == NULL)
+    dst.n = src.n;
+
+    for (int i = 0; i < src.n; i++)
     {
-        rc = NO_POINTARR;
-    }
-    else
-    {
-        rc = calc_avg_point_in_mas(res, points);
-    }
-
-    return rc;
-}
-
-error_t calc_avg_point_in_mas(point_t &point, const pointarr_t &points)
-{
-    error_t rc = OK;
-
-    if (points.n < 1 || points.array == NULL)
-    {
-        rc = NO_POINTARR;
-    }
-    else
-    {
-        double x_avg = 0, y_avg = 0, z_avg = 0;
-
-        for (int i = 0; i < points.n; i++)
-        {
-            x_avg += get_x_point(points.array[i]);
-            y_avg += get_y_point(points.array[i]);
-            z_avg += get_z_point(points.array[i]);
-        }
-
-        x_avg = x_avg / points.n;
-        y_avg = y_avg / points.n;
-        z_avg = z_avg / points.n;
-
-        rc = set_point(point, x_avg, y_avg, z_avg);
+        dst.array[i] = src.array[i];
     }
 
     return rc;
@@ -203,5 +168,11 @@ error_t move_point(point_t &point, const data_t &data)
 
     return rc;
 }
+
+int get_pointarr_n(const pointarr_t &points)
+{
+    return points.n;
+}
+
 
 

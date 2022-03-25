@@ -24,7 +24,22 @@ error_t project_points(pointarr_t &points)
     return rc;
 }
 
-error_t project_model(model_t &projected_model, const model_t &model)
+/*
+error_t project_model(model_t &temp_model)
+{
+    error_t rc = OK;
+
+    rc = project_points(temp_model.points);
+
+    if (rc == OK)
+    {
+        temp_model.transform_matrix = init_matrix();
+    }
+
+    return rc;
+}
+
+error_t project_transformed_model(model_t &projected_model, const model_t &model)
 {
     error_t rc = OK;
 
@@ -34,15 +49,18 @@ error_t project_model(model_t &projected_model, const model_t &model)
 
     if (rc == OK)
     {
-        rc = project_points(tmp_model.points);
+        rc = project_model(tmp_model);
 
-        if (rc == OK)
+        if (rc != OK)
         {
-            tmp_model.transform_matrix = init_matrix();
+            free_model(tmp_model);
+        }
+        else
+        {
             projected_model = tmp_model;
         }
     }
 
     return rc;
 }
-
+*/

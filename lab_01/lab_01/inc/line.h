@@ -35,8 +35,12 @@ error_t set_line(line_t &line, const int point1, const int point2);
 
 error_t transform_line(line_t &new_line, const line_t &line, const matrix_t &matrix);
 
-error_t allocate_lines_mas(linearr_t &lines, const int m);
+error_t create_lines_mas(linearr_t &lines, const int m);
 
 error_t copy_linearr(linearr_t &dst, const linearr_t &src);
+
+int get_linearr_n(const linearr_t &lines);
+
+error_t copy_elements_linearr(linearr_t &dst, const linearr_t &src);
 
 #endif // LINE_H

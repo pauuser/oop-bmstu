@@ -38,6 +38,8 @@ error_t read_lines(linearr_t &lines, FILE *stream);
 error_t add_lines_to_mas(linearr_t &lines, FILE *stream);
 
 
+error_t read_center(point_t &center, FILE *f);
+
 /*
 Функции для вывода в файл
 */

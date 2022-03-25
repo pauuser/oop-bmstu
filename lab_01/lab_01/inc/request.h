@@ -42,4 +42,8 @@ struct request_t
 
 request_t create_request(const event_t event, const double cx = 0, const double cy = 0, const double cz = 0, const char *f = "test.txt");
 
+data_t create_data(double cx, double cy, double cz);
+
+filename_t create_filename(const char *f);
+
 #endif // REQUEST_H

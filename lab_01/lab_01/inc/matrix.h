@@ -20,7 +20,7 @@ struct matrix_t
 
 matrix_t init_matrix();
 
-error_t multiply_row_by_column_matrix(double &res, const double *row, const matrix_t &matr, int j);
+error_t multiply_row_by_column_matrix(double &res, const matrix_t &mrow, const int row, const matrix_t &mcol, const int col);
 
 matrix_t create_scale_matrix(const data_t &data);
 
@@ -47,5 +47,9 @@ data_t create_move_from_center_data(const point_t &point);
 matrix_t create_rotate_with_center_matrix(const data_t &data, const point_t &center);
 
 matrix_t create_scale_with_center_matrix(const data_t &data, const point_t &center);
+
+error_t set_elem_matrix(matrix_t &mtr, const int i, const int j, const double val);
+
+error_t transform_points(pointarr_t &dst, const pointarr_t &src, const matrix_t transform_matrix);
 
 #endif // MATRIX_H

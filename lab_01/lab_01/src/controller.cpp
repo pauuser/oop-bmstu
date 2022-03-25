@@ -6,29 +6,27 @@ error_t controller(scene_t scene, request_t &request)
 
     static model_t model = init_model();
 
-    int req_type = request.event;
-
-    if (req_type == UPLOAD)
+    if (request.event == UPLOAD)
     {
         rc = input_model_from_file(model, request.filename);
     }
-    else if (req_type == MOVE)
+    else if (request.event == MOVE)
     {
         rc = move_model(model, request.data);
     }
-    else if (req_type == SCALE)
+    else if (request.event == SCALE)
     {
         rc = scale_model(model, request.data);
     }
-    else if (req_type == ROTATE)
+    else if (request.event == ROTATE)
     {
         rc = rotate_model(model, request.data);
     }
-    else if (req_type == SAVE)
+    else if (request.event == SAVE)
     {
         rc = upload_model_to_file(request.filename, model);
     }
-    else if (req_type == DRAW)
+    else if (request.event == DRAW)
     {
         rc = draw_model(scene, model);
     }

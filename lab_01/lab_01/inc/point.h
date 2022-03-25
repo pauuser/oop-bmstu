@@ -49,12 +49,16 @@ bool points_match(const point_t &point1, const point_t &point2);
 
 error_t copy_pointarr(pointarr_t &dst, const pointarr_t &src);
 
-error_t allocate_points_mas(pointarr_t &points, const int n);
+error_t create_points_mas(pointarr_t &points, const int n);
 
 error_t calc_avg_point_in_mas(point_t &point, const pointarr_t &points);
 
 error_t calculate_center(point_t &res, const pointarr_t &points);
 
 error_t move_point(point_t &point, const data_t &data);
+
+int get_pointarr_n(const pointarr_t &points);
+
+error_t copy_elements_pointarr(pointarr_t &dst, const pointarr_t &src);
 
 #endif // POINT_H

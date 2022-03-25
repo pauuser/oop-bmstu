@@ -37,24 +37,20 @@ error_t input_model_from_file(model_t &model, filename_t &data)
 
         rc = read_model(tmp_model, f);
 
+        fclose(f);
+
         if (rc == OK)
         {
             free_model(model);
 
             model = tmp_model;
         }
-        else
-        {
-            free_model(tmp_model);
-        }
-
-        fclose(f);
     }
 
     return rc;
 }
 
-error_t read_model(model_t &model, FILE *stream)
+error_t read_model(model_t &tmp_model, FILE *stream)
 {
     error_t rc = OK;
 
@@ -64,21 +60,28 @@ error_t read_model(model_t &model, FILE *stream)
     }
     else
     {
-        rc = read_points(model.points, stream);
+        rc = read_points(tmp_model.points, stream);
+    }
 
-        if (rc == OK)
-        {
-            rc = read_lines(model.lines, stream);
-
-            if (rc == OK)
-            {
-                rc = calculate_center(model.center, model.points);
-            }
-        }
+    if (rc == OK)
+    {
+        rc = read_lines(tmp_model.lines, stream);
 
         if (rc != OK)
         {
-            free_model(model);
+            free_pointarr(tmp_model.points);
+        }
+    }
+
+    if (rc == OK)
+    {
+        rc = read_center(tmp_model.center, stream);
+
+        if (rc != OK)
+        {
+            free_linearr(tmp_model.lines);
+
+            free_pointarr(tmp_model.points);
         }
     }
 
@@ -134,6 +137,22 @@ error_t read_point(point_t &point, FILE *stream)
     return rc;
 }
 
+error_t read_center(point_t &center, FILE *f)
+{
+    error_t rc = OK;
+
+    if (f == NULL)
+    {
+        rc = NO_FILE;
+    }
+    else
+    {
+        rc = read_point(center, f);
+    }
+
+    return rc;
+}
+
 error_t read_points(pointarr_t &points, FILE *stream)
 {
     error_t rc = OK;
@@ -144,15 +163,22 @@ error_t read_points(pointarr_t &points, FILE *stream)
     }
     else
     {
-        rc = read_points_count(points.n, stream);
+        int n = 0;
+
+        rc = read_points_count(n, stream);
 
         if (rc == OK)
         {
-            rc = allocate_points_mas(points, points.n);
+            rc = create_points_mas(points, n);
+        }
 
-            if (rc == OK)
+        if (rc == OK)
+        {
+            rc = add_points_to_mas(points, stream);
+
+            if (rc != OK)
             {
-                rc = add_points_to_mas(points, stream);
+                free_pointarr(points);
             }
         }
     }
@@ -248,14 +274,7 @@ error_t read_line(line_t &line, FILE *stream)
         }
         else
         {
-            line_t tmp = init_line();
-
-            rc = set_line(tmp, src, dest);
-
-            if (rc == OK)
-            {
-                line = tmp;
-            }
+            rc = set_line(line, src, dest);
         }
     }
 
@@ -273,15 +292,21 @@ error_t read_lines(linearr_t &lines, FILE *stream)
     }
     else
     {
-        rc = read_lines_count(lines.n, stream);
+        int m = 0;
+
+        rc = read_lines_count(m, stream);
 
         if (rc == OK)
         {
-            rc = allocate_lines_mas(lines, lines.n);
+            rc = create_lines_mas(lines, m);
+        }
+        if (rc == OK)
+        {
+            rc = add_lines_to_mas(lines, stream);
 
-            if (rc == OK)
+            if (rc != OK)
             {
-                rc = add_lines_to_mas(lines, stream);
+                free_linearr(lines);
             }
         }
     }
@@ -328,6 +353,8 @@ error_t upload_model_to_file(filename_t &data, const model_t &model)
     else if (model_exists(model.points, model.lines) == 0)
     {
         rc = NO_MODEL;
+
+        fclose(f);
     }
     else
     {

@@ -1,5 +1,4 @@
 #include "../inc/line.h"
-#include <stdio.h>
 
 line_t init_line()
 {
@@ -38,7 +37,7 @@ error_t set_line(line_t &line, const int point1, const int point2)
     return rc;
 }
 
-error_t allocate_lines_mas(linearr_t &lines, const int m)
+error_t create_lines_mas(linearr_t &lines, const int m)
 {
     error_t rc = OK;
 
@@ -70,16 +69,11 @@ error_t copy_linearr(linearr_t &dst, const linearr_t &src)
 
     linearr_t tmp = init_linearr();
 
-    rc = allocate_lines_mas(tmp, src.n);
+    rc = create_lines_mas(tmp, get_linearr_n(src));
 
     if (rc == OK)
     {
-        tmp.n = src.n;
-
-        for (int i = 0; i < tmp.n; i++)
-        {
-            tmp.array[i] = src.array[i];
-        }
+        rc = copy_elements_linearr(tmp, src);
 
         dst = tmp;
     }
@@ -87,3 +81,21 @@ error_t copy_linearr(linearr_t &dst, const linearr_t &src)
     return rc;
 }
 
+error_t copy_elements_linearr(linearr_t &dst, const linearr_t &src)
+{
+    error_t rc = OK;
+
+    dst.n = src.n;
+
+    for (int i = 0; i < dst.n; i++)
+    {
+        dst.array[i] = src.array[i];
+    }
+
+    return rc;
+}
+
+int get_linearr_n(const linearr_t &lines)
+{
+    return lines.n;
+}

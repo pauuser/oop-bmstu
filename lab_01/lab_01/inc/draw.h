@@ -22,5 +22,7 @@ void clear_scene(scene_t scene);
 
 error_t draw_lines(scene_t scene, const linearr_t &lines, const pointarr_t &points);
 
+error_t find_points(point_t &pt1, point_t &pt2, const pointarr_t &points, const line_t &edge);
+
 
 #endif // DRAW_H

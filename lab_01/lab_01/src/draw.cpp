@@ -36,15 +36,21 @@ error_t draw_model(scene_t scene, model_t &model)
     }
     else
     {
-        model_t projected_model = init_model();
-        rc = project_model(projected_model, model);
+        pointarr_t projected_points = init_pointarr();
+
+        rc = get_transformed_points(projected_points, model.points, model.transform_matrix);
+
+        if (rc == OK)
+        {
+            rc = project_points(projected_points);
+        }
 
         if (rc == OK)
         {
             clear_scene(scene);
-            rc = draw_lines(scene, projected_model.lines, projected_model.points);
-        }
 
+            rc = draw_lines(scene, model.lines, projected_points);
+        }
     }
 
     return rc;
@@ -56,13 +62,25 @@ error_t draw_lines(scene_t scene, const linearr_t &lines, const pointarr_t &poin
 
     for (int i = 0; rc == OK && i < lines.n; i++)
     {
-        line_t edge = lines.array[i];
+        point_t pt1, pt2;
 
-        point_t pt1 = points.array[edge.point1];
-        point_t pt2 = points.array[edge.point2];
+        rc = find_points(pt1, pt2, points, lines.array[i]);
 
-        rc = show_line_on_scene(scene, pt1, pt2);
+        if (rc == OK)
+        {
+            rc = show_line_on_scene(scene, pt1, pt2);
+        }
     }
+
+    return rc;
+}
+
+error_t find_points(point_t &pt1, point_t &pt2, const pointarr_t &points, const line_t &edge)
+{
+    error_t rc = OK;
+
+    pt1 = points.array[edge.point1];
+    pt2 = points.array[edge.point2];
 
     return rc;
 }
