@@ -14,10 +14,4 @@ error_t project_point(point_t &pout, const point_t &pin);
 
 error_t project_points(pointarr_t &points);
 
-/*
-error_t project_model(model_t &projected_model, const model_t &model);
-
-error_t project_transformed_model(model_t &projected_model, const model_t &model);
-*/
-
 #endif // PROJECTION_H

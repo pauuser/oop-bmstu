@@ -63,38 +63,6 @@ error_t create_lines_mas(linearr_t &lines, const int m)
     return rc;
 }
 
-error_t copy_linearr(linearr_t &dst, const linearr_t &src)
-{
-    error_t rc = OK;
-
-    linearr_t tmp = init_linearr();
-
-    rc = create_lines_mas(tmp, get_linearr_n(src));
-
-    if (rc == OK)
-    {
-        rc = copy_elements_linearr(tmp, src);
-
-        dst = tmp;
-    }
-
-    return rc;
-}
-
-error_t copy_elements_linearr(linearr_t &dst, const linearr_t &src)
-{
-    error_t rc = OK;
-
-    dst.n = src.n;
-
-    for (int i = 0; i < dst.n; i++)
-    {
-        dst.array[i] = src.array[i];
-    }
-
-    return rc;
-}
-
 int get_linearr_n(const linearr_t &lines)
 {
     return lines.n;

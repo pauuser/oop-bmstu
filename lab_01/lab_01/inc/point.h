@@ -51,10 +51,6 @@ error_t copy_pointarr(pointarr_t &dst, const pointarr_t &src);
 
 error_t create_points_mas(pointarr_t &points, const int n);
 
-error_t calc_avg_point_in_mas(point_t &point, const pointarr_t &points);
-
-error_t calculate_center(point_t &res, const pointarr_t &points);
-
 error_t move_point(point_t &point, const data_t &data);
 
 int get_pointarr_n(const pointarr_t &points);
