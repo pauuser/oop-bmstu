@@ -36,20 +36,20 @@ error_t draw_model(scene_t scene, model_t &model)
     }
     else
     {
-        pointarr_t projected_points = init_pointarr();
+        pointarr_t proj_points = init_pointarr();
 
-        rc = get_transformed_points(projected_points, model.points, model.transform_matrix);
+        rc = get_transformed_points(proj_points, model.points, model.transform_matrix);
 
         if (rc == OK)
         {
-            rc = project_points(projected_points);
+            rc = project_points(proj_points);
         }
 
         if (rc == OK)
         {
             clear_scene(scene);
 
-            rc = draw_lines(scene, model.lines, projected_points);
+            rc = draw_lines(scene, model.lines, proj_points);
         }
     }
 
@@ -79,8 +79,22 @@ error_t find_points(point_t &pt1, point_t &pt2, const pointarr_t &points, const 
 {
     error_t rc = OK;
 
-    pt1 = points.array[edge.point1];
-    pt2 = points.array[edge.point2];
+    int i1 = edge.point1;
+    int i2 = edge.point2;
+
+    if (i1 < 1 || i1 > points.n)
+    {
+        rc = IND_OUT_OF_RANGE;
+    }
+    else if (i2 < 1 || i2 > points.n)
+    {
+        rc = IND_OUT_OF_RANGE;
+    }
+    else
+    {
+        pt1 = points.array[edge.point1];
+        pt2 = points.array[edge.point2];
+    }
 
     return rc;
 }

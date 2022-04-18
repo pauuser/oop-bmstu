@@ -11,7 +11,8 @@ matrix_t init_matrix()
     return matr;
 }
 
-error_t multiply_row_by_column_matrix(double &res, const matrix_t &mrow, const int row, const matrix_t &mcol, const int col)
+error_t multiply_row_by_column_matrix(double &res, const matrix_t &mrow, const int row,
+                                                   const matrix_t &mcol, const int col)
 {
     error_t rc = OK;
 
