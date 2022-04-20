@@ -1,3 +1,7 @@
 #include "BaseMatrix.h"
 
-BaseMatrix::~BaseMatrix() {}
+BaseMatrix::~BaseMatrix()
+{
+	nrows = 0;
+	ncols = 0;
+}

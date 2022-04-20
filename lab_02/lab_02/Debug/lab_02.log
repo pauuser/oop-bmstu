@@ -1,4 +1,5 @@
-﻿  ConstIterator.cpp
-  Matrix.cpp
+﻿  Matrix.hpp
+  main.cpp
   Создание кода...
+     Создается библиотека C:\Users\Pavel Ivanov\labs\GitHub\oop-bmstu\lab_02\Debug\lab_02.lib и объект C:\Users\Pavel Ivanov\labs\GitHub\oop-bmstu\lab_02\Debug\lab_02.exp
   lab_02.vcxproj -> C:\Users\Pavel Ivanov\labs\GitHub\oop-bmstu\lab_02\Debug\lab_02.exe

@@ -1,7 +1,5 @@
-#include "Matrix.h"
 #include "Exceptions.h"
-
-#include <time.h>
+#include "Matrix.h"
 
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
@@ -14,15 +12,15 @@ SharedPtr<typename Matrix<T>::MatrixRow[]> Matrix<T>::_allocateMatrix(const size
 	try
 	{
 		data.reset(new MatrixRow[rows]);
-		for (int i = 0; i < rows; i++)
+		for (size_t i = 0; i < rows; i++)
 		{
-			data[i].reset(new T[cols]);
+			data[i].reset(new T[cols], cols);
 		}
 	}
-	catch (std::bad_alloc& err)
+	catch (std::bad_alloc&)
 	{
-		time_t curtime = time(NULL);
-		auto fmt_time = localtime(&curtime);
-		throw MemoryError(asctime(fmt_time), __FILE__, __LINE__, "_allocateMatrix failed.");
+		throw MemoryError(__FILE__, __LINE__, "_allocateMatrix failed.");
 	}
+
+	return data;
 }

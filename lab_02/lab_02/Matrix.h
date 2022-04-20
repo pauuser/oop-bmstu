@@ -5,6 +5,7 @@
 #include "BaseMatrix.h"
 #include "Iterator.h"
 #include "ConstIterator.h"
+#include "Exceptions.h"
 
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
@@ -18,12 +19,12 @@ public:
 	friend ConstIterator<T>;
 public:
 	// Конструкторы
-	explicit Matrix(size_t rows = 0, size_t cols = 0);
-	Matrix(size_t rows, size_t cols, T& fill_value);
+	Matrix() = default;
+	Matrix(size_t rows, size_t cols, const T& fill_value = {});
 	Matrix(std::initializer_list<std::initializer_list<T>> values);
 
 	// Копирование и перенос
-	explicit Matrix(const Matrix& matrix);
+	Matrix(const Matrix& matrix);
 	Matrix(Matrix&& matrix);
 
 	// Деструктор
@@ -35,9 +36,7 @@ public:
 	Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> values);
 
 	// Создание различных матриц
-	static Matrix<T>& OnesMatrix(size_t rows, size_t cols);
-	static Matrix<T>& ZerosMatrix(size_t rows, size_t cols);
-	static Matrix<T>& IdentityMatrix(size_t size);
+	Matrix<T>& DiagonalMatrix(const size_t size, const T& diag_val);
 
 	// Операторы равенства и неравенства
 	bool equals(const Matrix<T>& matrix) const;
@@ -46,11 +45,13 @@ public:
 	bool unequals(const Matrix<T>& matrix) const;
 	bool operator !=(const Matrix<T>& matrix) const;
 
+	explicit virtual operator bool() const;
+
 	// Перегрузка прочих операторов
-	Matrix<T>& operator +(const Matrix<T>& matrix) const;
-	Matrix<T>& operator -(const Matrix<T>& matrix) const;
-	Matrix<T>& operator *(const Matrix<T>& matrix) const;
-	Matrix<T>& operator /(const Matrix<T>& matrix) const;
+	Matrix<T> operator +(const Matrix<T>& matrix) const;
+	Matrix<T> operator -(const Matrix<T>& matrix) const;
+	Matrix<T> operator *(const Matrix<T>& matrix) const;
+	Matrix<T> operator /(const Matrix<T>& matrix) const;
 
 	Matrix<T>& addMatrix(const Matrix<T>& matrix);
 	Matrix<T>& mulMatrix(const Matrix<T>& matrix);
@@ -58,10 +59,10 @@ public:
 	Matrix<T>& subMatrix(const Matrix<T>& matrix);
 	Matrix<T>& dot(const Matrix<T>& matrix); // поэлементное умножение
 
-	Matrix<T>& operator +(const T& val) const;
-	Matrix<T>& operator -(const T& val) const;
-	Matrix<T>& operator *(const T& val) const;
-	Matrix<T>& operator /(const T& val) const;
+	Matrix<T> operator +(const T& val) const;
+	Matrix<T> operator -(const T& val) const;
+	Matrix<T> operator *(const T& val) const;
+	Matrix<T> operator /(const T& val) const;
 
 	Matrix<T>& addElem(const T& val);
 	Matrix<T>& subElem(const T& val);
@@ -117,33 +118,47 @@ private:
 	SharedPtr<MatrixRow[]> _allocateMatrix(const size_t rows, const size_t cols);
 	SharedPtr<MatrixRow[]> data;
 
+	bool _isMatrixIndValid(size_t ind) const;
+	bool _equalSize(const Matrix<T>& matr) const;
+	T _MultiplyRowByColumn(const Matrix<T>& matrix, const size_t row, const size_t col) const;
+	bool _CanMultiplyMatrices(const Matrix<T>& matr) const;
+
 public:
 	class MatrixRow
 	{
 	private:
-		size_t length;
-		SharedPtr<T[]> data;
+		size_t length = 0;
+		SharedPtr<T[]> data = nullptr;
 	public:
 		// Конструкторы
 		MatrixRow(): length(0), data(nullptr) {};
-		MatrixRow(std::initializer_list<T> values);
+		MatrixRow(std::initializer_list<T>);
+		explicit MatrixRow(const MatrixRow& row);
+		MatrixRow(MatrixRow&& row);
 
 		// Перегрузка операторов
 		T& operator[](const size_t index);
 		const T& operator[](const size_t index) const;
-		MatrixRow operator=(const MatrixRow& row);
-		MatrixRow operator=(MatrixRow&& row);
-		MatrixRow operator=(std::initializer_list<T> values);
+		MatrixRow& operator=(const MatrixRow& row);
+		MatrixRow& operator=(MatrixRow&& row);
+		MatrixRow& operator=(std::initializer_list<T> values);
 
-		MatrixRow fillValue(T& value);
+		void fillValue(T& value);
+		void reset();
+		void reset(T* newdata, size_t size);
 
-		size_t getLength();
+		size_t getLength() { return length; };
 
 		// Деструктор
 		~MatrixRow();
+	private:
+		SharedPtr<T[]> _allocateRow(size_t size);
+
+		bool _isIndexValid(const size_t index) const;
 	};
 
 };
 
-#include "Matrix.hpp"
+#include "PrivateMatrix.hpp"
+#include "MatrixRow.hpp"
 

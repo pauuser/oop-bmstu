@@ -3,6 +3,8 @@
 #include <iterator>
 #include <iostream>
 
+#include <vector>
+
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
 

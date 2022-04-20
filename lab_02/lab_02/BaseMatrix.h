@@ -8,17 +8,15 @@ public:
 	virtual ~BaseMatrix() = 0;
 
 	// Базовые методы абстрактного класса
-	virtual size_t getColumns() { return ncols; }
-	virtual size_t getRows() { return nrows; }
+	virtual size_t getColumns() const { return ncols; }
+	virtual size_t getRows() const { return nrows; }
 	virtual bool is_square() { return ncols == nrows; }
 
 	// Перегрузка оператора bool - проверка на инициализацию
-	explicit virtual operator bool() { return ncols && nrows; }
+	explicit virtual operator bool() const { return ncols && nrows; }
 
 protected:
 	size_t ncols;
 	size_t nrows;
 };
-
-#include "BaseMatrix.hpp"
 
