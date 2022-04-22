@@ -9,7 +9,7 @@
 */
 
 template <typename T>
-void print_matrix(typename Matrix<T> matr)
+void print_matrix(typename Matrix<T>& matr )
 {
 	if (matr.getRows() == 0 && matr.getColumns() == 0)
 	{
@@ -25,7 +25,7 @@ void print_matrix(typename Matrix<T> matr)
 		{
 			for (size_t j = 0; j < matr.getColumns(); j++)
 			{
-				std::cout << matr[i][j] << " ";
+				std::cout << matr[i][j] << "\t";
 			}
 			std::cout << std::endl;
 		}
@@ -36,7 +36,7 @@ int main()
 {
 	std::cout << "CONSTRUCTOR TEST" << std::endl;
 	std::cout << "Initialiser list:" << std::endl;
-	Matrix A = { {1, 2, 3}, { 4, 5, 1 } };
+	Matrix A = { {1, 2, 3}, { 4, 6, 1 } };
 	print_matrix(A);
 
 	std::cout << "Filler:" << std::endl;
@@ -160,5 +160,85 @@ int main()
 		std::cout << err.what() << std::endl;
 	}
 
-	return 0;
+	std::cout << "\nOPERATORS X=" << std::endl;
+	sum1 = { { 1, 2 }, { 3, 4 } };
+	sum2 = { { 1, 1 }, { 0, 1 } };
+
+	std::cout << "\n+" << std::endl;
+	sum1 += 5;
+	print_matrix(sum1);
+
+	std::cout << "\n-" << std::endl;
+	sum1 -= 5;
+	print_matrix(sum1);
+
+	std::cout << "\n*" << std::endl;
+	sum1 *= 5;
+	print_matrix(sum1);
+
+	std::cout << "\n/" << std::endl;
+	sum1 /= 5;
+	print_matrix(sum1);
+
+	std::cout << "\n+ matrix" << std::endl;
+	sum1 += sum2;
+	print_matrix(sum1);
+
+	std::cout << "\n- matrix" << std::endl;
+	sum1 -= sum2;
+	print_matrix(sum1);
+
+	std::cout << "\n* matrix" << std::endl;
+	sum1 *= sum2;
+	print_matrix(sum2);
+
+	std::cout << "\n/ matrix" << std::endl;
+	sum2 = { { 1, 1 }, { 2, 3 } };
+	sum1 /= sum2;
+	print_matrix(sum1);
+
+	std::cout << "\nDETERMINANT" << std::endl;
+	sum1 = { { 1, 2, 4 },
+			 { 3, 4, 5 },
+			 { 1, 0, 2 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum1);
+	std::cout << "Det = " << sum1.determinant() << std::endl;
+
+	sum1 = { { 1 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum1);
+	std::cout << "Det = " << sum1.determinant() << std::endl;
+
+	sum1 = { { 1, 1, 1 },
+			 { 1, 1, 1 },
+			 { 1, 1, 1 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum1);
+	std::cout << "Det = " << sum1.determinant() << std::endl;
+
+	sum1 = { { 1, 2, 4 },
+			 { 0, 4, 5 },
+			 { 0, 0, 0 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum1);
+	std::cout << "Det = " << sum1.determinant() << std::endl;
+
+	sum1 = { { 0, 2, 4 },
+			 { 4, 4, 0 },
+			 { 2, 0, 3 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum1);
+	std::cout << "Det = " << sum1.determinant() << std::endl;
+
+	Matrix<double> sum5 = { { 1.1, 2.3, 9.78, 3.92 },
+					{ 5.6, 4.2, 43.0, -123 },
+					{ 0.1, -4.3, +7., 4.444 },
+					{ -5.26, -15.9, -33, 0 } };
+	std::cout << "Matrix:" << std::endl;
+	print_matrix(sum5);
+	std::cout << "Det = " << sum5.determinant() << std::endl;
+
+	return 0 ;
+
 }

@@ -59,7 +59,7 @@ SharedPtr<T[]> Matrix<T>::MatrixRow::_allocateRow(size_t size)
 	{
 		data.reset(new T[size]);
 	}
-	catch (std::bad_alloc& err)
+	catch (std::bad_alloc&)
 	{
 		throw MemoryError(__FILE__, __LINE__, "_allocateMatrix failed.");
 	}
@@ -71,21 +71,22 @@ template <typename T>
 Matrix<T>::MatrixRow::MatrixRow(const Matrix<T>::MatrixRow& row)
 {
 	SharedPtr<T[]> newrow = _allocateRow(row.getLength());
-	this->length = row.getLength();
+	length = row.getLength();
 
 	for (size_t i = 0; i < this->length; i++)
 	{
 		newrow[i] = row[i];
 	}
 
-	this->data.reset(newrow);
+	data = newrow;
 }
 
 template <typename T>
 Matrix<T>::MatrixRow::MatrixRow(Matrix<T>::MatrixRow&& row)
 {
-	this->length = row.length;
-	this->data.reset(row.data);
+	length = row.length;
+	data = row.data;
+	row.data = nullptr;
 }
 
 template <typename T>
@@ -164,4 +165,84 @@ void Matrix<T>::MatrixRow::reset(T* newdata, size_t size)
 {
 	this->data.reset(newdata);
 	this->length = size;
+}
+
+template <typename T>
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const MatrixRow& row)
+{
+	if (_canAdd(row) == false)
+	{
+		throw SizeError(length, row.length, __FILE__, __LINE__, "Rows have different size!");
+	}
+
+	for (size_t i = 0; i < length; i++)
+	{
+		data[i] += row[i];
+	}
+
+	return *this;
+}
+
+template <typename T>
+bool Matrix<T>::MatrixRow::_canAdd(const MatrixRow& row) const
+{
+	bool ans = false;
+
+	if (row.length == length)
+	{
+		ans = true;
+	}
+
+	return ans;
+}
+
+template <typename T>
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const T& val)
+{
+	for (size_t i = 0; i < length; i++)
+	{
+		data[i] += val;
+	}
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator*=(const T& val)
+{
+	for (size_t i = 0; i < length; i++)
+	{
+		data[i] *= val;
+	}
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator-=(const Matrix<T>::MatrixRow& row)
+{
+	if (_canAdd(row) == false)
+	{
+		throw SizeError(length, row.length, __FILE__, __LINE__, "Rows have different size!");
+	}
+
+	for (size_t i = 0; i < length; i++)
+	{
+		data[i] -= row[i];
+	}
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator*(const T& val) const
+{
+	MatrixRow temp = *this;
+
+	for (size_t i = 0; i < temp.getLength(); i++)
+	{
+		temp[i] *= val;
+	}
+
+	return temp;
 }

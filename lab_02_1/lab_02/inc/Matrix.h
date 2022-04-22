@@ -24,7 +24,7 @@ public:
 	Matrix(std::initializer_list<std::initializer_list<T>> values);
 
 	//  опирование и перенос
-	Matrix(const Matrix& matrix);
+	explicit Matrix(const Matrix& matrix);
 	Matrix(Matrix&& matrix);
 
 	// ƒеструктор
@@ -85,21 +85,28 @@ public:
 	const MatrixRow& operator[](const size_t ind) const;
 
 	// —мена знака 
-	Matrix<T>& operator-();
+	Matrix<T> operator-() const;
 	Matrix<T>& neg();
 
 	Matrix<T>& abs(); // модуль
 
-	T& determinant(); // определитель
+	T determinant(); // определитель
 	void transpose(); // транспонирование
-	void rotate(); // поворот на 90 градусов вправо
+	void horizontal_mirror(); // отражение по горизонтали
+	void vertical_mirror(); // отражение по вертикали
+	void rotate_right(); // поворот на 90 градусов вправо
+	void rotate_left(); // поворот на 90 градусов влево
+
 	void inverse(); // обратна€ матрица
 
-	void insertRow(const size_t ind, const T& fill_value);
-	void insertCol(const size_t ind, const T& fill_value);
+	void insertRow(const size_t after_ind, const T& fill_value = {});
+	void insertCol(const size_t after_ind, const T& fill_value = {});
 	void deleteRow(const size_t ind);
 	void deleteCol(const size_t ind);
-	void resize(const size_t new_row, const size_t new_col, const T& fill_value);
+
+	void resize(const size_t new_row, const size_t new_col, const T& fill_value = {});
+	void resizeColumns(const size_t new_col, const T& fill_value = {});
+	void resizeRows(const size_t new_row, const T& fill_value = {});
 
 	// ‘ункции итератора
 	Iterator<T> begin();
@@ -122,6 +129,7 @@ private:
 	bool _equalSize(const Matrix<T>& matr) const;
 	T _MultiplyRowByColumn(const Matrix<T>& matrix, const size_t row, const size_t col) const;
 	bool _CanMultiplyMatrices(const Matrix<T>& matr) const;
+	Matrix<T> _excludeRowAndColumn(size_t i, size_t j);
 
 public:
 	class MatrixRow
@@ -133,7 +141,7 @@ public:
 		//  онструкторы
 		MatrixRow(): length(0), data(nullptr) {};
 		MatrixRow(std::initializer_list<T>);
-		explicit MatrixRow(const MatrixRow& row);
+		MatrixRow(const MatrixRow& row);
 		MatrixRow(MatrixRow&& row);
 
 		// ѕерегрузка операторов
@@ -142,12 +150,17 @@ public:
 		MatrixRow& operator=(const MatrixRow& row);
 		MatrixRow& operator=(MatrixRow&& row);
 		MatrixRow& operator=(std::initializer_list<T> values);
+		MatrixRow& operator+=(const MatrixRow& row);
+		MatrixRow& operator*=(const T&val);
+		MatrixRow operator*(const T& val) const;
+		MatrixRow& operator+=(const T& val);
+		MatrixRow& operator-=(const MatrixRow& row);
 
 		void fillValue(T& value);
 		void reset();
 		void reset(T* newdata, size_t size);
 
-		size_t getLength() { return length; };
+		size_t getLength() const { return length; };
 
 		// ƒеструктор
 		~MatrixRow();
@@ -155,6 +168,7 @@ public:
 		SharedPtr<T[]> _allocateRow(size_t size);
 
 		bool _isIndexValid(const size_t index) const;
+		bool _canAdd(const MatrixRow& row) const;
 	};
 
 };

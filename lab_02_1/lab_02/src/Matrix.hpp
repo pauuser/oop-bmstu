@@ -591,3 +591,380 @@ Matrix<T>& Matrix<T>::divElem(const T& val)
 
 	return *this;
 }
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator +=(const T& val)
+{
+	*this = operator+(val);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator -=(const T& val)
+{
+	*this = operator-(val);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator *=(const T& val)
+{
+	*this = operator+(val);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator /=(const T& val)
+{
+	*this = operator/(val);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator +=(const Matrix<T>& matrix)
+{
+	*this = operator+(matrix);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator -=(const Matrix<T>& matrix)
+{
+	*this = operator-(matrix);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator *=(const Matrix<T>& matrix)
+{
+	*this = operator*(matrix);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator /=(const Matrix<T>& matrix)
+{
+	*this = operator/(matrix);
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T> Matrix<T>::operator-() const
+{
+	Matrix<T> tmp(nrows, ncols);
+	for (size_t i = 0; i < nrows; i++)
+	{
+		for (size_t j = 0; j < ncols; j++)
+		{
+			data[i][j] = -data[i][j];
+		}
+	}
+
+	return tmp;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::neg()
+{
+	*this = operator-();
+
+	return *this;
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::abs()
+{
+	for (size_t i = 0; i < nrows; i++)
+	{
+		for (size_t j = 0; j < ncols; j++)
+		{
+			data[i][j] = abs(data[i][j]);
+		}
+	}
+}
+
+template <typename T>
+T Matrix<T>::determinant()
+{
+	if (is_square() == false)
+	{
+		throw SizeError(nrows, ncols, __FILE__, __LINE__);
+	}
+
+	T det = 1;
+	T bottom = 1;
+
+	for (size_t i = 0; i < nrows; i++)
+	{
+		size_t k = i + 1;
+		while (data[i][i] == 0 && k < nrows)
+		{
+			data[i] += data[k];
+			k++;
+		}
+
+		for (size_t j = i + 1; j < nrows; j++)
+		{
+			if (data[i][i] != 0)
+			{
+				data[j] *= data[i][i];
+				bottom *= data[i][i];
+
+				T diff = data[j][i] / data[i][i];
+				data[j] -= (data[i] * diff);
+			}
+		}
+	}
+
+	for (size_t i = 0; i < nrows; i++)
+	{
+		det *= data[i][i];
+	}
+
+	det /= bottom;
+
+	return det;
+}
+
+template <typename T>
+void Matrix<T>::transpose()
+{
+	size_t maxsize = 0, rescol = nrows, resrow = ncols;
+	(nrows > ncols) ? maxsize = nrows : ncols;
+	
+	this->resize(maxsize, maxsize);
+
+	for (int i = 0; i < nrows; i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			T tmp = data[i][j];
+			data[i][j] = data[j][i];
+			data[j][i] = tmp;
+		}
+	}
+
+	this->resize(resrow, resrow);
+}
+
+template <typename T>
+void Matrix<T>::resize(const size_t new_row, const size_t new_col, const T& fill_value)
+{
+	if (new_row < 1 || new_col < 1)
+	{
+		throw SizeError(new_row, new_col, __FILE__, __LINE__);
+	}
+
+	auto new_data = _allocateMatrix(new_row, new_col);
+
+	for (size_t i = 0; i < new_row; i++)
+	{
+		for (size_t j = 0; j < new_col; j++)
+		{
+			((i < nrows) && (j < ncols)) ? new_data[i][j] = data[i][j] :
+										   new_data[i][j] = fill_value;
+		}
+	}
+
+	data = new_data;
+	new_data = nullptr;
+
+	nrows = new_row;
+	ncols = new_col;
+}
+
+template <typename T>
+void Matrix<T>::horizontal_mirror()
+{
+	for (size_t i = 0; i < nrows; i++)
+	{
+		for (size_t j = 0; j < ncols / 2; j++)
+		{
+			T tmp = data[i][j];
+			data[i][j] = data[i][ncols - 1 - j];
+			data[i][ncols - 1 - j] = tmp;
+		}
+	}
+}
+
+template <typename T>
+void Matrix<T>::vertical_mirror()
+{
+	for (size_t i = 0; i < ncols; i++)
+	{
+		for (size_t j = 0; j < nrows / 2; j++)
+		{
+			T tmp = data[j][i];
+			data[j][i] = data[j][nrows - 1 - i];
+			data[j][nrows - 1 - i] = tmp;
+		}
+	}
+}
+
+template <typename T>
+void Matrix<T>::rotate_right()
+{
+	this->transpose();
+	this->vertical_mirror();
+}
+
+template <typename T>
+void Matrix<T>::rotate_left()
+{
+	this->transpose();
+	this->horizontal_mirror();
+}
+
+template <typename T>
+void Matrix<T>::resizeColumns(const size_t new_col, const T& fill_value)
+{
+	this->resize(nrows, new_col, fill_value);
+}
+
+template <typename T>
+void Matrix<T>::resizeRows(const size_t new_row, const T& fill_value)
+{
+	this->resize(new_row, nrows, fill_value);
+}
+
+template <typename T>
+void Matrix<T>::insertRow(const size_t after_ind, const T& fill_value)
+{
+	if (after_ind >= nrows)
+	{
+		throw IndexOutOfRange(after_ind, __FILE__, __LINE__, "Can't insert!");
+	}
+
+	this->resize(nrows + 1, ncols, fill_value);
+
+	for (size_t i = nrows - 1; i > after_ind + 1; i--)
+	{
+		for (size_t j = 0; j < ncols; j++)
+		{
+			T tmp = data[i][j];
+			data[i][j] = data[i - 1][j];
+			data[i - 1][j] = tmp;
+		}
+	}
+}
+
+template <typename T>
+void Matrix<T>::insertCol(const size_t after_ind, const T& fill_value)
+{
+	if (after_ind >= ncols)
+	{
+		throw IndexOutOfRange(after_ind, __FILE__, __LINE__, "Can't insert!");
+	}
+
+	this->resize(nrows, ncols + 1, fill_value);
+
+	for (size_t i = ncols - 1; i > after_ind + 1; i--)
+	{
+		for (size_t j = 0; j < nrows; j++)
+		{
+			T tmp = data[j][i];
+			data[j][i] = data[j][i - 1];
+			data[j][i - 1] = tmp;
+		}
+	}
+}
+
+template <typename T>
+void Matrix<T>::deleteRow(const size_t ind)
+{
+	if (ind >= nrows)
+	{
+		throw IndexOutOfRange(ind, __FILE__, __LINE__, "Can't delete!");
+	}
+
+	for (size_t i = nrows - 1; i > ind; i--)
+	{
+		for (size_t j = 0; j < ncols; j++)
+		{
+			T tmp = data[i][j];
+			data[i][j] = data[i - 1][j];
+			data[i - 1][j] = tmp;
+		}
+	}
+
+	this->resize(nrows - 1, ncols);
+}
+
+template <typename T>
+void Matrix<T>::deleteCol(const size_t ind)
+{
+	if (ind >= ncols)
+	{
+		throw IndexOutOfRange(ind, __FILE__, __LINE__, "Can't delete!");
+	}
+
+	for (size_t i = ncols - 1; i > ind; i--)
+	{
+		for (size_t j = 0; j < nrows; j++)
+		{
+			T tmp = data[j][i];
+			data[j][i] = data[j][i - 1];
+			data[j][i - 1] = tmp;
+		}
+	}
+
+	this->resize(nrows, ncols - 1);
+}
+
+template <typename T>
+Matrix<T> Matrix<T>::_excludeRowAndColumn(size_t i, size_t j)
+{
+	Matrix<T> copy = Matrix(*this);
+
+	copy.deleteCol(j);
+	copy.deleteRow(i);
+
+	return copy;
+}
+
+template <typename T>
+void Matrix<T>::inverse()
+{
+	if (!is_square())
+	{
+		throw SizeError(nrows, ncols, __FILE__, __LINE__);
+	}
+
+	T det = determinant();
+
+	if (det == 0)
+	{
+		throw SingularMatrixError(__FILE__, __LINE__);
+	}
+
+	Matrix<T> res(nrows, ncols);
+	Matrix<T> tmp(nrows - 1, ncols - 1);
+
+	for (int i = 0; i < nrows; i++)
+	{
+		for (int j = 0; i < ncols; j++)
+		{
+			tmp._excludeRowAndColumn(i, j);
+			T minor = tmp.determinant();
+			if ((i + j) % 2 == 0)
+			{
+				res[j][i] = minor / det;
+			}
+			else
+			{
+				res[j][i] = -minor / det;
+			}
+			tmp = res;
+		}
+	}
+
+	*this = res;
+}

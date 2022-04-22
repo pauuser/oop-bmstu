@@ -111,3 +111,20 @@ public:
 	}
 };
 
+class SingularMatrixError : public MatrixException
+{
+public:
+	SingularMatrixError(const std::string filename,
+		const size_t line, const std::string inf = "") :
+		MatrixException(filename, line, "Determinant equals zero! " + inf)
+	{
+	}
+
+	virtual ~SingularMatrixError() {}; // виртуальность для возможности подмены
+
+	virtual char const* what() const noexcept
+	{
+		return errinfo.c_str();
+	}
+};
+
