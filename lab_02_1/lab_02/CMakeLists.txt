@@ -22,6 +22,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_compile_definitions(
+    _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+)
+
+
 #########
 #  SRC  #
 #########
@@ -31,7 +36,7 @@ set(SRC
         ${SRC_DOMAIN}/BaseMatrix.hpp
         ${SRC_DOMAIN}/ConstIterator.hpp
         ${SRC_DOMAIN}/Iterator.hpp
-        ${SRC_DOMAIN}/Exceptions.hpp
+        
         ${SRC_DOMAIN}/BaseMatrix.hpp
         ${SRC_DOMAIN}/Matrix.hpp
         ${SRC_DOMAIN}/PrivateMatrix.hpp)

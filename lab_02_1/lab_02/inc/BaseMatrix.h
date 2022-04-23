@@ -10,7 +10,7 @@ public:
 	// Базовые методы абстрактного класса
 	virtual size_t getColumns() const { return ncols; }
 	virtual size_t getRows() const { return nrows; }
-	virtual bool is_square() { return ncols == nrows; }
+	virtual bool isSquare() const { return ncols == nrows; }
 
 	// Перегрузка оператора bool - проверка на инициализацию
 	explicit virtual operator bool() const { return ncols && nrows; }

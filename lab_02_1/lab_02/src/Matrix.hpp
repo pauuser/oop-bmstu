@@ -79,7 +79,6 @@ template <typename T>
 Matrix<T>::Matrix(Matrix<T>&& matrix) : BaseMatrix(matrix.getRows(), matrix.getColumns())
 {
 	this->data = matrix.data;
-	matrix.data = nullptr;
 }
 
 /*
@@ -91,11 +90,13 @@ Matrix<T>::~Matrix()
 {
 	if (bool(*this))
 	{
-		for (size_t i = 0; i < nrows; i++)
+		if (data.use_count() == 1)
 		{
-			data[i].reset();
+			_cleanRows();
 		}
+
 		data.reset();
+
 		nrows = 0;
 		ncols = 0;
 	}
@@ -128,7 +129,6 @@ Matrix<T>& Matrix<T>::operator =(Matrix<T>&& matrix)
 	nrows = matrix.getRows();
 	ncols = matrix.getColumns();
 	this->data = matrix.data;
-	matrix.data = nullptr;
 
 	return *this;
 }
@@ -282,35 +282,9 @@ const typename Matrix<T>::MatrixRow& Matrix<T>::operator[](const size_t ind) con
 }
 
 template <typename T>
-bool Matrix<T>::_isMatrixIndValid(size_t ind) const
-{
-	bool ans = true;
-
-	if (ind < 0 || ind >= nrows)
-	{
-		ans = false;
-	}
-
-	return ans;
-}
-
-template <typename T>
 Matrix<T>::operator bool() const
 {
 	return nrows && ncols && (data != nullptr);
-}
-
-template <typename T>
-bool Matrix<T>::_equalSize(const Matrix<T>& matr) const
-{
-	bool ans = false;
-
-	if (this->getColumns() == matr.getColumns() && this->getRows() == matr.getRows())
-	{
-		ans = true;
-	}
-
-	return ans;
 }
 
 /*
@@ -411,31 +385,6 @@ Matrix<T>& Matrix<T>::divMatrix(const Matrix<T>& matrix)
 	*this = operator/(matrix);
 
 	return *this;
-}
-
-template <typename T>
-T Matrix<T>::_MultiplyRowByColumn(const Matrix<T>& matrix, const size_t row, const size_t col) const
-{
-	T ans = {};
-	for (size_t i = 0; i < matrix.getRows(); i++)
-	{
-		ans += (*this)[row][i] * matrix[i][col];
-	}
-
-	return ans;
-}
-
-template <typename T>
-bool Matrix<T>::_CanMultiplyMatrices(const Matrix<T>& matr) const
-{
-	bool ans = false;
-
-	if (this->getColumns() == matr.getRows())
-	{
-		ans = true;
-	}
-
-	return ans;
 }
 
 template <typename T>
@@ -692,9 +641,9 @@ Matrix<T>& Matrix<T>::abs()
 }
 
 template <typename T>
-T Matrix<T>::determinant()
+T Matrix<T>::determinant() const
 {
-	if (is_square() == false)
+	if (isSquare() == false)
 	{
 		throw SizeError(nrows, ncols, __FILE__, __LINE__);
 	}
@@ -702,31 +651,33 @@ T Matrix<T>::determinant()
 	T det = 1;
 	T bottom = 1;
 
+	Matrix copy = Matrix(*this);
+
 	for (size_t i = 0; i < nrows; i++)
 	{
 		size_t k = i + 1;
 		while (data[i][i] == 0 && k < nrows)
 		{
-			data[i] += data[k];
+			copy[i] += copy[k];
 			k++;
 		}
 
 		for (size_t j = i + 1; j < nrows; j++)
 		{
-			if (data[i][i] != 0)
+			if (copy[i][i] != 0)
 			{
-				data[j] *= data[i][i];
-				bottom *= data[i][i];
+				copy[j] *= copy[i][i];
+				bottom *= copy[i][i];
 
-				T diff = data[j][i] / data[i][i];
-				data[j] -= (data[i] * diff);
+				T diff = copy[j][i] / copy[i][i];
+				copy[j] -= (copy[i] * diff);
 			}
 		}
 	}
 
 	for (size_t i = 0; i < nrows; i++)
 	{
-		det *= data[i][i];
+		det *= copy[i][i];
 	}
 
 	det /= bottom;
@@ -738,7 +689,7 @@ template <typename T>
 void Matrix<T>::transpose()
 {
 	size_t maxsize = 0, rescol = nrows, resrow = ncols;
-	(nrows > ncols) ? maxsize = nrows : ncols;
+	(nrows > ncols) ? maxsize = nrows : maxsize = ncols;
 	
 	this->resize(maxsize, maxsize);
 
@@ -752,7 +703,7 @@ void Matrix<T>::transpose()
 		}
 	}
 
-	this->resize(resrow, resrow);
+	this->resize(resrow, rescol);
 }
 
 template <typename T>
@@ -782,7 +733,7 @@ void Matrix<T>::resize(const size_t new_row, const size_t new_col, const T& fill
 }
 
 template <typename T>
-void Matrix<T>::horizontal_mirror()
+void Matrix<T>::vertical_mirror()
 {
 	for (size_t i = 0; i < nrows; i++)
 	{
@@ -796,15 +747,15 @@ void Matrix<T>::horizontal_mirror()
 }
 
 template <typename T>
-void Matrix<T>::vertical_mirror()
+void Matrix<T>::horizontal_mirror()
 {
 	for (size_t i = 0; i < ncols; i++)
 	{
 		for (size_t j = 0; j < nrows / 2; j++)
 		{
 			T tmp = data[j][i];
-			data[j][i] = data[j][nrows - 1 - i];
-			data[j][nrows - 1 - i] = tmp;
+			data[j][i] = data[nrows - 1 - j][i];
+			data[nrows - 1 - j][i] = tmp;
 		}
 	}
 }
@@ -832,20 +783,32 @@ void Matrix<T>::resizeColumns(const size_t new_col, const T& fill_value)
 template <typename T>
 void Matrix<T>::resizeRows(const size_t new_row, const T& fill_value)
 {
-	this->resize(new_row, nrows, fill_value);
+	this->resize(new_row, ncols, fill_value);
+}
+
+template<typename T>
+Iterator<T> Matrix<T>::begin()
+{
+	return Iterator<T>(*this, 0, 0);
+}
+
+template<typename T>
+Iterator<T> Matrix<T>::end()
+{
+	return Iterator<T>(*this, nrows - 1, ncols - 1) + 1;
 }
 
 template <typename T>
-void Matrix<T>::insertRow(const size_t after_ind, const T& fill_value)
+void Matrix<T>::insertRow(const size_t before_ind, const T& fill_value)
 {
-	if (after_ind >= nrows)
+	if (before_ind > nrows)
 	{
-		throw IndexOutOfRange(after_ind, __FILE__, __LINE__, "Can't insert!");
+		throw IndexOutOfRange(before_ind, __FILE__, __LINE__, "Can't insert!");
 	}
 
 	this->resize(nrows + 1, ncols, fill_value);
 
-	for (size_t i = nrows - 1; i > after_ind + 1; i--)
+	for (size_t i = nrows - 1; i > before_ind; i--)
 	{
 		for (size_t j = 0; j < ncols; j++)
 		{
@@ -857,16 +820,16 @@ void Matrix<T>::insertRow(const size_t after_ind, const T& fill_value)
 }
 
 template <typename T>
-void Matrix<T>::insertCol(const size_t after_ind, const T& fill_value)
+void Matrix<T>::insertCol(const size_t before_ind, const T& fill_value)
 {
-	if (after_ind >= ncols)
+	if (before_ind > ncols)
 	{
-		throw IndexOutOfRange(after_ind, __FILE__, __LINE__, "Can't insert!");
+		throw IndexOutOfRange(before_ind, __FILE__, __LINE__, "Can't insert!");
 	}
 
 	this->resize(nrows, ncols + 1, fill_value);
 
-	for (size_t i = ncols - 1; i > after_ind + 1; i--)
+	for (size_t i = ncols - 1; i > before_ind; i--)
 	{
 		for (size_t j = 0; j < nrows; j++)
 		{
@@ -885,13 +848,18 @@ void Matrix<T>::deleteRow(const size_t ind)
 		throw IndexOutOfRange(ind, __FILE__, __LINE__, "Can't delete!");
 	}
 
-	for (size_t i = nrows - 1; i > ind; i--)
+	if (nrows == 1)
+	{
+		throw SizeError(nrows, ncols, __FILE__, __LINE__, "Too small matrix!");
+	}
+
+	for (size_t i = ind; i < nrows - 1; i++)
 	{
 		for (size_t j = 0; j < ncols; j++)
 		{
 			T tmp = data[i][j];
-			data[i][j] = data[i - 1][j];
-			data[i - 1][j] = tmp;
+			data[i][j] = data[i + 1][j];
+			data[i + 1][j] = tmp;
 		}
 	}
 
@@ -906,13 +874,18 @@ void Matrix<T>::deleteCol(const size_t ind)
 		throw IndexOutOfRange(ind, __FILE__, __LINE__, "Can't delete!");
 	}
 
-	for (size_t i = ncols - 1; i > ind; i--)
+	if (ncols == 1)
+	{
+		throw SizeError(nrows, ncols, __FILE__, __LINE__, "Too small matrix!");
+	}
+
+	for (size_t i = ind; i < ncols - 1; i++)
 	{
 		for (size_t j = 0; j < nrows; j++)
 		{
 			T tmp = data[j][i];
-			data[j][i] = data[j][i - 1];
-			data[j][i - 1] = tmp;
+			data[j][i] = data[j][i + 1];
+			data[j][i + 1] = tmp;
 		}
 	}
 
@@ -920,40 +893,30 @@ void Matrix<T>::deleteCol(const size_t ind)
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::_excludeRowAndColumn(size_t i, size_t j)
-{
-	Matrix<T> copy = Matrix(*this);
-
-	copy.deleteCol(j);
-	copy.deleteRow(i);
-
-	return copy;
-}
-
-template <typename T>
 void Matrix<T>::inverse()
 {
-	if (!is_square())
+	if (!isSquare() || (isSquare() && nrows == 1))
 	{
-		throw SizeError(nrows, ncols, __FILE__, __LINE__);
+		throw SizeError(nrows, ncols, __FILE__, __LINE__, "Can't inverse!");
 	}
 
 	T det = determinant();
 
 	if (det == 0)
 	{
-		throw SingularMatrixError(__FILE__, __LINE__);
+		throw SingularMatrixError(__FILE__, __LINE__, "Can't inverse!");
 	}
 
 	Matrix<T> res(nrows, ncols);
-	Matrix<T> tmp(nrows - 1, ncols - 1);
+	Matrix tmp = Matrix(*this);
 
-	for (int i = 0; i < nrows; i++)
+	for (size_t i = 0; i < nrows; i++)
 	{
-		for (int j = 0; i < ncols; j++)
+		for (size_t j = 0; j < ncols; j++)
 		{
 			tmp._excludeRowAndColumn(i, j);
 			T minor = tmp.determinant();
+
 			if ((i + j) % 2 == 0)
 			{
 				res[j][i] = minor / det;
@@ -962,9 +925,42 @@ void Matrix<T>::inverse()
 			{
 				res[j][i] = -minor / det;
 			}
-			tmp = res;
+			tmp = Matrix(*this);
 		}
 	}
 
 	*this = res;
+}
+
+template<typename T>
+ConstIterator<T> Matrix<T>::begin() const
+{
+	return ConstIterator<T>(*this, 0, 0);
+}
+
+template<typename T>
+ConstIterator<T> Matrix<T>::end() const
+{
+	return ConstIterator<T>(*this, nrows - 1, ncols - 1) + 1;
+}
+
+template<typename T>
+ConstIterator<T> Matrix<T>::cbegin() const
+{
+	return ConstIterator<T>(*this, 0, 0);
+}
+
+template<typename T>
+ConstIterator<T> Matrix<T>::cend() const
+{
+	return ConstIterator<T>(*this, nrows - 1, ncols - 1) + 1;
+}
+
+template<typename T>
+void Matrix<T>::fill(Iterator<T>& start, const Iterator<T>& end, T& fill_value)
+{
+	for (Iterator<T> it = start; it < end; it++)
+	{
+		*it = fill_value;
+	}
 }

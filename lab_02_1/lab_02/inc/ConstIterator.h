@@ -3,8 +3,6 @@
 #include <iterator>
 #include <iostream>
 
-#include <vector>
-
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
 
@@ -15,18 +13,22 @@ template <typename T>
 class Matrix;
 
 template <typename T>
-class ConstIterator
+class ConstIterator : public std::iterator<std::random_access_iterator_tag, T>
 {
 public:
 	// Конструктор
-	ConstIterator(Matrix<T> matrix, size_t i, size_t j) : nrow(matrix.nrows), ncol(matrix.ncols),
+	ConstIterator(const Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : nrow(matrix.nrows), ncol(matrix.ncols),
 		index(i* matrix.ncols + j), data(matrix.data) {}
 
 	// Конструктор копирования
 	ConstIterator(const ConstIterator& It) = default;
 
+	/*
+	* Сделать что-то с обработкой ошибок
+	*/
 	const T* operator->() const;
 	const T& operator*() const;
+
 	operator bool() const;
 
 	ConstIterator<T>& operator++();
@@ -35,18 +37,32 @@ public:
 	ConstIterator<T>& operator--();
 	ConstIterator<T> operator--(int);
 
-	const T& operator[](const size_t ind) const;
-	ConstIterator<T>& operator+=(ConstIterator<T>& iterator);
-	ConstIterator<T>& operator-=(ConstIterator<T>& iterator);
-	ConstIterator<T>& operator+(ConstIterator<T>& iterator) const;
-	ConstIterator<T>& operator-(ConstIterator<T>& iterator) const;
+	const T& operator[](const int ind) const;
+	ConstIterator<T>& operator=(const ConstIterator<T>& it);
 
-	bool operator!=(ConstIterator<T>& iterator) const;
-	bool operator==(ConstIterator<T>& iterator) const;
-	bool operator<(ConstIterator<T>& iterator) const;
-	bool operator<=(ConstIterator<T>& iterator) const;
-	bool operator>(ConstIterator<T>& iterator) const;
-	bool operator>=(ConstIterator<T>& iterator) const;
+	ConstIterator<T>& operator+=(const ConstIterator<T>& iterator);
+	ConstIterator<T>& operator-=(const ConstIterator<T>& iterator);
+	ConstIterator<T> operator+(const ConstIterator<T>& iterator) const;
+	ConstIterator<T> operator-(const ConstIterator<T>& iterator) const;
+
+	ConstIterator<T>& operator+=(const int value);
+	ConstIterator<T>& operator-=(const int value);
+	ConstIterator<T> operator+(const int value) const;
+	ConstIterator<T> operator-(const int value) const;
+
+	bool operator!=(const ConstIterator<T>& iterator) const;
+	bool operator==(const ConstIterator<T>& iterator) const;
+	bool operator <(const ConstIterator<T>& iterator) const;
+	bool operator<=(const ConstIterator<T>& iterator) const;
+	bool operator >(const ConstIterator<T>& iterator) const;
+	bool operator>=(const ConstIterator<T>& iterator) const;
+
+	const T& value() const;
+
+	ConstIterator<T>& next();
+
+	bool isEnd() const;
+	bool isStart() const;
 
 private:
 	size_t nrow;
@@ -54,5 +70,9 @@ private:
 	size_t index;
 
 	WeakPtr<typename Matrix<T>::MatrixRow[]> data;
+
+	bool _isIndexValid() const;
+	bool _isExpired() const;
+	void _checkIterValid(std::string filename, int line, std::string inf = "") const;
 };
 
