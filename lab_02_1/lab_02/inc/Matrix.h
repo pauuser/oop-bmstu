@@ -141,7 +141,7 @@ public:
 		MatrixRow& operator=(const MatrixRow& row);
 		MatrixRow& operator=(MatrixRow&& row);
 		MatrixRow& operator=(std::initializer_list<T> values);
-
+		
 		MatrixRow& operator+=(const MatrixRow& row);
 		MatrixRow& operator-=(const MatrixRow& row);
 
