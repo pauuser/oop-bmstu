@@ -33,13 +33,11 @@ add_compile_definitions(
 
 set(SRC_DOMAIN src/)
 set(SRC
-        ${SRC_DOMAIN}/BaseMatrix.hpp
         ${SRC_DOMAIN}/ConstIterator.hpp
         ${SRC_DOMAIN}/Iterator.hpp
-        
-        ${SRC_DOMAIN}/BaseMatrix.hpp
         ${SRC_DOMAIN}/Matrix.hpp
-        ${SRC_DOMAIN}/PrivateMatrix.hpp)
+        ${SRC_DOMAIN}/MatrixRow.hpp
+        "src/MatrixPrivate.hpp")
 
 set(INC_DOMAIN inc/)
 set(INC
@@ -64,7 +62,7 @@ include_directories(
 add_executable(lab_02
         main.cpp
         ${INC}
-        ${SRC})
+        ${SRC} "src/MatrixMath.hpp" "src/MatrixTransformations.hpp")
 
 ##########
 #  Libs  #

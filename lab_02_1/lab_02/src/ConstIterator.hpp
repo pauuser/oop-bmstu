@@ -1,6 +1,3 @@
-#include "ConstIterator.h"
-#include "Exceptions.h"
-
 template <typename T>
 bool ConstIterator<T>::_isIndexValid() const
 {
@@ -21,7 +18,7 @@ bool ConstIterator<T>::_isExpired() const
 }
 
 template<typename T>
-void ConstIterator<T>::_checkIterValid(std::string filename, int line, std::string inf) const
+void ConstIterator<T>::_checkIterValid(const std::string filename, const int line, const std::string inf) const
 {
 	if (_isExpired())
 	{

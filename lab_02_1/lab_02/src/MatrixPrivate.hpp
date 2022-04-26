@@ -26,7 +26,7 @@ SharedPtr<typename Matrix<T>::MatrixRow[]> Matrix<T>::_allocateMatrix(const size
 }
 
 template <typename T>
-bool Matrix<T>::_isMatrixIndValid(size_t ind) const
+bool Matrix<T>::_isMatrixIndValid(const size_t ind) const
 {
 	bool ans = true;
 
@@ -68,7 +68,11 @@ bool Matrix<T>::_CanMultiplyMatrices(const Matrix<T>& matr) const
 {
 	bool ans = false;
 
-	if (this->getColumns() == matr.getRows())
+	if (matr.ncols == 0 || matr.nrows == 0 || ncols == 0 || nrows == 0)
+	{
+		ans = false;
+	}
+	else if (this->getColumns() == matr.getRows())
 	{
 		ans = true;
 	}
@@ -77,7 +81,7 @@ bool Matrix<T>::_CanMultiplyMatrices(const Matrix<T>& matr) const
 }
 
 template <typename T>
-Matrix<T>& Matrix<T>::_excludeRowAndColumn(size_t i, size_t j)
+Matrix<T>& Matrix<T>::_excludeRowAndColumn(const size_t i, const size_t j)
 {
 	deleteCol(j);
 	deleteRow(i);

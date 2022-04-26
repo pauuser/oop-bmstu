@@ -4,9 +4,8 @@
 
 #include "BaseMatrix.h"
 #include "Exceptions.h"
-
-#include "Iterator.hpp"
-#include "ConstIterator.hpp"
+#include "Iterator.h"
+#include "ConstIterator.h"
 
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
@@ -23,17 +22,18 @@ public:
 	Matrix() = default;
 	Matrix(size_t rows, size_t cols, const T& fill_value = {});
 	Matrix(std::initializer_list<std::initializer_list<T>> values);
+	Matrix(T **cdata, const size_t rows, const size_t cols);
 
 	explicit Matrix(const Matrix& matrix);
-	Matrix(Matrix&& matrix);
+	Matrix(Matrix&& matrix) noexcept;
 
 	~Matrix();
 
 	Matrix<T>& operator =(const Matrix<T>& matrix);
-	Matrix<T>& operator =(Matrix<T>&& matrix);
+	Matrix<T>& operator =(Matrix<T>&& matrix) noexcept;
 	Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> values);
 
-	Matrix<T>& DiagonalMatrix(const size_t size, const T& diag_val); 
+	static Matrix<T> DiagonalMatrix(const size_t size, const T& diag_val); 
 
 	bool equals(const Matrix<T>& matrix) const;
 	bool operator ==(const Matrix<T>& matrix) const;
@@ -54,19 +54,19 @@ public:
 	Matrix<T>& subMatrix(const Matrix<T>& matrix);
 	Matrix<T>& dot(const Matrix<T>& matrix);
 
-	Matrix<T> operator +(const T& val) const;
-	Matrix<T> operator -(const T& val) const;
-	Matrix<T> operator *(const T& val) const;
+	Matrix<T> operator +(const T& val) const noexcept;
+	Matrix<T> operator -(const T& val) const noexcept;
+	Matrix<T> operator *(const T& val) const noexcept;
 	Matrix<T> operator /(const T& val) const;
 
-	Matrix<T>& addElem(const T& val);
-	Matrix<T>& subElem(const T& val);
+	Matrix<T>& addElem(const T& val) noexcept;
+	Matrix<T>& subElem(const T& val) noexcept;
+	Matrix<T>& mulElem(const T& val) noexcept;
 	Matrix<T>& divElem(const T& val);
-	Matrix<T>& mulElem(const T& val);
 
-	Matrix<T>& operator +=(const T& val);
-	Matrix<T>& operator -=(const T& val);
-	Matrix<T>& operator *=(const T& val);
+	Matrix<T>& operator +=(const T& val) noexcept;
+	Matrix<T>& operator -=(const T& val) noexcept;
+	Matrix<T>& operator *=(const T& val) noexcept;
 	Matrix<T>& operator /=(const T& val);
 
 	Matrix<T>& operator +=(const Matrix<T>& matrix);
@@ -112,16 +112,18 @@ public:
 	void fill(Iterator<T>& start, const Iterator<T>& end, T& fill_value = {});
 
 private:
-	SharedPtr<MatrixRow[]> _allocateMatrix(const size_t rows, const size_t cols);
 	SharedPtr<MatrixRow[]> data = nullptr;
 
-	bool _isMatrixIndValid(size_t ind) const;
+	SharedPtr<MatrixRow[]> _allocateMatrix(const size_t rows, const size_t cols);
+
+	bool _isMatrixIndValid(const size_t ind) const;
 	bool _equalSize(const Matrix<T>& matr) const;
 	bool _CanMultiplyMatrices(const Matrix<T>& matr) const;
 	void _cleanRows();
+	void _checkPointer(T** cptr, const size_t len);
 
 	T _MultiplyRowByColumn(const Matrix<T>& matrix, const size_t row, const size_t col) const;
-	Matrix<T>& _excludeRowAndColumn(size_t i, size_t j);
+	Matrix<T>& _excludeRowAndColumn(const size_t i, const size_t j);
 
 public:
 	class MatrixRow
@@ -132,14 +134,16 @@ public:
 	public:
 		MatrixRow(): length(0), data(nullptr) {};
 		MatrixRow(std::initializer_list<T>);
+		MatrixRow(T *cdata, const size_t len);
+
 		MatrixRow(const MatrixRow& row);
-		MatrixRow(MatrixRow&& row);
+		MatrixRow(MatrixRow&& row) noexcept;
 
 		T& operator[](const size_t index);
 		const T& operator[](const size_t index) const;
 
 		MatrixRow& operator=(const MatrixRow& row);
-		MatrixRow& operator=(MatrixRow&& row);
+		MatrixRow& operator=(MatrixRow&& row) noexcept;
 		MatrixRow& operator=(std::initializer_list<T> values);
 		
 		MatrixRow& operator+=(const MatrixRow& row);
@@ -148,32 +152,37 @@ public:
 		MatrixRow operator+(const MatrixRow& row) const;
 		MatrixRow operator-(const MatrixRow& row) const;
 
-		MatrixRow& operator*=(const T&val);
-		MatrixRow& operator+=(const T& val);
-		MatrixRow& operator-=(const T& val);
+		MatrixRow& operator*=(const T&val) noexcept;
+		MatrixRow& operator+=(const T& val) noexcept;
+		MatrixRow& operator-=(const T& val) noexcept;
 		MatrixRow& operator/=(const T& val);
 
-		MatrixRow operator*(const T& val) const;
-		MatrixRow operator+(const T& val) const;
-		MatrixRow operator-(const T& val) const;
+		MatrixRow operator*(const T& val) const noexcept;
+		MatrixRow operator+(const T& val) const noexcept;
+		MatrixRow operator-(const T& val) const noexcept;
 		MatrixRow operator/(const T& val) const;
 
-		void fillValue(T& value);
+		void fillValue(const T& value);
 		void reset();
-		void reset(T* newdata, size_t size);
+		void reset(T* newdata, const size_t size);
 
 		size_t getLength() const { return length; };
 
 		~MatrixRow();
 	private:
-		SharedPtr<T[]> _allocateRow(size_t size);
+		SharedPtr<T[]> _allocateRow(const size_t size);
 
 		bool _isIndexValid(const size_t index) const;
 		bool _canAdd(const MatrixRow& row) const;
+		void _checkPointer(T *cptr);
 	};
 
 };
 
-#include "PrivateMatrix.hpp"
+#include "Matrix.hpp"
+#include "MatrixPrivate.hpp"
 #include "MatrixRow.hpp"
+#include "MatrixOperators.hpp"
+#include "MatrixMath.hpp"
+#include "MatrixTransformations.hpp"
 

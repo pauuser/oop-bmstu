@@ -16,6 +16,24 @@ Matrix<T>::MatrixRow::MatrixRow(std::initializer_list<T> row)
 }
 
 template <typename T>
+void Matrix<T>::MatrixRow::_checkPointer(T* cptr)
+{
+	if (!cptr)
+	{
+		throw InitError(__FILE__, __LINE__, "Bad pointer!");
+	}
+}
+
+template <typename T>
+Matrix<T>::MatrixRow::MatrixRow(T* cdata, const size_t len)
+{
+	_checkPointer(cdata);
+
+	this->data = cdata;
+	this->length = len;
+}
+
+template <typename T>
 bool Matrix<T>::MatrixRow::_isIndexValid(const size_t index) const
 {
 	bool ans = true;
@@ -51,7 +69,7 @@ const T& Matrix<T>::MatrixRow::operator[](const size_t index) const
 }
 
 template <typename T>
-SharedPtr<T[]> Matrix<T>::MatrixRow::_allocateRow(size_t size)
+SharedPtr<T[]> Matrix<T>::MatrixRow::_allocateRow(const size_t size)
 {
 	SharedPtr<T[]> data = nullptr;
 
@@ -82,7 +100,7 @@ Matrix<T>::MatrixRow::MatrixRow(const Matrix<T>::MatrixRow& row)
 }
 
 template <typename T>
-Matrix<T>::MatrixRow::MatrixRow(Matrix<T>::MatrixRow&& row)
+Matrix<T>::MatrixRow::MatrixRow(Matrix<T>::MatrixRow&& row) noexcept
 {
 	length = row.length;
 	data = row.data;
@@ -128,16 +146,16 @@ Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator=(const Matrix<T>::MatrixRow
 }
 
 template <typename T>
-Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator=(MatrixRow&& row)
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator=(MatrixRow&& row) noexcept
 {
-	this->length = row.getLength();
+	this->length = row.length;
 	this->data.reset(row.data);
 
 	return *this;
 }
 
 template <typename T>
-void Matrix<T>::MatrixRow::fillValue(T& value)
+void Matrix<T>::MatrixRow::fillValue(const T& value)
 {
 	for (size_t i = 0; i < length; i++)
 	{
@@ -160,7 +178,7 @@ void Matrix<T>::MatrixRow::reset()
 }
 
 template <typename T>
-void Matrix<T>::MatrixRow::reset(T* newdata, size_t size)
+void Matrix<T>::MatrixRow::reset(T* newdata, const size_t size)
 {
 	this->data.reset(newdata);
 	this->length = size;
@@ -196,7 +214,7 @@ bool Matrix<T>::MatrixRow::_canAdd(const MatrixRow& row) const
 }
 
 template <typename T>
-Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const T& val)
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const T& val) noexcept
 {
 	for (size_t i = 0; i < length; i++)
 	{
@@ -207,7 +225,7 @@ Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const T& val)
 }
 
 template <typename T>
-Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator-=(const T& val)
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator-=(const T& val) noexcept
 {
 	for (size_t i = 0; i < length; i++)
 	{
@@ -233,7 +251,7 @@ Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator/=(const T& val)
 }
 
 template <typename T>
-Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator*=(const T& val)
+Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator*=(const T& val) noexcept
 {
 	for (size_t i = 0; i < length; i++)
 	{
@@ -260,7 +278,7 @@ Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator-=(const Matrix<T>::MatrixRo
 }
 
 template <typename T>
-Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator*(const T& val) const
+Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator*(const T& val) const noexcept
 {
 	MatrixRow temp = *this;
 
@@ -273,7 +291,7 @@ Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator*(const T& val) const
 }
 
 template <typename T>
-Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator+(const T& val) const
+Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator+(const T& val) const noexcept
 {
 	MatrixRow temp = *this;
 
@@ -286,7 +304,7 @@ Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator+(const T& val) const
 }
 
 template <typename T>
-Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator-(const T& val) const
+Matrix<T>::MatrixRow Matrix<T>::MatrixRow::operator-(const T& val) const noexcept
 {
 	MatrixRow temp = *this;
 

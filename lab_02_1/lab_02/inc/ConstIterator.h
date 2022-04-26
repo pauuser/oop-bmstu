@@ -3,6 +3,8 @@
 #include <iterator>
 #include <iostream>
 
+#include "Exceptions.h"
+
 template <typename T>
 using SharedPtr = std::shared_ptr<T>;
 
@@ -16,16 +18,11 @@ template <typename T>
 class ConstIterator : public std::iterator<std::random_access_iterator_tag, T>
 {
 public:
-	// Конструктор
 	ConstIterator(const Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : nrow(matrix.nrows), ncol(matrix.ncols),
 		index(i* matrix.ncols + j), data(matrix.data) {}
 
-	// Конструктор копирования
 	ConstIterator(const ConstIterator& It) = default;
 
-	/*
-	* Сделать что-то с обработкой ошибок
-	*/
 	const T* operator->() const;
 	const T& operator*() const;
 
@@ -73,6 +70,8 @@ private:
 
 	bool _isIndexValid() const;
 	bool _isExpired() const;
-	void _checkIterValid(std::string filename, int line, std::string inf = "") const;
+	void _checkIterValid(const std::string filename, const int line, const std::string inf = "") const;
 };
+
+#include "ConstIterator.hpp"
 

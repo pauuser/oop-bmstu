@@ -11,7 +11,6 @@ class MatrixException : public std::exception
 protected:
 	std::string errinfo;
 public:
-	// Перегружаем конструктор, т.к. появился член errinfo
 	MatrixException(const std::string filename,
 		const size_t line, const std::string inf = "Undefined exception occured!")
 	{
@@ -20,7 +19,7 @@ public:
 		errinfo = "Time: " + time_f + " File: " + filename + "\nLine : " + std::to_string(line) + " Message : " + inf;
 	}
 
-	virtual ~MatrixException() {}; // виртуальность для возможности подмены
+	virtual ~MatrixException() {};
 
 	virtual char const* what() const noexcept override
 	{
@@ -35,7 +34,7 @@ public:
 		const size_t line, const std::string inf = "") :
 		MatrixException(filename, line, "Out of memory! " + inf) {}
 
-	virtual ~MemoryError() {}; // виртуальность для возможности подмены
+	virtual ~MemoryError() {};
 
 	virtual char const* what() const noexcept
 	{
@@ -49,7 +48,7 @@ public:
 	InitError(const std::string filename, const size_t line, const std::string inf = "") :
 		MatrixException(filename, line, "Bad initialisation data! " + inf) {}
 
-	virtual ~InitError() {}; // виртуальность для возможности подмены
+	virtual ~InitError() {};
 
 	virtual char const* what() const noexcept
 	{
@@ -67,7 +66,7 @@ public:
 		errinfo += " ind = " + std::to_string(ind);
 	}
 
-	virtual ~IndexOutOfRange() {}; // виртуальность для возможности подмены
+	virtual ~IndexOutOfRange() {};
 
 	virtual char const* what() const noexcept
 	{
@@ -85,7 +84,7 @@ public:
 		errinfo += " rows = " + std::to_string(rows) + " cols = " + std::to_string(cols);
 	}
 
-	virtual ~SizeError() {}; // виртуальность для возможности подмены
+	virtual ~SizeError() {};
 
 	virtual char const* what() const noexcept
 	{
@@ -103,7 +102,7 @@ public:
 		errinfo += " row = " + std::to_string(row) + " col = " + std::to_string(col);
 	}
 
-	virtual ~ZeroDivMatrix() {}; // виртуальность для возможности подмены
+	virtual ~ZeroDivMatrix() {};
 
 	virtual char const* what() const noexcept
 	{
@@ -120,7 +119,7 @@ public:
 	{
 	}
 
-	virtual ~SingularMatrixError() {}; // виртуальность для возможности подмены
+	virtual ~SingularMatrixError() {};
 
 	virtual char const* what() const noexcept
 	{

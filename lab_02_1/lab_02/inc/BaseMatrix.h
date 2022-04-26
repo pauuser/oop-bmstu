@@ -4,7 +4,7 @@ class BaseMatrix
 {
 public:
 	// Конструкторы и деструктор
-	explicit BaseMatrix(size_t rows=0, size_t cols=0) : ncols(cols), nrows(rows) {};
+	BaseMatrix(size_t rows = 0, size_t cols = 0) : ncols(cols), nrows(rows) {};
 	virtual ~BaseMatrix() = 0;
 
 	// Базовые методы абстрактного класса
