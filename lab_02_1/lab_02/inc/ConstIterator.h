@@ -34,7 +34,7 @@ public:
 	ConstIterator<T>& operator--();
 	ConstIterator<T> operator--(int);
 
-	const T& operator[](const int ind) const;
+	const T& operator[](int ind) const;
 	ConstIterator<T>& operator=(const ConstIterator<T>& it);
 
 	ConstIterator<T>& operator+=(const ConstIterator<T>& iterator);
@@ -42,10 +42,10 @@ public:
 	ConstIterator<T> operator+(const ConstIterator<T>& iterator) const;
 	ConstIterator<T> operator-(const ConstIterator<T>& iterator) const;
 
-	ConstIterator<T>& operator+=(const int value);
-	ConstIterator<T>& operator-=(const int value);
-	ConstIterator<T> operator+(const int value) const;
-	ConstIterator<T> operator-(const int value) const;
+	ConstIterator<T>& operator+=(int value);
+	ConstIterator<T>& operator-=(int value);
+	ConstIterator<T> operator+(int value) const;
+	ConstIterator<T> operator-(int value) const;
 
 	bool operator!=(const ConstIterator<T>& iterator) const;
 	bool operator==(const ConstIterator<T>& iterator) const;
@@ -70,7 +70,7 @@ private:
 
 	bool _isIndexValid() const;
 	bool _isExpired() const;
-	void _checkIterValid(const std::string filename, const int line, const std::string inf = "") const;
+	void _checkIterValid(const std::string filename, int line, const std::string inf = "") const;
 };
 
 #include "ConstIterator.hpp"

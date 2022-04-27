@@ -1,6 +1,7 @@
 template <typename T>
 bool Iterator<T>::_isIndexValid() const
 {
+	_updateSize();
 	bool ans = false;
 
 	if (index < nrow * ncol)
@@ -18,7 +19,7 @@ bool Iterator<T>::_isExpired() const
 }
 
 template<typename T>
-void Iterator<T>::_checkIterValid(const std::string filename, const int line, const std::string inf) const
+void Iterator<T>::_checkIterValid(const std::string filename, int line, const std::string inf) const
 {
 	if (_isExpired())
 	{
@@ -36,6 +37,7 @@ T& Iterator<T>::operator*()
 {
 	_checkIterValid(__FILE__, __LINE__, "operator *");
 
+	_updateSize();
 	SharedPtr<typename Matrix<T>::MatrixRow[]> data_ptr = data.lock();
 
 	return data_ptr[index / ncol][index % ncol];
@@ -46,6 +48,7 @@ T* Iterator<T>::operator->()
 {
 	_checkIterValid(__FILE__, __LINE__, "operator ->");
 
+	_updateSize();
 	SharedPtr<typename Matrix<T>::MatrixRow[]> data_ptr = data.lock();
 
 	return data_ptr[index / ncol].get() + (index % ncol);
@@ -60,6 +63,7 @@ Iterator<T>::operator bool() const
 template <typename T>
 Iterator<T>& Iterator<T>::operator++()
 {
+	_updateSize();
 	if (index <= nrow * ncol)
 	{
 		++index;
@@ -100,8 +104,9 @@ Iterator<T> Iterator<T>::operator--(int)
 }
 
 template <typename T>
-Iterator<T> Iterator<T>::operator+(const int value) const
+Iterator<T> Iterator<T>::operator+(int value) const
 {
+	_updateSize();
 	Iterator<T> it(*this);
 
 	if (value < 0)
@@ -129,7 +134,7 @@ Iterator<T> Iterator<T>::operator+(const int value) const
 }
 
 template <typename T>
-Iterator<T> Iterator<T>::operator-(const int value) const
+Iterator<T> Iterator<T>::operator-(int value) const
 {
 	Iterator<T> it(*this);
 
@@ -153,7 +158,7 @@ Iterator<T> Iterator<T>::operator-(const int value) const
 }
 
 template <typename T>
-Iterator<T>& Iterator<T>::operator+=(const int value)
+Iterator<T>& Iterator<T>::operator+=(int value)
 {
 	*this = operator+(value);
 
@@ -161,52 +166,21 @@ Iterator<T>& Iterator<T>::operator+=(const int value)
 }
 
 template <typename T>
-Iterator<T>& Iterator<T>::operator-=(const int value)
+Iterator<T>& Iterator<T>::operator-=(int value)
 {
 	*this = operator-(value);
 
 	return *this;
 }
 
-
 template <typename T>
-Iterator<T> Iterator<T>::operator+(const Iterator<T>& iterator) const
+const T& Iterator<T>::operator[](int ind) const
 {
-	Iterator<T> it(*this);
-
-	it += iterator.index;
-
-	return it;
+	return *(operator+(ind));
 }
 
 template <typename T>
-Iterator<T> Iterator<T>::operator-(const Iterator<T>& iterator) const
-{
-	Iterator<T> it(*this);
-
-	it -= iterator.index;
-
-	return it;
-}
-
-template <typename T>
-Iterator<T>& Iterator<T>::operator+=(const Iterator<T>& iterator)
-{
-	*this += iterator.index;
-
-	return *this;
-}
-
-template <typename T>
-Iterator<T>& Iterator<T>::operator-=(const Iterator<T>& iterator)
-{
-	*this -= iterator.index;
-
-	return *this;
-}
-
-template <typename T>
-T& Iterator<T>::operator[](const int ind) const
+T& Iterator<T>::operator[](int ind)
 {
 	return *(operator+(ind));
 }
@@ -259,9 +233,10 @@ const T* Iterator<T>::operator->() const
 {
 	_checkIterValid(__FILE__, __LINE__, "operator -> const");
 
+	_updateSize();
 	SharedPtr<typename Matrix<T>::MatrixRow[]> data_ptr = data.lock();
 
-	return data_ptr[index / ncol].get() + (index % ncol);
+	return data_ptr[data.index / ncol].get() + (index % ncol);
 }
 
 template <typename T>
@@ -269,6 +244,7 @@ const T& Iterator<T>::operator*() const
 {
 	_checkIterValid(__FILE__, __LINE__, "operator -> const");
 
+	_updateSize();
 	SharedPtr<typename Matrix<T>::MatrixRow[]> data_ptr = data.lock();
 
 	return data_ptr[index / ncol][index % ncol];
@@ -304,13 +280,30 @@ Iterator<T>& Iterator<T>::next()
 }
 
 template<typename T>
-bool Iterator<T>::isEnd() const
+bool Iterator<T>::isEnd()
 {
+	_updateSize();
 	return index == (nrow * ncol - 1);
 }
 
 template<typename T>
-bool Iterator<T>::isStart() const
+bool Iterator<T>::isStart()
 {
 	return index == 0;
+}
+
+template<typename T>
+void Iterator<T>::_updateSize() const
+{
+	SharedPtr<typename Matrix<T>::MatrixRow[]> data_ptr = data.lock();
+
+	if (data_ptr == nullptr)
+	{
+		throw InitError(__FILE__, __LINE__, "Unitialised iterator!");
+	}
+	else
+	{
+		nrow = data_ptr.get()->getLength();
+		ncol = data_ptr[0].getLength();
+	}
 }

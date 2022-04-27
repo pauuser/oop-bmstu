@@ -18,7 +18,7 @@ bool ConstIterator<T>::_isExpired() const
 }
 
 template<typename T>
-void ConstIterator<T>::_checkIterValid(const std::string filename, const int line, const std::string inf) const
+void ConstIterator<T>::_checkIterValid(const std::string filename, int line, const std::string inf) const
 {
 	if (_isExpired())
 	{
@@ -80,7 +80,7 @@ ConstIterator<T> ConstIterator<T>::operator--(int)
 }
 
 template <typename T>
-ConstIterator<T> ConstIterator<T>::operator+(const int value) const
+ConstIterator<T> ConstIterator<T>::operator+(int value) const
 {
 	ConstIterator<T> it(*this);
 
@@ -109,7 +109,7 @@ ConstIterator<T> ConstIterator<T>::operator+(const int value) const
 }
 
 template <typename T>
-ConstIterator<T> ConstIterator<T>::operator-(const int value) const
+ConstIterator<T> ConstIterator<T>::operator-(int value) const
 {
 	ConstIterator<T> it(*this);
 
@@ -133,7 +133,7 @@ ConstIterator<T> ConstIterator<T>::operator-(const int value) const
 }
 
 template <typename T>
-ConstIterator<T>& ConstIterator<T>::operator+=(const int value)
+ConstIterator<T>& ConstIterator<T>::operator+=(int value)
 {
 	*this = operator+(value);
 
@@ -141,7 +141,7 @@ ConstIterator<T>& ConstIterator<T>::operator+=(const int value)
 }
 
 template <typename T>
-ConstIterator<T>& ConstIterator<T>::operator-=(const int value)
+ConstIterator<T>& ConstIterator<T>::operator-=(int value)
 {
 	*this = operator-(value);
 
@@ -186,7 +186,7 @@ ConstIterator<T>& ConstIterator<T>::operator-=(const ConstIterator<T>& iterator)
 }
 
 template <typename T>
-const T& ConstIterator<T>::operator[](const int ind) const
+const T& ConstIterator<T>::operator[](int ind) const
 {
 	return *(operator+(ind));
 }

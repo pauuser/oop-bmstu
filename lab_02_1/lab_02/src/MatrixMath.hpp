@@ -47,24 +47,28 @@ T Matrix<T>::determinant() const
 }
 
 template <typename T>
-void Matrix<T>::transpose()
+Matrix<T> Matrix<T>::transpose()
 {
 	size_t maxsize = 0, rescol = nrows, resrow = ncols;
 	(nrows > ncols) ? maxsize = nrows : maxsize = ncols;
 
-	this->resize(maxsize, maxsize);
+	Matrix<T> tmpmatr = Matrix(*this);
+
+	tmpmatr.resize(maxsize, maxsize);
 
 	for (int i = 0; i < nrows; i++)
 	{
 		for (int j = 0; j < i; j++)
 		{
-			T tmp = data[i][j];
-			data[i][j] = data[j][i];
-			data[j][i] = tmp;
+			T tmp = tmpmatr[i][j];
+			tmpmatr[i][j] = tmpmatr[j][i];
+			tmpmatr[j][i] = tmp;
 		}
 	}
 
-	this->resize(resrow, rescol);
+	tmpmatr.resize(resrow, rescol);
+
+	return tmpmatr;
 }
 
 template <typename T>
@@ -91,7 +95,7 @@ Matrix<T>& Matrix<T>::abs()
 }
 
 template <typename T>
-void Matrix<T>::inverse()
+Matrix<T> Matrix<T>::inverse()
 {
 	if (!isSquare() || (isSquare() && nrows == 1))
 	{
@@ -127,7 +131,7 @@ void Matrix<T>::inverse()
 		}
 	}
 
-	*this = res;
+	return res;
 }
 
 template <typename T>

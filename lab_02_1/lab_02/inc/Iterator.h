@@ -6,6 +6,9 @@
 #include "Exceptions.h"
 
 template <typename T>
+using UniquePtr = std::unique_ptr<T>;
+
+template <typename T>
 using SharedPtr = std::shared_ptr<T>;
 
 template <typename T>
@@ -18,9 +21,8 @@ template <typename T>
 class Iterator : public std::iterator<std::random_access_iterator_tag, T>
 {
 public:
-	Iterator(Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : nrow(matrix.nrows), ncol(matrix.ncols),
-		index(i * matrix.ncols + j), data(matrix.data) {}
-	
+	Iterator(Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : index(i * matrix.ncols + j), data(matrix.data),
+																		  nrow(matrix.nrows), ncol(matrix.ncols) {}
 	Iterator(const Iterator& It) = default;
 
 	T* operator->();
@@ -36,19 +38,15 @@ public:
 
 	Iterator<T>& operator--();
 	Iterator<T> operator--(int);
-
-	T& operator[](const int ind) const;
+	
+	T& operator[](int ind);
+	const T& operator[](int ind) const;
 	Iterator<T>& operator=(const Iterator<T>& it);
 
-	Iterator<T>& operator+=(const Iterator<T>& iterator);
-	Iterator<T>& operator-=(const Iterator<T>& iterator);
-	Iterator<T> operator+(const Iterator<T>& iterator) const;
-	Iterator<T> operator-(const Iterator<T>& iterator) const;
-
-	Iterator<T>& operator+=(const int value);
-	Iterator<T>& operator-=(const int value);
-	Iterator<T> operator+(const int value) const;
-	Iterator<T> operator-(const int value) const;
+	Iterator<T>& operator+=(int value);
+	Iterator<T>& operator-=(int value);
+	Iterator<T> operator+(int value) const;
+	Iterator<T> operator-(int value) const;
 
 	bool operator!=(const Iterator<T>& iterator) const;
 	bool operator==(const Iterator<T>& iterator) const;
@@ -62,19 +60,20 @@ public:
 
 	Iterator<T>& next();
 
-	bool isEnd() const;
-	bool isStart() const;
+	bool isEnd();
+	bool isStart();
 
 private:
-	size_t nrow;
-	size_t ncol;
+	mutable size_t nrow;
+	mutable size_t ncol;
 	size_t index;
 
 	WeakPtr<typename Matrix<T>::MatrixRow[]> data;
 
 	bool _isIndexValid() const;
 	bool _isExpired() const;
-	void _checkIterValid(const std::string filename, const int line, const std::string inf = "") const;
+	void _checkIterValid(const std::string filename, int line, const std::string inf = "") const;
+	void _updateSize() const;
 };
 
 #include "Iterator.hpp"

@@ -15,7 +15,7 @@ class Matrix : public BaseMatrix
 {
 public:
 	class MatrixRow;
-	friend Iterator<T>; // У итератора будет доступ к членам-данным матрицы
+	friend Iterator<T>;
 	friend ConstIterator<T>;
 
 public:
@@ -44,34 +44,36 @@ public:
 	explicit virtual operator bool() const;
 
 	Matrix<T> operator +(const Matrix<T>& matrix) const;
-	Matrix<T> operator -(const Matrix<T>& matrix) const;
-	Matrix<T> operator *(const Matrix<T>& matrix) const;
-	Matrix<T> operator /(const Matrix<T>& matrix) const;
-
-	Matrix<T>& addMatrix(const Matrix<T>& matrix);
-	Matrix<T>& mulMatrix(const Matrix<T>& matrix);
-	Matrix<T>& divMatrix(const Matrix<T>& matrix);
-	Matrix<T>& subMatrix(const Matrix<T>& matrix);
-	Matrix<T>& dot(const Matrix<T>& matrix);
-
 	Matrix<T> operator +(const T& val) const noexcept;
-	Matrix<T> operator -(const T& val) const noexcept;
-	Matrix<T> operator *(const T& val) const noexcept;
-	Matrix<T> operator /(const T& val) const;
-
+	Matrix<T>& addMatrix(const Matrix<T>& matrix);
 	Matrix<T>& addElem(const T& val) noexcept;
-	Matrix<T>& subElem(const T& val) noexcept;
-	Matrix<T>& mulElem(const T& val) noexcept;
-	Matrix<T>& divElem(const T& val);
 
 	Matrix<T>& operator +=(const T& val) noexcept;
-	Matrix<T>& operator -=(const T& val) noexcept;
-	Matrix<T>& operator *=(const T& val) noexcept;
-	Matrix<T>& operator /=(const T& val);
-
 	Matrix<T>& operator +=(const Matrix<T>& matrix);
+
+	Matrix<T> operator -(const Matrix<T>& matrix) const;
+	Matrix<T> operator -(const T& val) const noexcept;
+	Matrix<T>& subMatrix(const Matrix<T>& matrix);
+	Matrix<T>& subElem(const T& val) noexcept;
+
+	Matrix<T>& operator -=(const T& val) noexcept;
 	Matrix<T>& operator -=(const Matrix<T>& matrix);
+
+	Matrix<T> operator *(const Matrix<T>& matrix) const;
+	Matrix<T> operator *(const T& val) const noexcept;
+	Matrix<T>& mulMatrix(const Matrix<T>& matrix);
+	Matrix<T>& mulElem(const T& val) noexcept;
+	Matrix<T>& dot(const Matrix<T>& matrix);
+
+	Matrix<T>& operator *=(const T& val) noexcept;
 	Matrix<T>& operator *=(const Matrix<T>& matrix);
+
+	Matrix<T> operator /(const Matrix<T>& matrix) const;
+	Matrix<T> operator /(const T& val) const;
+	Matrix<T>& divMatrix(const Matrix<T>& matrix);
+	Matrix<T>& divElem(const T& val);
+	
+	Matrix<T>& operator /=(const T& val);
 	Matrix<T>& operator /=(const Matrix<T>& matrix);
 
 	MatrixRow& operator[](const size_t ind);
@@ -83,13 +85,13 @@ public:
 	Matrix<T>& abs();			 // модуль
 
 	T determinant() const;		 // определитель
-	void transpose();			 // транспонирование
+	Matrix<T> transpose();			 // транспонирование
 	void horizontal_mirror();	 // отражение по горизонтали
 	void vertical_mirror();		 // отражение по вертикали
 	void rotate_right();		 // поворот на 90 градусов вправо
 	void rotate_left();			 // поворот на 90 градусов влево
 
-	void inverse();				 // обратная матрица
+	Matrix<T> inverse();				 // обратная матрица
 
 	void insertRow(const size_t before_ind, const T& fill_value = {});
 	void insertCol(const size_t before_ind, const T& fill_value = {});

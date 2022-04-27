@@ -9,6 +9,11 @@ SharedPtr<typename Matrix<T>::MatrixRow[]> Matrix<T>::_allocateMatrix(const size
 {
 	SharedPtr<MatrixRow[]> data = nullptr;
 
+	if (rows == 0 || cols == 0)
+	{
+		throw SizeError(rows, cols, __FILE__, __LINE__, "Can't allocate 0!");
+	}
+
 	try
 	{
 		data.reset(new MatrixRow[rows]);
