@@ -21,8 +21,7 @@ template <typename T>
 class Iterator : public std::iterator<std::random_access_iterator_tag, T>
 {
 public:
-	Iterator(Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : index(i * matrix.ncols + j), data(matrix.data),
-																		  nrow(matrix.nrows), ncol(matrix.ncols) {}
+	Iterator(Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : index(i * matrix.ncols + j), data(matrix.data) {}
 	Iterator(const Iterator& It) = default;
 
 	T* operator->();
@@ -64,8 +63,6 @@ public:
 	bool isStart();
 
 private:
-	mutable size_t nrow;
-	mutable size_t ncol;
 	size_t index;
 
 	WeakPtr<typename Matrix<T>::MatrixRow[]> data;
@@ -73,7 +70,9 @@ private:
 	bool _isIndexValid() const;
 	bool _isExpired() const;
 	void _checkIterValid(const std::string filename, int line, const std::string inf = "") const;
-	void _updateSize() const;
+
+	size_t _getRows() const;
+	size_t _getCols() const;
 };
 
 #include "Iterator.hpp"

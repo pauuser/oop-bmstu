@@ -37,6 +37,7 @@ set(SRC
         ${SRC_DOMAIN}/Iterator.hpp
         ${SRC_DOMAIN}/Matrix.hpp
         ${SRC_DOMAIN}/MatrixRow.hpp
+        ${SRC_DOMAIN}/BaseMatrix.cpp
         "src/MatrixPrivate.hpp")
 
 set(INC_DOMAIN inc/)
@@ -62,7 +63,7 @@ include_directories(
 add_executable(lab_02
         main.cpp
         ${INC}
-        ${SRC} "src/MatrixMath.hpp" "src/MatrixTransformations.hpp")
+        ${SRC} "src/MatrixMath.hpp" "src/MatrixTransformations.hpp" "src/BaseMatrix.cpp")
 
 ##########
 #  Libs  #

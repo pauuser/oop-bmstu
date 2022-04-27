@@ -18,8 +18,7 @@ template <typename T>
 class ConstIterator : public std::iterator<std::random_access_iterator_tag, T>
 {
 public:
-	ConstIterator(const Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : nrow(matrix.nrows), ncol(matrix.ncols),
-		index(i* matrix.ncols + j), data(matrix.data) {}
+	ConstIterator(const Matrix<T>& matrix, const size_t i = 0, const size_t j = 0) : index(i* matrix.ncols + j), data(matrix.data) {}
 
 	ConstIterator(const ConstIterator& It) = default;
 
@@ -36,11 +35,6 @@ public:
 
 	const T& operator[](int ind) const;
 	ConstIterator<T>& operator=(const ConstIterator<T>& it);
-
-	ConstIterator<T>& operator+=(const ConstIterator<T>& iterator);
-	ConstIterator<T>& operator-=(const ConstIterator<T>& iterator);
-	ConstIterator<T> operator+(const ConstIterator<T>& iterator) const;
-	ConstIterator<T> operator-(const ConstIterator<T>& iterator) const;
 
 	ConstIterator<T>& operator+=(int value);
 	ConstIterator<T>& operator-=(int value);
@@ -62,8 +56,6 @@ public:
 	bool isStart() const;
 
 private:
-	size_t nrow;
-	size_t ncol;
 	size_t index;
 
 	WeakPtr<typename Matrix<T>::MatrixRow[]> data;
@@ -71,6 +63,9 @@ private:
 	bool _isIndexValid() const;
 	bool _isExpired() const;
 	void _checkIterValid(const std::string filename, int line, const std::string inf = "") const;
+	
+	size_t _getRows() const;
+	size_t _getCols() const;
 };
 
 #include "ConstIterator.hpp"

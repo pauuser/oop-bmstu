@@ -20,9 +20,3 @@ protected:
 	size_t nrows;
 };
 
-BaseMatrix::~BaseMatrix()
-{
-	nrows = 0;
-	ncols = 0;
-}
-
