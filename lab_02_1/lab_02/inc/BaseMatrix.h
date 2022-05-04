@@ -1,18 +1,18 @@
-#pragma once
+п»ї#pragma once
 
 class BaseMatrix
 {
 public:
-    // Конструкторы и деструктор
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё РґРµСЃС‚СЂСѓРєС‚РѕСЂ
     BaseMatrix(size_t rows = 0, size_t cols = 0) : ncols(cols), nrows(rows) {};
     virtual ~BaseMatrix() = 0;
 
-    // Базовые методы абстрактного класса
+    // Р‘Р°Р·РѕРІС‹Рµ РјРµС‚РѕРґС‹ Р°Р±СЃС‚СЂР°РєС‚РЅРѕРіРѕ РєР»Р°СЃСЃР°
     virtual size_t getColumns() const { return ncols; }
     virtual size_t getRows() const { return nrows; }
     virtual bool isSquare() const { return ncols == nrows; }
 
-    // Перегрузка оператора bool - проверка на инициализацию
+    // РџРµСЂРµРіСЂСѓР·РєР° РѕРїРµСЂР°С‚РѕСЂР° bool - РїСЂРѕРІРµСЂРєР° РЅР° РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ
     explicit virtual operator bool() const { return ncols && nrows; }
 
 protected:

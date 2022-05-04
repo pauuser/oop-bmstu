@@ -1,7 +1,7 @@
-#include <ostream>
+п»ї#include <ostream>
 
 /*
-* Конструкторы
+* РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 */
 
 template <typename T>
@@ -31,7 +31,7 @@ Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> values)
     auto first = values.begin();
     size_t cols = first->size();
 
-    // Проверка на корректность
+    // РџСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ
     for (const auto &line : values)
     {
         if (line.size() != cols)
@@ -92,7 +92,7 @@ Matrix<T>::Matrix(T** cdata, const size_t rows, const size_t cols) : BaseMatrix(
 }
 
 /*
-* Копирование и перенос
+* РљРѕРїРёСЂРѕРІР°РЅРёРµ Рё РїРµСЂРµРЅРѕСЃ
 */
 
 template <typename T>
@@ -116,7 +116,7 @@ Matrix<T>::Matrix(Matrix<T>&& matrix) noexcept : BaseMatrix(matrix.nrows, matrix
 }
 
 /*
-* Деструктор
+* Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 */
 
 template <typename T>

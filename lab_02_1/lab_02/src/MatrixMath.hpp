@@ -1,4 +1,4 @@
-#include "Exceptions.h"
+п»ї#include "Exceptions.h"
 #include "Matrix.h"
 
 template <typename T>
@@ -247,7 +247,7 @@ Matrix<T>& Matrix<T>::divElem(const T& val)
 }
 
 /*
-* Операторы равенства и неравенства
+* РћРїРµСЂР°С‚РѕСЂС‹ СЂР°РІРµРЅСЃС‚РІР° Рё РЅРµСЂР°РІРµРЅСЃС‚РІР°
 */
 template <typename T>
 bool Matrix<T>::equals(const Matrix<T>& matrix) const

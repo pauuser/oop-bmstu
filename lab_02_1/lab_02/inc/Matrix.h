@@ -110,14 +110,14 @@ public:
     Matrix<T> operator-() const; // Смена знака
     Matrix<T>& neg();
 
-    Matrix<T>& abs();			 // модуль
+    Matrix<T>& abs();            // модуль
 
     T determinant() const;		 // определитель
-    Matrix<T> transpose();		 // транспонирование
-    void horizontal_mirror();	 // отражение по горизонтали
-    void vertical_mirror();		 // отражение по вертикали
-    void rotate_right();		 // поворот на 90 градусов вправо
-    void rotate_left();			 // поворот на 90 градусов влево
+    Matrix<T> transpose();       // транспонирование
+    void horizontal_mirror();    // отражение по горизонтали
+    void vertical_mirror();      // отражение по вертикали
+    void rotate_right();         // поворот на 90 градусов вправо
+    void rotate_left();          // поворот на 90 градусов влево
 
     Matrix<T> inverse();		 // обратная матрица
 
