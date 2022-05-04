@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include <iostream>
 
@@ -107,19 +107,19 @@ public:
     MatrixRow& operator[](const size_t ind);
     const MatrixRow& operator[](const size_t ind) const;
  
-    Matrix<T> operator-() const; // Смена знака
+    Matrix<T> operator-() const; // РЎРјРµРЅР° Р·РЅР°РєР°
     Matrix<T>& neg();
 
-    Matrix<T>& abs();			 // модуль
+    Matrix<T>& abs();			 // РјРѕРґСѓР»СЊ
 
-    T determinant() const;		 // определитель
-    Matrix<T> transpose();		 // транспонирование
-    void horizontal_mirror();	 // отражение по горизонтали
-    void vertical_mirror();		 // отражение по вертикали
-    void rotate_right();		 // поворот на 90 градусов вправо
-    void rotate_left();			 // поворот на 90 градусов влево
+    T determinant() const;		 // РѕРїСЂРµРґРµР»РёС‚РµР»СЊ
+    Matrix<T> transpose();		 // С‚СЂР°РЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёРµ
+    void horizontal_mirror();	 // РѕС‚СЂР°Р¶РµРЅРёРµ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
+    void vertical_mirror();		 // РѕС‚СЂР°Р¶РµРЅРёРµ РїРѕ РІРµСЂС‚РёРєР°Р»Рё
+    void rotate_right();		 // РїРѕРІРѕСЂРѕС‚ РЅР° 90 РіСЂР°РґСѓСЃРѕРІ РІРїСЂР°РІРѕ
+    void rotate_left();			 // РїРѕРІРѕСЂРѕС‚ РЅР° 90 РіСЂР°РґСѓСЃРѕРІ РІР»РµРІРѕ
 
-    Matrix<T> inverse();		 // обратная матрица
+    Matrix<T> inverse();		 // РѕР±СЂР°С‚РЅР°СЏ РјР°С‚СЂРёС†Р°
 
     void insertRow(const size_t before_ind, const T& fill_value = {});
     void insertCol(const size_t before_ind, const T& fill_value = {});
