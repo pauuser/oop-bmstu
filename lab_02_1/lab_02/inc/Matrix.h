@@ -33,6 +33,9 @@ public:
     Matrix<T>& operator =(Matrix<T>&& matrix) noexcept;
     Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> values);
 
+    template <typename T1> Matrix<T>& operator =(const Matrix<T1>& matrix);
+    template <typename T1> Matrix<T>& operator =(Matrix<T1>&& matrix) noexcept;
+
     static Matrix<T> DiagonalMatrix(const size_t size, const T& diag_val); 
 
     bool equals(const Matrix<T>& matrix) const;
@@ -47,34 +50,59 @@ public:
     Matrix<T> operator +(const T& val) const noexcept;
     Matrix<T>& addMatrix(const Matrix<T>& matrix);
     Matrix<T>& addElem(const T& val) noexcept;
+    template<typename T1> decltype(auto) operator +(const Matrix<T1>& matrix) const;
+    template<typename T1> decltype(auto) operator +(const T1& val) const noexcept;
+    template<typename T1> decltype(auto) addMatrix(const Matrix<T1>& matrix);
+    template<typename T1> decltype(auto) addElem(const T1& val) noexcept;
 
     Matrix<T>& operator +=(const T& val) noexcept;
     Matrix<T>& operator +=(const Matrix<T>& matrix);
+    template<typename T1> Matrix<T>& operator +=(const Matrix<T1>& matrix);
+    template<typename T1> Matrix<T>& operator +=(const T1& val) noexcept;
 
     Matrix<T> operator -(const Matrix<T>& matrix) const;
     Matrix<T> operator -(const T& val) const noexcept;
     Matrix<T>& subMatrix(const Matrix<T>& matrix);
     Matrix<T>& subElem(const T& val) noexcept;
+    template<typename T1> decltype(auto) operator -(const Matrix<T1>& matrix) const;
+    template<typename T1> decltype(auto) operator -(const T1& val) const noexcept;
+    template<typename T1> decltype(auto) subMatrix(const Matrix<T1>& matrix);
+    template<typename T1> decltype(auto) subElem(const T1& val) noexcept;
 
     Matrix<T>& operator -=(const T& val) noexcept;
     Matrix<T>& operator -=(const Matrix<T>& matrix);
+    template<typename T1> Matrix<T>& operator -=(const Matrix<T1>& matrix);
+    template<typename T1> Matrix<T>& operator -=(const T1& val) noexcept;
 
     Matrix<T> operator *(const Matrix<T>& matrix) const;
     Matrix<T> operator *(const T& val) const noexcept;
     Matrix<T>& mulMatrix(const Matrix<T>& matrix);
     Matrix<T>& mulElem(const T& val) noexcept;
     Matrix<T>& dot(const Matrix<T>& matrix);
+    template<typename T1> decltype(auto) operator *(const Matrix<T1>& matrix) const;
+    template<typename T1> decltype(auto) operator *(const T1& val) const noexcept;
+    template<typename T1> decltype(auto) mulMatrix(const Matrix<T1>& matrix);
+    template<typename T1> decltype(auto) mulElem(const T1& val) noexcept;
+    template<typename T1> decltype(auto) dot(const Matrix<T1>& matrix);
 
     Matrix<T>& operator *=(const T& val) noexcept;
     Matrix<T>& operator *=(const Matrix<T>& matrix);
+    template<typename T1> Matrix<T>& operator *=(const Matrix<T1>& matrix);
+    template<typename T1> Matrix<T>& operator *=(const T1& val) noexcept;
 
     Matrix<T> operator /(const Matrix<T>& matrix) const;
     Matrix<T> operator /(const T& val) const;
     Matrix<T>& divMatrix(const Matrix<T>& matrix);
     Matrix<T>& divElem(const T& val);
+    template<typename T1> decltype(auto) operator /(const Matrix<T1>& matrix) const;
+    template<typename T1> decltype(auto) operator /(const T1& val) const;
+    template<typename T1> decltype(auto) divMatrix(const Matrix<T1>& matrix);
+    template<typename T1> decltype(auto) divElem(const T1& val);
     
     Matrix<T>& operator /=(const T& val);
     Matrix<T>& operator /=(const Matrix<T>& matrix);
+    template<typename T1> Matrix<T>& operator /=(const Matrix<T1>& matrix);
+    template<typename T1> Matrix<T>& operator /=(const T1& val);
 
     MatrixRow& operator[](const size_t ind);
     const MatrixRow& operator[](const size_t ind) const;
@@ -120,7 +148,9 @@ private:
 
     bool _isMatrixIndValid(const size_t ind) const;
     bool _equalSize(const Matrix<T>& matr) const;
+    template<typename T1> bool _equalSize(const Matrix<T1>& matr) const;
     bool _CanMultiplyMatrices(const Matrix<T>& matr) const;
+    template<typename T1> bool _CanMultiplyMatrices(const Matrix<T1>& matr) const;
     void _cleanRows();
     void _checkPointer(T** cptr, const size_t len);
 
