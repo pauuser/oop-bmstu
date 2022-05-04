@@ -50,6 +50,7 @@ public:
     Matrix<T> operator +(const T& val) const noexcept;
     Matrix<T>& addMatrix(const Matrix<T>& matrix);
     Matrix<T>& addElem(const T& val) noexcept;
+
     template<typename T1> decltype(auto) operator +(const Matrix<T1>& matrix) const;
     template<typename T1> decltype(auto) operator +(const T1& val) const noexcept;
     template<typename T1> decltype(auto) addMatrix(const Matrix<T1>& matrix);
@@ -57,6 +58,7 @@ public:
 
     Matrix<T>& operator +=(const T& val) noexcept;
     Matrix<T>& operator +=(const Matrix<T>& matrix);
+
     template<typename T1> Matrix<T>& operator +=(const Matrix<T1>& matrix);
     template<typename T1> Matrix<T>& operator +=(const T1& val) noexcept;
 
@@ -64,6 +66,7 @@ public:
     Matrix<T> operator -(const T& val) const noexcept;
     Matrix<T>& subMatrix(const Matrix<T>& matrix);
     Matrix<T>& subElem(const T& val) noexcept;
+
     template<typename T1> decltype(auto) operator -(const Matrix<T1>& matrix) const;
     template<typename T1> decltype(auto) operator -(const T1& val) const noexcept;
     template<typename T1> decltype(auto) subMatrix(const Matrix<T1>& matrix);
@@ -79,6 +82,7 @@ public:
     Matrix<T>& mulMatrix(const Matrix<T>& matrix);
     Matrix<T>& mulElem(const T& val) noexcept;
     Matrix<T>& dot(const Matrix<T>& matrix);
+
     template<typename T1> decltype(auto) operator *(const Matrix<T1>& matrix) const;
     template<typename T1> decltype(auto) operator *(const T1& val) const noexcept;
     template<typename T1> decltype(auto) mulMatrix(const Matrix<T1>& matrix);
@@ -87,6 +91,7 @@ public:
 
     Matrix<T>& operator *=(const T& val) noexcept;
     Matrix<T>& operator *=(const Matrix<T>& matrix);
+
     template<typename T1> Matrix<T>& operator *=(const Matrix<T1>& matrix);
     template<typename T1> Matrix<T>& operator *=(const T1& val) noexcept;
 
@@ -94,6 +99,7 @@ public:
     Matrix<T> operator /(const T& val) const;
     Matrix<T>& divMatrix(const Matrix<T>& matrix);
     Matrix<T>& divElem(const T& val);
+
     template<typename T1> decltype(auto) operator /(const Matrix<T1>& matrix) const;
     template<typename T1> decltype(auto) operator /(const T1& val) const;
     template<typename T1> decltype(auto) divMatrix(const Matrix<T1>& matrix);
@@ -101,6 +107,7 @@ public:
     
     Matrix<T>& operator /=(const T& val);
     Matrix<T>& operator /=(const Matrix<T>& matrix);
+
     template<typename T1> Matrix<T>& operator /=(const Matrix<T1>& matrix);
     template<typename T1> Matrix<T>& operator /=(const T1& val);
 
@@ -112,14 +119,14 @@ public:
 
     Matrix<T>& abs();            // модуль
 
-    T determinant() const;		 // определитель
+    T determinant() const;       // определитель
     Matrix<T> transpose();       // транспонирование
     void horizontal_mirror();    // отражение по горизонтали
     void vertical_mirror();      // отражение по вертикали
     void rotate_right();         // поворот на 90 градусов вправо
     void rotate_left();          // поворот на 90 градусов влево
 
-    Matrix<T> inverse();		 // обратная матрица
+    Matrix<T> inverse();         // обратная матрица
 
     void insertRow(const size_t before_ind, const T& fill_value = {});
     void insertCol(const size_t before_ind, const T& fill_value = {});
