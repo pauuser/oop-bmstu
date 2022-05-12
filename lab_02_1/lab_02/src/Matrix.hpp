@@ -1,4 +1,5 @@
 ﻿#include <ostream>
+#include "..\inc\Matrix.h"
 
 /*
 * Конструкторы

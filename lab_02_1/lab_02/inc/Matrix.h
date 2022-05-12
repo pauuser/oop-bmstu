@@ -140,18 +140,20 @@ public:
     Iterator<T> begin();
     Iterator<T> end();
 
-    ConstIterator<T> begin() const;
-    ConstIterator<T> end() const;
+    ConstIterator<T> begin()  const;
+    ConstIterator<T> end()    const;
 
     ConstIterator<T> cbegin() const;
-    ConstIterator<T> cend() const;
+    ConstIterator<T> cend()   const;
 
     void fill(Iterator<T>& start, const Iterator<T>& end, T& fill_value = {});
+    //void reset(MatrixRow *newdata, const size_t size);
 
 private:
     SharedPtr<MatrixRow[]> data = nullptr;
 
     SharedPtr<MatrixRow[]> _allocateMatrix(const size_t rows, const size_t cols);
+    void                   _reallocateMatrix(const size_t rows, const size_t cols);
 
     bool _isMatrixIndValid(const size_t ind) const;
     bool _equalSize(const Matrix<T>& matr) const;
@@ -204,6 +206,7 @@ public:
         void fillValue(const T& value);
         void reset();
         void reset(T* newdata, const size_t size);
+        void reset(MatrixRow* newdata, const size_t size);
 
         size_t getLength() const { return length; };
 

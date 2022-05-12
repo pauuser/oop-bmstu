@@ -805,5 +805,12 @@ int main()
     std::cout << 10 << "=" << std::endl;
     std::cout << (P /= 10);
 
+    Matrix K = { { 1, 2, 3 },
+                 { 5, 3, 2 }};
+    Iterator it(K);
+    std::cout << *it;
+    K.resize(3, 3);
+    std::cout << *it;
+
     return 0;
 }

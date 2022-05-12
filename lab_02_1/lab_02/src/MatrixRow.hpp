@@ -184,6 +184,13 @@ void Matrix<T>::MatrixRow::reset(T* newdata, const size_t size)
     this->length = size;
 }
 
+template<typename T>
+inline void Matrix<T>::MatrixRow::reset(MatrixRow* newdata, const size_t size)
+{
+    this->data = MatrixRow(newdata, size);
+    this->length = size;
+}
+
 template <typename T>
 Matrix<T>::MatrixRow& Matrix<T>::MatrixRow::operator+=(const MatrixRow& row)
 {
