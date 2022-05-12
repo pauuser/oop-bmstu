@@ -4,8 +4,16 @@ project(src)
 set(MANAGERS
         )
 
+set(FACADE
+        facade/Facade.cpp facade/Facade.hpp)
+
+set(COMMANDS
+        commands/BaseCommand.hpp)
+
 add_library(${PROJECT_NAME}
-        ${MANAGERS})
+        ${MANAGERS}
+        ${FACADE}
+        ${COMMANDS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 
