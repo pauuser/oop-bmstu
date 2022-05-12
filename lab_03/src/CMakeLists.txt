@@ -10,10 +10,14 @@ set(FACADE
 set(COMMANDS
         commands/BaseCommand.hpp)
 
+set(OBJECTS
+        objects/Object.hpp objects/Composite/Composite.cpp objects/Composite/Composite.hpp objects/Model/Model.hpp objects/Point/Point.cpp objects/Point/Point.hpp)
+
 add_library(${PROJECT_NAME}
         ${MANAGERS}
         ${FACADE}
-        ${COMMANDS})
+        ${COMMANDS}
+        ${OBJECTS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 
