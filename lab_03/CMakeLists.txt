@@ -16,13 +16,23 @@ find_package(Qt6 COMPONENTS
 
 add_executable(lab_03
         main.cpp
-        ui/mainwindow.cpp
+        gui/qt/mainwindow.cpp
+        gui/qt/mainwindow.h
         )
+
 target_link_libraries(lab_03
         Qt::Core
         Qt::Gui
         Qt::Widgets
         )
+
+add_subdirectory(./src)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+        ./src/
+        ./gui/qt/)
+
+target_link_libraries(${PROJECT_NAME} src)
 
 if (WIN32)
     set(DEBUG_SUFFIX)
