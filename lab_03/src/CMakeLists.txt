@@ -11,7 +11,7 @@ set(COMMANDS
         commands/BaseCommand.hpp)
 
 set(OBJECTS
-        objects/Object.hpp objects/Composite/Composite.cpp objects/Composite/Composite.hpp objects/Model/Model.hpp objects/Point/Point.cpp objects/Point/Point.hpp)
+        objects/Object.hpp objects/Composite/Composite.cpp objects/Composite/Composite.hpp objects/Model/Model.hpp objects/Point/Point.cpp objects/Point/Point.hpp objects/Edge/Edge.cpp objects/Edge/Edge.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}
