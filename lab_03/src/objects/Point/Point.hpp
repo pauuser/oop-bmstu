@@ -44,15 +44,15 @@ public:
     bool operator!=(const Point& point) const;
 
     void move  (double dx, double dy, double dz);
-    void scale (double kx, double ky, double kz, const Point &point);
-    void rotate(double ax, double ay, double az, const Point &point);
+    void scale (double kx, double ky, double kz);
+    void rotate(double ax, double ay, double az);
 
     void rotate_x(double ax);
     void rotate_y(double ay);
     void rotate_z(double az);
 
 private:
-    double x = 0, y = 0, z = 0;
+    double _x = 0, _y = 0, _z = 0;
 
     static double _toRadians(double degrees);
 };

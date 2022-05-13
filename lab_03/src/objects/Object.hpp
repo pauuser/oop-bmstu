@@ -8,7 +8,9 @@
 #include <memory>
 #include <vector>
 
-class Visitor;
+#include "../Point/Point.hpp"
+
+class Visitor; // TODO fix visitor in accept
 
 class Object;
 using Iterator = std::vector<std::shared_ptr<Object>>::iterator;
@@ -36,7 +38,7 @@ public:
     virtual ConstIterator cend()   const { return ConstIterator{}; }
 
     virtual void accept(std::shared_ptr<Visitor> visitor) = 0; // FIX ME
-    virtual void transform(...) = 0;                           // FIX ME
+    virtual void transform(const Point& move_params, const Point& scale_params, const Point& rotate_params) = 0;
 };
 
 class VisibleObject : public Object

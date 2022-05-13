@@ -11,13 +11,17 @@ set(COMMANDS
         commands/BaseCommand.hpp)
 
 set(OBJECTS
-        objects/Object.hpp objects/Composite/Composite.cpp objects/Composite/Composite.hpp objects/Model/Model.hpp objects/Point/Point.cpp objects/Point/Point.hpp objects/Edge/Edge.cpp objects/Edge/Edge.hpp)
+        objects/Object.hpp objects/Composite/Composite.cpp objects/Composite/Composite.hpp objects/Model/Model.hpp objects/Point/Point.cpp objects/Point/Point.hpp objects/Edge/Edge.cpp objects/Edge/Edge.hpp objects/Model/FrameModel/FrameModel.cpp objects/Model/FrameModel/FrameModel.hpp objects/Model/FrameModelImplementation/FrameModelImplementation.cpp objects/Model/FrameModelImplementation/FrameModelImplementation.hpp objects/Camera/Camera.cpp objects/Camera/Camera.hpp)
+
+set(VISITOR
+        visitor/BaseVisitor.h)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}
         ${FACADE}
         ${COMMANDS}
-        ${OBJECTS})
+        ${OBJECTS}
+        ${VISITOR})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 

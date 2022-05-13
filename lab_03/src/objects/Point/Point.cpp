@@ -6,25 +6,25 @@
 
 Point::Point(double x, double y, double z)
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
+    this->_x = x;
+    this->_y = y;
+    this->_z = z;
 }
 
 Point::Point(Point &&point) noexcept
 {
-    this->x = point.x;
-    this->y = point.y;
-    this->z = point.z;
+    this->_x = point._x;
+    this->_y = point._y;
+    this->_z = point._z;
 
     point.~Point();
 }
 
 Point &Point::operator=(Point &&point) noexcept
 {
-    this->x = point.x;
-    this->y = point.y;
-    this->z = point.z;
+    this->_x = point._x;
+    this->_y = point._y;
+    this->_z = point._z;
 
     point.~Point();
 
@@ -33,50 +33,50 @@ Point &Point::operator=(Point &&point) noexcept
 
 void Point::setX(double new_x)
 {
-    this->x = new_x;
+    this->_x = new_x;
 }
 
 double Point::getX() const
 {
-    return this->x;
+    return this->_x;
 }
 
 void Point::setY(double new_y)
 {
-    this->y = new_y;
+    this->_y = new_y;
 }
 
 double Point::getY() const
 {
-    return this->y;
+    return this->_y;
 }
 
 void Point::setZ(double new_z)
 {
-    this->z = new_z;
+    this->_z = new_z;
 }
 
 double Point::getZ() const
 {
-    return this->z;
+    return this->_z;
 }
 
 Point Point::operator+(const Point &point) const
 {
     Point result{};
 
-    result.x = this->x + point.x;
-    result.y = this->y + point.y;
-    result.z = this->z + point.z;
+    result._x = this->_x + point._x;
+    result._y = this->_y + point._y;
+    result._z = this->_z + point._z;
 
     return result;
 }
 
 Point& Point::operator+=(const Point &point)
 {
-    this->x += point.x;
-    this->y += point.y;
-    this->z += point.z;
+    this->_x += point._x;
+    this->_y += point._y;
+    this->_z += point._z;
 
     return *this;
 }
@@ -85,18 +85,18 @@ Point Point::operator-(const Point &point) const
 {
     Point result{};
 
-    result.x = this->x - point.x;
-    result.y = this->y - point.y;
-    result.z = this->z - point.z;
+    result._x = this->_x - point._x;
+    result._y = this->_y - point._y;
+    result._z = this->_z - point._z;
 
     return result;
 }
 
 Point& Point::operator-=(const Point &point)
 {
-    this->x -= point.x;
-    this->y -= point.y;
-    this->z -= point.z;
+    this->_x -= point._x;
+    this->_y -= point._y;
+    this->_z -= point._z;
 
     return *this;
 }
@@ -105,58 +105,50 @@ Point Point::operator-() const
 {
     Point result{};
 
-    result.x = -this->x;
-    result.y = -this->y;
-    result.z = -this->z;
+    result._x = -this->_x;
+    result._y = -this->_y;
+    result._z = -this->_z;
 
     return result;
 }
 
 bool Point::operator==(const Point& point) const
 {
-    bool res = (this->x == point.x) &&
-               (this->y == point.y) &&
-               (this->z == point.z);
+    bool res = (this->_x == point._x) &&
+               (this->_y == point._y) &&
+               (this->_z == point._z);
 
     return res;
 }
 
 bool Point::operator!=(const Point& point) const
 {
-    bool res = (this->x == point.x) &&
-               (this->y == point.y) &&
-               (this->z == point.z);
+    bool res = (this->_x == point._x) &&
+               (this->_y == point._y) &&
+               (this->_z == point._z);
 
     return !res;
 }
 
 void Point::move(double dx, double dy, double dz)
 {
-    this->x += dx;
-    this->y += dy;
-    this->z += dz;
+    this->_x += dx;
+    this->_y += dy;
+    this->_z += dz;
 }
 
-void Point::scale(double kx, double ky, double kz, const Point& point)
+void Point::scale(double kx, double ky, double kz)
 {
-    *this = *this - point;
-
-    this->x *= kx;
-    this->y *= ky;
-    this->z *= kz;
-
-    *this = *this + point;
+    this->_x *= kx;
+    this->_y *= ky;
+    this->_z *= kz;
 }
 
-void Point::rotate(double ax, double ay, double az, const Point &point)
+void Point::rotate(double ax, double ay, double az)
 {
-    *this = *this - point;
-
     rotate_x(ax);
     rotate_y(ay);
     rotate_z(az);
-
-    *this = *this + point;
 }
 
 double Point::_toRadians(double degrees)
@@ -168,28 +160,28 @@ void Point::rotate_x(double ax)
 {
     const double cosinus = cos(_toRadians(ax));
     const double sinus   = sin(_toRadians(ax));
-    const double y       = this->y;
+    const double y       = this->_y;
 
-    this->y = y * cosinus - this->z * sinus;
-    this->z = this->z * cosinus + y * sinus;
+    this->_y = y * cosinus - this->_z * sinus;
+    this->_z = this->_z * cosinus + y * sinus;
 }
 
 void Point::rotate_y(double ay)
 {
     const double cosinus = cos(_toRadians(ay));
     const double sinus   = sin(_toRadians(ay));
-    const double x       = this->x;
+    const double x       = this->_x;
 
-    this->x = x * cosinus - this->z * sinus;
-    this->y = this->z * cosinus + x * sinus;
+    this->_x = x * cosinus - this->_z * sinus;
+    this->_y = this->_z * cosinus + x * sinus;
 }
 
 void Point::rotate_z(double az)
 {
     const double cosinus = cos(_toRadians(az));
     const double sinus   = sin(_toRadians(az));
-    const double x       = this->x;
+    const double x       = this->_x;
 
-    this->x = x * cosinus - this->y * sinus;
-    this->y = this->y * cosinus + x * sinus;
+    this->_x = x * cosinus - this->_y * sinus;
+    this->_y = this->_y * cosinus + x * sinus;
 }
