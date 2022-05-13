@@ -7,8 +7,7 @@
 
 #include "../Object.hpp"
 #include "../Point/Point.hpp"
-
-// TODO : Add visitor
+#include "../../visitor/DrawVisitor/DrawVisitor.hpp"
 
 class Camera : public InvisibleObject
 {
@@ -18,7 +17,7 @@ public:
     ~Camera() override = default;
 
     void transform(const Point& move_params, const Point& scale_params, const Point& rotate_params) override;
-    void accept(std::shared_ptr<Visitor> visitor) override;
+    void accept(std::shared_ptr<BaseVisitor> visitor) override;
 
 private:
     Point _pos{};

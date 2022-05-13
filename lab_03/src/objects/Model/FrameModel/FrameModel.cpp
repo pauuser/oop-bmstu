@@ -6,9 +6,9 @@
 
 FrameModel::FrameModel(std::shared_ptr<FrameModelImplementation> imp) : _implementation(imp) {}
 
-void FrameModel::accept(std::shared_ptr<Visitor> visitor)
+void FrameModel::accept(std::shared_ptr<BaseVisitor> visitor)
 {
-    visitor->visit(*this); // TODO: check if visitor defined
+    visitor->visit(*this);
 }
 
 void FrameModel::transform(const Point& move_params, const Point& scale_params, const Point& rotate_params)

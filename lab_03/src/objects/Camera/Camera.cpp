@@ -46,7 +46,7 @@ void Camera::transform(const Point &move_params, const Point &scale_params, cons
     this->_rotate(rotate_params);
 }
 
-void Camera::accept(std::shared_ptr<Visitor> visitor)
+void Camera::accept(std::shared_ptr<BaseVisitor> visitor)
 {
     visitor->visit(*this);
 }
