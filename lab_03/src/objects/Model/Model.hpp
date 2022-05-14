@@ -9,6 +9,7 @@
 
 class Model : public VisibleObject
 {
+
 };
 
 #endif//LAB_03_MODEL_HPP

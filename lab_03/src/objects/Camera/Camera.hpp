@@ -19,6 +19,11 @@ public:
     void transform(const Point& move_params, const Point& scale_params, const Point& rotate_params) override;
     void accept(std::shared_ptr<BaseVisitor> visitor) override;
 
+    Point getPosition();
+    double getXangle();
+    double getYangle();
+    double getZangle();
+
 private:
     Point _pos{};
     double _ax = 0, _ay = 0, _az = 0;

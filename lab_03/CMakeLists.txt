@@ -18,7 +18,9 @@ add_executable(lab_03
         main.cpp
         gui/qt/mainwindow.cpp
         gui/qt/mainwindow.h
-        )
+        gui/drawer/BaseDrawer.hpp
+        gui/qt/QtDrawer/QtDrawer.cpp gui/qt/QtDrawer/QtDrawer.hpp
+        gui/drawer/AbstractFactory/AbstractFactory.hpp gui/qt/QtFactory/QtFactory.cpp gui/qt/QtFactory/QtFactory.hpp)
 
 target_link_libraries(lab_03
         Qt::Core

@@ -5,10 +5,11 @@
 #ifndef LAB_03_FRAMEMODEL_HPP
 #define LAB_03_FRAMEMODEL_HPP
 
-#include "../Model.hpp"
-#include "../FrameModelImplementation/FrameModelImplementation.hpp"
+#include <memory>
 
-#include "visitor/BaseVisitor.h"
+#include "visitor/DrawVisitor/DrawVisitor.hpp"
+#include "../FrameModelImplementation/FrameModelImplementation.hpp"
+#include "../Model.hpp"
 
 class FrameModel : public Model
 {
@@ -19,6 +20,11 @@ public:
 
     void accept(std::shared_ptr<BaseVisitor> visitor) override;
     void transform(const Point& move_params, const Point& scale_params, const Point& rotate_params) override;
+
+    friend void DrawVisitor::visit(const FrameModel& model);
+
+protected:
+    [[nodiscard]] std::shared_ptr<FrameModelImplementation> getImplementation() const;
 
 private:
     std::shared_ptr<FrameModelImplementation> _implementation = nullptr;

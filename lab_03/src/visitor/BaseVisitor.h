@@ -5,6 +5,7 @@
 #ifndef LAB_03_BASEVISITOR_H
 #define LAB_03_BASEVISITOR_H
 
+class FrameModel;
 class Model;
 class Scene;
 class Camera;
@@ -17,9 +18,10 @@ public:
     virtual ~BaseVisitor() = default;
 
     virtual void visit(const Camera& camera) = 0;
-    virtual void visit(const Model& model) = 0;
+    virtual void visit(const FrameModel& model) = 0;
     virtual void visit(const Composite& composite) = 0;
     virtual void visit(const Scene& scene) = 0;
+    virtual void visit(const Model& model) = 0;
 };
 
 #endif//LAB_03_BASEVISITOR_H

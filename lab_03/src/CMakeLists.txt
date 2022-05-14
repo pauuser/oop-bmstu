@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.21)
 project(src)
 
 set(MANAGERS
-        managers/SceneManager/SceneManager.cpp managers/SceneManager/SceneManager.hpp managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp)
+        managers/SceneManager/SceneManager.cpp managers/SceneManager/SceneManager.hpp
+        managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp
+        managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp managers/DrawManager/DrawManager.cpp managers/DrawManager/DrawManager.hpp)
 
 set(FACADE
         #facade/Facade.cpp facade/Facade.hpp
@@ -23,7 +25,8 @@ set(OBJECTS
         objects/Camera/Camera.cpp objects/Camera/Camera.hpp)
 
 set(VISITOR
-        visitor/BaseVisitor.h visitor/DrawVisitor/DrawVisitor.cpp visitor/DrawVisitor/DrawVisitor.hpp)
+        visitor/BaseVisitor.h
+        visitor/DrawVisitor/DrawVisitor.cpp visitor/DrawVisitor/DrawVisitor.hpp)
 
 set(SCENE
         scene/Scene.cpp scene/Scene.hpp)

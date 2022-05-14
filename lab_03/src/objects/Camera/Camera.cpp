@@ -50,3 +50,23 @@ void Camera::accept(std::shared_ptr<BaseVisitor> visitor)
 {
     visitor->visit(*this);
 }
+
+Point Camera::getPosition()
+{
+    return this->_pos;
+}
+
+double Camera::getXangle()
+{
+    return this->_ax;
+}
+
+double Camera::getYangle()
+{
+    return this->_ay;
+}
+
+double Camera::getZangle()
+{
+    return this->_az;
+}

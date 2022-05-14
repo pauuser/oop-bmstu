@@ -10,8 +10,7 @@
 
 #include "../../Point/Point.hpp"
 #include "../../Edge/Edge.hpp"
-
-class Visitor; // TODO: add visitor include + friend DrawVisitor??
+#include "visitor/DrawVisitor/DrawVisitor.hpp"
 
 class FrameModelImplementation
 {
@@ -28,13 +27,16 @@ public:
 
     virtual void transform(const Point& move_params, const Point& scale_params, const Point& rotate_params);
 
+    friend void DrawVisitor::visit(const FrameModel &model);
+
+protected:
+    const std::vector<Point>& _getPoints();
+    const std::vector<Edge>&  _getEdges();
+
 private:
     std::vector<Point> _points;
     std::vector<Edge>  _edges;
     Point _center{};
-
-    const std::vector<Point>& _getPoints();
-    const std::vector<Edge>&  _getEdges();
 
     void _move  (const Point& move_params);
     void _scale (const Point& scale_params);

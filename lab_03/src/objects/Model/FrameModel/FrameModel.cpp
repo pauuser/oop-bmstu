@@ -16,3 +16,7 @@ void FrameModel::transform(const Point& move_params, const Point& scale_params, 
     this->_implementation->transform(move_params, scale_params, rotate_params);
 }
 
+std::shared_ptr<FrameModelImplementation> FrameModel::getImplementation() const
+{
+    return this->_implementation;
+}
