@@ -6,11 +6,12 @@
 #define LAB_03_FACADE_HPP
 
 #include <memory>
+#include "commands/BaseCommand.hpp"
 
 class Facade
 {
 public:
-    void execute(const std::shared_ptr<Command> command);
+    void execute(const std::shared_ptr<BaseCommand> command);
 };
 
 

@@ -28,7 +28,8 @@ void DrawManager::setCamera(const std::shared_ptr<Camera> &camera)
 
 void DrawManagerCreator::_createManager()
 {
-    _manager = std::make_shared<DrawManager>();
+    static auto manager = std::make_shared<DrawManager>();
+    this->_manager = manager;
 }
 
 std::shared_ptr<DrawManager> DrawManagerCreator::getManager()

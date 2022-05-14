@@ -17,7 +17,7 @@ public:
     explicit Composite(const std::shared_ptr<Object>& obj);
     explicit Composite(const std::vector<std::shared_ptr<Object>>& vec);
 
-    bool add(std::shared_ptr<Object> &obj) override;
+    bool add(const std::shared_ptr<Object> &obj) override;
     bool remove(const Iterator &it) override;
 
     [[nodiscard]] bool isComposite() const override;

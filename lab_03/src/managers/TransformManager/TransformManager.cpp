@@ -11,7 +11,8 @@ void TransformManager::transform(std::shared_ptr<Object> &obj, const Point &move
 
 void TransformManagerCreator::_createManager()
 {
-    this->_manager = std::make_shared<TransformManager>();
+    static auto manager = std::make_shared<TransformManager>();
+    this->_manager = manager;
 }
 
 std::shared_ptr<TransformManager> TransformManagerCreator::getManager()

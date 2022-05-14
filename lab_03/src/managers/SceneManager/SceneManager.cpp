@@ -40,6 +40,7 @@ std::shared_ptr<SceneManager> SceneManagerCreator::getManager()
 
 void SceneManagerCreator::_createManager()
 {
-    this->_manager = std::make_shared<SceneManager>();
+    static auto manager = std::make_shared<SceneManager>();
+    this->_manager = manager;
 }
 

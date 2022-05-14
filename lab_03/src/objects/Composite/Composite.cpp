@@ -14,7 +14,7 @@ Composite::Composite(const std::vector<std::shared_ptr<Object>> &vec)
     this->_objects = vec;
 }
 
-bool Composite::add(std::shared_ptr<Object> &obj)
+bool Composite::add(const std::shared_ptr<Object> &obj)
 {
     this->_objects.push_back(obj);
 

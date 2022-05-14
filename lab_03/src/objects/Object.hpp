@@ -21,8 +21,8 @@ public:
     Object() = default;
     virtual ~Object() = default;
 
-    virtual bool add   (std::shared_ptr<Object> &obj) { return false; }
-    virtual bool remove(const Iterator &it)           { return false; }
+    virtual bool add   (const std::shared_ptr<Object> &obj) { return false; }
+    virtual bool remove(const Iterator &it)                 { return false; }
 
     virtual bool isComposite() const { return false; }
     virtual bool isVisible() const = 0;

@@ -4,7 +4,7 @@
 
 #include "Scene.hpp"
 
-void Scene::addObject(std::shared_ptr<Object> &object)
+void Scene::addObject(const std::shared_ptr<Object> &object)
 {
     if (object->isVisible())
     {
