@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(src)
 
 set(MANAGERS
-        managers/SceneManager/SceneManager.cpp managers/SceneManager/SceneManager.hpp managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp)
+        managers/SceneManager/SceneManager.cpp managers/SceneManager/SceneManager.hpp managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp)
 
 set(FACADE
         #facade/Facade.cpp facade/Facade.hpp
