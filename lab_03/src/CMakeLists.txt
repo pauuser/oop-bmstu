@@ -6,7 +6,7 @@ set(MANAGERS
         managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp
         managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp
         managers/DrawManager/DrawManager.cpp managers/DrawManager/DrawManager.hpp
-        )
+        commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp)
 
 set(FACADE
         facade/Facade.cpp facade/Facade.hpp
@@ -24,7 +24,7 @@ set(COMMANDS
         commands/camera/remove/RemoveCamera.cpp commands/camera/remove/RemoveCamera.h
         commands/camera/set/SetCamera.cpp commands/camera/set/SetCamera.hpp
         commands/model/add/AddModel.cpp commands/model/add/AddModel.hpp
-        )
+        commands/model/count/CountModel.cpp commands/model/count/CountModel.hpp commands/model/remove/RemoveModel.cpp commands/model/remove/RemoveModel.hpp commands/model/rotate/RotateModel.cpp commands/model/rotate/RotateModel.hpp commands/model/scale/ScaleModel.cpp commands/model/scale/ScaleModel.hpp)
 
 set(OBJECTS
         objects/Object.hpp
