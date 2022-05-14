@@ -6,6 +6,13 @@
 #define LAB_03_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+
+#include "src/facade/Facade.hpp"
+#include "gui/drawer/BaseDrawer.hpp"
+#include "gui/drawer/AbstractFactory/AbstractFactory.hpp"
+#include "gui/qt/QtDrawer/QtDrawer.hpp"
+#include "gui/qt/QtFactory/QtFactory.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -16,8 +23,8 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-
-private:
+/*
+private slots:
     void on_pushButton_move_clicked();
     void on_pushButton_scale_clicked();
     void on_pushButton_spin_clicked();
@@ -31,6 +38,10 @@ private:
     void on_pushButton_del_camera_cur_clicked();
     void on_pushButton_add_camera_clicked();
     void change_cam();
+    */
+
+protected:
+    void setupScene();
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -38,6 +49,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    std::shared_ptr<Facade> _facade;
+    std::shared_ptr<QGraphicsScene> _scene;
+    std::shared_ptr<BaseDrawer> _drawer;
 };
 
 
