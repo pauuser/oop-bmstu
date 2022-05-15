@@ -29,11 +29,11 @@ private slots:
     void on_pushButton_move_clicked();
     void on_pushButton_add_camera_clicked();
     void on_pushButton_spin_clicked();
-    /*
     void on_pushButton_scale_clicked();
+    void on_pushButton_load_model_clicked();
+    /*
     void on_pushButton_del_model_cur_clicked();
     void on_pushButton_del_model_all_clicked();
-    void on_pushButton_load_model_clicked();
     void on_pushButton_camera_move_up_clicked();
     void on_pushButton_camera_move_left_clicked();
     void on_pushButton_camera_move_down_clicked();

@@ -43,8 +43,6 @@ void FrameModelImplementation::_move(const Point &move_params)
     {
         point.move(move_params.getX(), move_params.getY(), move_params.getZ());
     }
-
-    this->_center.move(move_params.getX(), move_params.getY(), move_params.getZ());
 }
 
 void FrameModelImplementation::_scale(const Point &scale_params)
@@ -66,6 +64,7 @@ void FrameModelImplementation::_rotate(const Point &rotate_params)
 void FrameModelImplementation::transform(const Point &move_params, const Point &scale_params, const Point &rotate_params)
 {
     this->_move(move_params); // Moving object + center
+    this->_center.move(move_params.getX(), move_params.getY(), move_params.getZ());
 
     this->_move(-(this->_center));
 

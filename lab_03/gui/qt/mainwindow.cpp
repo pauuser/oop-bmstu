@@ -41,7 +41,7 @@ void MainWindow::setupScene()
 #include <vector>
 #include "commands/model/add/AddModel.hpp"
 
-void MainWindow::on_pushButton_move_clicked()
+void MainWindow::on_pushButton_load_model_clicked()
 {
     std::cout << "Inside!\n";
 
@@ -107,6 +107,33 @@ void MainWindow::on_pushButton_spin_clicked()
 
     auto rotcmd = std::make_shared<RotateModel>(1, ax, ay, az);
     this->_facade->execute(rotcmd);
+    updateScene();
+}
+
+#include "commands/model/scale/ScaleModel.hpp"
+
+void MainWindow::on_pushButton_scale_clicked()
+{
+    // TODO: add ID choose to all transformation commands
+    double kx = ui->doubleSpinBox_scale_x->value();
+    double ky = ui->doubleSpinBox_scale_y->value();
+    double kz = ui->doubleSpinBox_scale_z->value();
+
+    auto sclcmd = std::make_shared<ScaleModel>(1, kx, ky, kz);
+    this->_facade->execute(sclcmd);
+    updateScene();
+}
+
+#include "commands/model/move/MoveModel.hpp"
+
+void MainWindow::on_pushButton_move_clicked()
+{
+    double dx = ui->doubleSpinBox_move_x->value();
+    double dy = ui->doubleSpinBox_move_y->value();
+    double dz = ui->doubleSpinBox_move_z->value();
+
+    auto movcmd = std::make_shared<MoveModel>(1, dx, dy, dz);
+    this->_facade->execute(movcmd);
     updateScene();
 }
 

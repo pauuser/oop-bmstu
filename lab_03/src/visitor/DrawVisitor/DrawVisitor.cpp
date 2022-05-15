@@ -37,7 +37,7 @@ Point DrawVisitor::_projectPoint(const Point &point)
     res_point.setX(new_x);
     res_point.setY(new_y);
 
-    std::cout << res_point.getX() << " " << res_point.getY() << std::endl;
+    // std::cout << res_point.getX() << " " << res_point.getY() << std::endl;
 
     return res_point;
 }
@@ -56,8 +56,9 @@ void DrawVisitor::visit(const FrameModel &model)
 
     for (const auto &edge: model.getImplementation()->_getEdges())
     {
-        std::cout << points[edge.getFirst()].getX() << " " << points[edge.getFirst()].getY() << " " << points[edge.getFirst()].getZ() << std::endl;
-        std::cout << points[edge.getSecond()].getX() << " " << points[edge.getSecond()].getY() << " " << points[edge.getSecond()].getZ() << std::endl;
+        // TODO: get rid of prints
+        //std::cout << points[edge.getFirst()].getX() << " " << points[edge.getFirst()].getY() << " " << points[edge.getFirst()].getZ() << std::endl;
+        //std::cout << points[edge.getSecond()].getX() << " " << points[edge.getSecond()].getY() << " " << points[edge.getSecond()].getZ() << std::endl;
         this->_drawer->drawLine(
                 this->_projectPoint(points[edge.getFirst()]),
                 this->_projectPoint(points[edge.getSecond()])
