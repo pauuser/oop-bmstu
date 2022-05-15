@@ -8,8 +8,6 @@
 #include <cmath>
 #include <memory>
 
-// TODO : test
-
 class Point
 {
 public:

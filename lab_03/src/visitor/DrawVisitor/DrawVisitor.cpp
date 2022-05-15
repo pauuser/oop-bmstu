@@ -31,6 +31,7 @@ Point DrawVisitor::_projectPoint(const Point &point)
     res_point.move(center.getX(), center.getY(), center.getZ());
 
     // Now we can project the camera image to 2d screen
+
     //double new_x = res_point.getY() - res_point.getX() * sin(_toRad(45));
     //double new_y = res_point.getZ() - res_point.getX() * cos(_toRad(45));
     double new_x = res_point.getY();
@@ -38,8 +39,6 @@ Point DrawVisitor::_projectPoint(const Point &point)
 
     res_point.setX(new_x);
     res_point.setY(new_y);
-
-    // std::cout << res_point.getX() << " " << res_point.getY() << std::endl;
 
     return res_point;
 }
@@ -58,18 +57,9 @@ void DrawVisitor::visit(const FrameModel &model)
 
     for (const auto &edge: model.getImplementation()->_getEdges())
     {
-        // TODO: get rid of prints
-        //std::cout << points[edge.getFirst()].getX() << " " << points[edge.getFirst()].getY() << " " << points[edge.getFirst()].getZ() << std::endl;
-        //std::cout << points[edge.getSecond()].getX() << " " << points[edge.getSecond()].getY() << " " << points[edge.getSecond()].getZ() << std::endl;
         this->_drawer->drawLine(
                 this->_projectPoint(points[edge.getFirst()]),
                 this->_projectPoint(points[edge.getSecond()])
                 );
-        /*
-        std::cout << "Here! " << (this->_projectPoint(points[edge.getFirst()]).getX()) << " " <<
-                                 (this->_projectPoint(points[edge.getFirst()]).getY()) << " " <<
-                                 (this->_projectPoint(points[edge.getSecond()]).getX()) << " " <<
-                                 (this->_projectPoint(points[edge.getSecond()]).getY()) << " " <<std::endl;
-        */
     }
 }
