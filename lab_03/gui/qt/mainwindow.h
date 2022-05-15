@@ -14,6 +14,7 @@
 #include "gui/qt/QtDrawer/QtDrawer.hpp"
 #include "gui/qt/QtFactory/QtFactory.hpp"
 
+#include <iostream>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,11 +24,13 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-/*
+
 private slots:
     void on_pushButton_move_clicked();
-    void on_pushButton_scale_clicked();
+    void on_pushButton_add_camera_clicked();
     void on_pushButton_spin_clicked();
+    /*
+    void on_pushButton_scale_clicked();
     void on_pushButton_del_model_cur_clicked();
     void on_pushButton_del_model_all_clicked();
     void on_pushButton_load_model_clicked();
@@ -36,12 +39,12 @@ private slots:
     void on_pushButton_camera_move_down_clicked();
     void on_pushButton_camera_move_right_clicked();
     void on_pushButton_del_camera_cur_clicked();
-    void on_pushButton_add_camera_clicked();
     void change_cam();
     */
 
 protected:
     void setupScene();
+    void updateScene();
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);

@@ -173,7 +173,7 @@ void Point::rotate_y(double ay)
     const double x       = this->_x;
 
     this->_x = x * cosinus - this->_z * sinus;
-    this->_y = this->_z * cosinus + x * sinus;
+    this->_z = this->_z * cosinus + x * sinus;
 }
 
 void Point::rotate_z(double az)

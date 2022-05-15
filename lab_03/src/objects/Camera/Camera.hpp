@@ -26,7 +26,7 @@ public:
 
 private:
     Point _pos{};
-    double _ax = 0, _ay = 0, _az = 0;
+    double _ax = -45, _ay = 180, _az = 0;
 
     void _move(const Point& move_params);
     void _scale(const Point &scale_params);

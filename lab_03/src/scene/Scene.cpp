@@ -4,6 +4,8 @@
 
 #include "Scene.hpp"
 
+Scene::Scene(): _objects(std::make_shared<Composite>()) {}
+
 void Scene::addObject(const std::shared_ptr<Object> &object)
 {
     if (object->isVisible())

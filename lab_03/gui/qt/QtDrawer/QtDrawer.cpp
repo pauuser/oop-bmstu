@@ -16,8 +16,8 @@ QtDrawer::QtDrawer(std::shared_ptr<QGraphicsScene>& scene)
 
 void QtDrawer::drawLine(const Point &p1, const Point &p2)
 {
-    this->_scene->addLine(p1.getX(), p1.getY(),
-                          p2.getX(), p2.getY());
+    this->_scene->addLine(p1.getX(), -p1.getY(),
+                          p2.getX(), -p2.getY());
 }
 
 void QtDrawer::clearScene()

@@ -5,9 +5,9 @@
 #include "AddCamera.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-CountCamera::CountCamera(double posx, double posy, double posz): _posx(posx), _posy(posy), _posz(posz) {}
+AddCamera::AddCamera(double posx, double posy, double posz): _posx(posx), _posy(posy), _posz(posz) {}
 
-void CountCamera::execute()
+void AddCamera::execute()
 {
     Point camera_position(_posx, _posy, _posz);
 

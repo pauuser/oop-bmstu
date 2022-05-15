@@ -5,7 +5,7 @@
 #include "DrawManager.hpp"
 #include "scene/Scene.hpp"
 
-void DrawManager::draw(const std::shared_ptr<Scene> &scene)
+void DrawManager::draw(const std::shared_ptr<Scene> scene)
 {
     auto visitor = std::make_shared<DrawVisitor>(this->_drawer, this->_camera);
 
@@ -16,14 +16,14 @@ void DrawManager::draw(const std::shared_ptr<Scene> &scene)
     }
 }
 
-void DrawManager::setDrawer(const std::shared_ptr<BaseDrawer> &drawer)
+void DrawManager::setDrawer(const std::shared_ptr<BaseDrawer> drawer)
 {
-    this->_drawer = drawer;
+    this->_drawer = std::move(drawer);
 }
 
-void DrawManager::setCamera(const std::shared_ptr<Camera> &camera)
+void DrawManager::setCamera(const std::shared_ptr<Camera> camera)
 {
-    this->_camera = camera;
+    this->_camera = std::move(camera);
 }
 
 void DrawManagerCreator::_createManager()
@@ -34,7 +34,7 @@ void DrawManagerCreator::_createManager()
 
 std::shared_ptr<DrawManager> DrawManagerCreator::getManager()
 {
-    if (this->_manager)
+    if (this->_manager == nullptr)
     {
         _createManager();
     }

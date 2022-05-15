@@ -12,7 +12,7 @@ class AddModel : public BaseModelCommand
 {
 public:
     AddModel() = delete;
-    explicit AddModel(std::shared_ptr<Object>& obj);
+    explicit AddModel(std::shared_ptr<Object> obj);
     ~AddModel() override = default;
 
     void execute() override;

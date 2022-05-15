@@ -10,12 +10,12 @@
 #include "commands/camera/BaseCameraCommand.hpp"
 #include "objects/Camera/Camera.hpp"
 
-class CountCamera : BaseCameraCommand
+class AddCamera : public BaseCameraCommand
 {
 public:
-    CountCamera() = delete;
-    explicit CountCamera(double posx, double posy, double posz);
-    ~CountCamera() override = default;
+    AddCamera() = delete;
+    explicit AddCamera(double posx, double posy, double posz);
+    ~AddCamera() override = default;
 
     void execute() override;
 
