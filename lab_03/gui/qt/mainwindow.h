@@ -31,6 +31,9 @@ private slots:
     void on_pushButton_spin_clicked();
     void on_pushButton_scale_clicked();
     void on_pushButton_load_model_clicked();
+    void on_pushButton_move_3_clicked();
+    void on_pushButton_scale_3_clicked();
+    void on_pushButton_spin_3_clicked();
     /*
     void on_pushButton_del_model_cur_clicked();
     void on_pushButton_del_model_all_clicked();

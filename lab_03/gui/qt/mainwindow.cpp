@@ -76,7 +76,6 @@ void MainWindow::on_pushButton_load_model_clicked()
     auto cmd = std::make_shared<AddModel>(model);
     this->_facade->execute(cmd);
 
-    // TODO add update
     updateScene();
 }
 
@@ -92,8 +91,18 @@ void MainWindow::updateScene()
 
 void MainWindow::on_pushButton_add_camera_clicked()
 {
+    /*
+    double x = ui->doubleSpinBox->value();
+    double y = ui->doubleSpinBox_2->value();
+    double z = ui->doubleSpinBox_3->value();
+
+    double ax = ui->doubleSpinBox_5->value();
+    double ay = ui->doubleSpinBox_6->value();
+    double az = ui->doubleSpinBox_4->value();
+    */
+
     std::cout << "Inside add camera!";
-    auto cmd = std::make_shared<AddCamera>(-200, 0, 0);
+    auto cmd = std::make_shared<AddCamera>(0, 0, 0, 0, 0, 0);
     this->_facade->execute(cmd);
 }
 
@@ -134,6 +143,53 @@ void MainWindow::on_pushButton_move_clicked()
 
     auto movcmd = std::make_shared<MoveModel>(1, dx, dy, dz);
     this->_facade->execute(movcmd);
+    updateScene();
+}
+
+#include "commands/camera/move/MoveCamera.hpp"
+
+void MainWindow::on_pushButton_move_3_clicked()
+{
+    double dx = ui->doubleSpinBox_move_x_3->value();
+    double dy = ui->doubleSpinBox_move_y_3->value();
+    double dz = ui->doubleSpinBox_move_z_3->value();
+
+    Point move_params{ dx, dy, dz };
+    Point scale_params{ 1, 1, 1 };
+    Point rotate_params{ 0, 0, 0 };
+
+    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    this->_facade->execute(cmd);
+    updateScene();
+}
+
+void MainWindow::on_pushButton_scale_3_clicked()
+{
+    double kx = ui->doubleSpinBox_scale_x_3->value();
+    double ky = ui->doubleSpinBox_scale_y_3->value();
+    double kz = ui->doubleSpinBox_scale_z_3->value();
+
+    Point move_params{ 0, 0, 0 };
+    Point scale_params{ kx, ky, kz };
+    Point rotate_params{ 0, 0, 0 };
+
+    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    this->_facade->execute(cmd);
+    updateScene();
+}
+
+void MainWindow::on_pushButton_spin_3_clicked()
+{
+    double ax = ui->doubleSpinBox_spin_x_3->value();
+    double ay = ui->doubleSpinBox_spin_y_3->value();
+    double az = ui->doubleSpinBox_spin_z_3->value();
+
+    Point move_params{ 0, 0, 0 };
+    Point scale_params{ 1, 1, 1 };
+    Point rotate_params{ ax, ay, az };
+
+    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    this->_facade->execute(cmd);
     updateScene();
 }
 

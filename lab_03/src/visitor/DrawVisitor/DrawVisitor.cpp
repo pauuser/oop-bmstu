@@ -31,8 +31,10 @@ Point DrawVisitor::_projectPoint(const Point &point)
     res_point.move(center.getX(), center.getY(), center.getZ());
 
     // Now we can project the camera image to 2d screen
-    double new_x = res_point.getY() - res_point.getX() * sin(_toRad(45));
-    double new_y = res_point.getZ() - res_point.getX() * cos(_toRad(45));
+    //double new_x = res_point.getY() - res_point.getX() * sin(_toRad(45));
+    //double new_y = res_point.getZ() - res_point.getX() * cos(_toRad(45));
+    double new_x = res_point.getY();
+    double new_y = res_point.getZ();
 
     res_point.setX(new_x);
     res_point.setY(new_y);

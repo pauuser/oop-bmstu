@@ -14,13 +14,15 @@ class AddCamera : public BaseCameraCommand
 {
 public:
     AddCamera() = delete;
-    explicit AddCamera(double posx, double posy, double posz);
+    explicit AddCamera(double posx, double posy, double posz,
+                       double ax,   double ay,   double az);
     ~AddCamera() override = default;
 
     void execute() override;
 
 private:
     double _posx = 0, _posy = 0, _posz = 0;
+    double _ax = 0, _ay = 0, _az = 0;
 };
 
 
