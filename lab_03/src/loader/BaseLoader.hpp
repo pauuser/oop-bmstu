@@ -17,7 +17,7 @@ public:
     virtual ~BaseLoader() = default;
 
     virtual std::shared_ptr<Object> load(std::shared_ptr<BaseBuilder> builder) = 0;
-    virtual void open(std::string &name) = 0;
+    virtual void open() = 0;
     virtual void close() = 0;
 };
 
@@ -27,7 +27,7 @@ public:
     LoaderCreator() = default;
     virtual ~LoaderCreator() = default;
 
-    virtual std::shared_ptr<BaseLoader> createLoader() = 0;
+    virtual std::shared_ptr<BaseLoader> createLoader(std::string &name) = 0;
 };
 
 

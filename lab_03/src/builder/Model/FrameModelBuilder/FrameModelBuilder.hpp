@@ -23,13 +23,21 @@ public:
 
     std::shared_ptr<Object> get() override;
 
-    void buildPoint(double x, double y, double z);
-    void buildEdge(std::size_t id1, std::size_t id2);
-    void buildCenter(double x, double y, double z);
+    void buildPoint(double x, double y, double z) override;
+    void buildEdge(std::size_t id1, std::size_t id2) override;
+    void buildCenter(double x, double y, double z) override;
 
 private:
     std::shared_ptr<FrameModelImplementation> _modelimp = nullptr;
 };
 
+class FrameModelBuilderCreator : public BuilderCreator
+{
+public:
+    FrameModelBuilderCreator() = default;
+    ~FrameModelBuilderCreator() override = default;
+
+    std::shared_ptr<BaseBuilder> createBuilder() override;
+};
 
 #endif//LAB_03_FRAMEMODELBUILDER_HPP

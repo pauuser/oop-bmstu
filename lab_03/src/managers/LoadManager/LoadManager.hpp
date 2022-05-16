@@ -6,6 +6,7 @@
 #define LAB_03_LOADMANAGER_HPP
 
 #include "managers/BaseManager/BaseManager.hpp"
+#include "objects/Object.hpp"
 
 class LoadManager : public BaseManager
 {
@@ -16,6 +17,8 @@ public:
     LoadManager& operator=(const LoadManager& manager) = delete;
 
     ~LoadManager() override = default;
+
+    std::shared_ptr<Object> load();
 
 private:
 

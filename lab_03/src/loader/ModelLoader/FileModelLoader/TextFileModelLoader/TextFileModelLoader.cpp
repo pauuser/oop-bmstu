@@ -4,16 +4,17 @@
 
 #include "TextFileModelLoader.hpp"
 
-TextFileModelLoader::TextFileModelLoader()
+TextFileModelLoader::TextFileModelLoader(std::string &name)
 {
     _file = std::make_shared<std::ifstream>();
+    _filename = name;
 }
 
-void TextFileModelLoader::open(std::string &name)
+void TextFileModelLoader::open()
 {
     // TODO: add exception if (!_file)
 
-    _file->open(name);
+    _file->open(_filename);
 
     if (!_file)
     {
@@ -33,7 +34,7 @@ void TextFileModelLoader::close()
 
 std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
-    std::shared_ptr<FrameModelBuilder> _builder = std::dynamic_pointer_cast<FrameModelBuilder>(builder);
+    std::shared_ptr<BaseModelBuilder> _builder = std::dynamic_pointer_cast<BaseModelBuilder>(builder);
     _builder->build();
 
     int points_count = 0;
@@ -71,7 +72,7 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
     return _builder->get();
 }
 
-std::shared_ptr<BaseLoader> TextFileModelLoaderCreator::createLoader()
+std::shared_ptr<BaseLoader> TextFileModelLoaderCreator::createLoader(std::string &name)
 {
-    return std::make_shared<TextFileModelLoader>();
+    return std::make_shared<TextFileModelLoader>(name);
 }

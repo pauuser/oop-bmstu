@@ -47,3 +47,8 @@ void FrameModelBuilder::buildCenter(double x, double y, double z)
     Point point(x, y, z);
     _modelimp->setCenter(point);
 }
+
+std::shared_ptr<BaseBuilder> FrameModelBuilderCreator::createBuilder()
+{
+    return std::make_shared<FrameModelBuilder>();
+}

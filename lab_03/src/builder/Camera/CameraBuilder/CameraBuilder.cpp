@@ -37,3 +37,13 @@ void CameraBuilder::buildAngle(double ax, double ay, double az)
     }
 }
 
+std::shared_ptr<Object> CameraBuilder::get()
+{
+    return _camera;
+}
+
+std::shared_ptr<BaseBuilder> CameraBuilderCreator::createBuilder()
+{
+    return std::make_shared<CameraBuilder>();
+}
+

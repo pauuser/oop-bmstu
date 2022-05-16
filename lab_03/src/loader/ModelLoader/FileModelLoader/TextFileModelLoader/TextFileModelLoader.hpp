@@ -13,15 +13,16 @@
 class TextFileModelLoader : public FileModelLoader
 {
 public:
-    TextFileModelLoader();
+    TextFileModelLoader(std::string &name);
     ~TextFileModelLoader() override = default;
 
     std::shared_ptr<Object> load(std::shared_ptr<BaseBuilder> builder) override;
-    void open(std::string &name) override;
+    void open() override;
     void close() override;
 
 private:
     std::shared_ptr<std::ifstream> _file;
+    std::string _filename;
 };
 
 class TextFileModelLoaderCreator : public LoaderCreator
@@ -30,7 +31,7 @@ public:
     TextFileModelLoaderCreator() = default;
     ~TextFileModelLoaderCreator() = default;
 
-    std::shared_ptr<BaseLoader> createLoader() override;
+    std::shared_ptr<BaseLoader> createLoader(std::string &name) override;
 };
 
 

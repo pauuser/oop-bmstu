@@ -18,11 +18,22 @@ public:
     bool is_built() override;
     void reset() override;
 
-    void buildPosition(double x, double y, double z);
-    void buildAngle(double ax, double ay, double az);
+    std::shared_ptr<Object> get() override;
+
+    void buildPosition(double x, double y, double z) override;
+    void buildAngle(double ax, double ay, double az) override;
 
 private:
     std::shared_ptr<Camera> _camera;
+};
+
+class CameraBuilderCreator : public BuilderCreator
+{
+public:
+    CameraBuilderCreator() = default;
+    ~CameraBuilderCreator() override = default;
+
+    std::shared_ptr<BaseBuilder> createBuilder() override;
 };
 
 

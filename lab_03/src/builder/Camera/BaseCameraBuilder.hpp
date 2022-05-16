@@ -12,6 +12,9 @@ class BaseCameraBuilder : public BaseBuilder
 public:
     BaseCameraBuilder() = default;
     ~BaseCameraBuilder() override = default;
+
+    virtual void buildPosition(double x, double y, double z) = 0;
+    virtual void buildAngle(double ax, double ay, double az) = 0;
 };
 
 

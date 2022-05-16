@@ -4,16 +4,17 @@
 
 #include "TextFileCameraLoader.hpp"
 
-TextFileCameraLoader::TextFileCameraLoader()
+TextFileCameraLoader::TextFileCameraLoader(std::string &name)
 {
     this->_file = std::make_shared<std::ifstream>();
+    this->_filename = name;
 }
 
-void TextFileCameraLoader::open(std::string &name)
+void TextFileCameraLoader::open()
 {
     // TODO: add exception if (!_file)
 
-    _file->open(name);
+    _file->open(_filename);
 
     if (!_file)
     {
@@ -33,7 +34,7 @@ void TextFileCameraLoader::close()
 
 std::shared_ptr<Object> TextFileCameraLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
-    std::shared_ptr<CameraBuilder> _builder = std::dynamic_pointer_cast<CameraBuilder>(builder);
+    std::shared_ptr<BaseCameraBuilder> _builder = std::dynamic_pointer_cast<BaseCameraBuilder>(builder);
     _builder->build();
 
     double x = 0, y = 0, z = 0;
@@ -47,7 +48,7 @@ std::shared_ptr<Object> TextFileCameraLoader::load(std::shared_ptr<BaseBuilder> 
     return _builder->get();
 }
 
-std::shared_ptr<BaseLoader> TextFileCameraLoaderCreator::createLoader()
+std::shared_ptr<BaseLoader> TextFileCameraLoaderCreator::createLoader(std::string &name)
 {
-    return std::make_shared<TextFileCameraLoader>();
+    return std::make_shared<TextFileCameraLoader>(name);
 }

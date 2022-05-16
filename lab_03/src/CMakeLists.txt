@@ -60,11 +60,16 @@ set(LOADER
 set (BUILDER
         builder/BaseBuilder.hpp builder/Model/BaseModelBuilder.hpp
         builder/Model/FrameModelBuilder/FrameModelBuilder.cpp builder/Model/FrameModelBuilder/FrameModelBuilder.hpp
-        builder/Camera/BaseCameraBuilder.hpp builder/Camera/CameraBuilder/CameraBuilder.cpp builder/Camera/CameraBuilder/CameraBuilder.hpp)
+        builder/Camera/BaseCameraBuilder.hpp builder/Camera/CameraBuilder/CameraBuilder.cpp builder/Camera/CameraBuilder/CameraBuilder.hpp builder/Solution/BuilderSolution.cpp builder/Solution/BuilderSolution.hpp)
 
 
 set(DIRECTOR
-        director/BaseLoadDirector.hpp director/CameraDirector/CameraDirector.cpp director/CameraDirector/CameraDirector.hpp director/ModelDirector/ModelDirector.cpp director/ModelDirector/ModelDirector.hpp)
+        director/BaseLoadDirector.hpp
+        director/CameraDirector/CameraDirector.cpp director/CameraDirector/CameraDirector.hpp
+        director/ModelDirector/ModelDirector.cpp director/ModelDirector/ModelDirector.hpp)
+
+set(CONFIGURATION
+        configuration/BaseConfiguration.cpp configuration/BaseConfiguration.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}
@@ -75,7 +80,8 @@ add_library(${PROJECT_NAME}
         ${SCENE}
         ${LOADER}
         ${BUILDER}
-        ${DIRECTOR})
+        ${DIRECTOR}
+        ${CONFIGURATION})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 

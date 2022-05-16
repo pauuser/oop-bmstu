@@ -21,5 +21,14 @@ public:
     virtual std::shared_ptr<Object> get() = 0;
 };
 
+class BuilderCreator
+{
+public:
+    BuilderCreator() = default;
+    virtual ~BuilderCreator() = default;
+
+    virtual std::shared_ptr<BaseBuilder> createBuilder() = 0;
+};
+
 
 #endif//LAB_03_BASEBUILDER_HPP
