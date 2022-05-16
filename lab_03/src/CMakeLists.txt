@@ -7,7 +7,7 @@ set(MANAGERS
         managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp
         managers/DrawManager/DrawManager.cpp managers/DrawManager/DrawManager.hpp
         commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp
-        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp)
+        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp managers/LoadManager/LoadManager.cpp managers/LoadManager/LoadManager.hpp)
 
 set(FACADE
         facade/Facade.cpp facade/Facade.hpp
@@ -52,15 +52,19 @@ set(LOADER
         loader/BaseLoader.hpp
         loader/CameraLoader/CameraLoader.hpp
         loader/ModelLoader/ModelLoader.hpp
-        loader/SceneLoader/SceneLoader.hpp
         loader/CameraLoader/FileCameraLoader/FileCameraLoader.hpp
         loader/ModelLoader/FileModelLoader/FileModelLoader.hpp
-        loader/SceneLoader/FileSceneLoader/FileSceneLoader.hpp
         loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.cpp
-        loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.hpp)
+        loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.hpp loader/ModelLoader/FileModelLoader/TextFileModelLoader/TextFileModelLoader.cpp loader/ModelLoader/FileModelLoader/TextFileModelLoader/TextFileModelLoader.hpp loader/Solution/LoaderSolution.cpp loader/Solution/LoaderSolution.hpp)
 
 set (BUILDER
-        builder/BaseBuilder.hpp builder/Model/BaseModelBuilder.hpp builder/Model/FrameModelBuilder/FrameModelBuilder.cpp builder/Model/FrameModelBuilder/FrameModelBuilder.hpp builder/Camera/BaseCameraBuilder.hpp builder/Camera/CameraBuilder/CameraBuilder.cpp builder/Camera/CameraBuilder/CameraBuilder.hpp)
+        builder/BaseBuilder.hpp builder/Model/BaseModelBuilder.hpp
+        builder/Model/FrameModelBuilder/FrameModelBuilder.cpp builder/Model/FrameModelBuilder/FrameModelBuilder.hpp
+        builder/Camera/BaseCameraBuilder.hpp builder/Camera/CameraBuilder/CameraBuilder.cpp builder/Camera/CameraBuilder/CameraBuilder.hpp)
+
+
+set(DIRECTOR
+        director/BaseLoadDirector.hpp director/CameraDirector/CameraDirector.cpp director/CameraDirector/CameraDirector.hpp director/ModelDirector/ModelDirector.cpp director/ModelDirector/ModelDirector.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}
@@ -70,7 +74,8 @@ add_library(${PROJECT_NAME}
         ${VISITOR}
         ${SCENE}
         ${LOADER}
-        ${BUILDER})
+        ${BUILDER}
+        ${DIRECTOR})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 

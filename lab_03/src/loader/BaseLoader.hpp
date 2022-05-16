@@ -6,7 +6,9 @@
 #define LAB_03_BASELOADER_HPP
 
 #include <string>
-#include <fstream>
+
+#include "builder/BaseBuilder.hpp"
+#include "objects/Object.hpp"
 
 class BaseLoader
 {
@@ -14,9 +16,18 @@ public:
     BaseLoader() = default;
     virtual ~BaseLoader() = default;
 
-    virtual void load(std::string &name) = 0; // TODO: здесь билдер
-    virtual void open(std::string &filename) = 0;
+    virtual std::shared_ptr<Object> load(std::shared_ptr<BaseBuilder> builder) = 0;
+    virtual void open(std::string &name) = 0;
     virtual void close() = 0;
+};
+
+class LoaderCreator
+{
+public:
+    LoaderCreator() = default;
+    virtual ~LoaderCreator() = default;
+
+    virtual std::shared_ptr<BaseLoader> createLoader() = 0;
 };
 
 
