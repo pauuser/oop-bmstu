@@ -14,7 +14,7 @@ public:
     BaseLoader() = default;
     virtual ~BaseLoader() = default;
 
-    virtual void load(std::string &name) = 0; // ??
+    virtual void load(std::string &name) = 0; // TODO: здесь билдер
     virtual void open(std::string &filename) = 0;
     virtual void close() = 0;
 };

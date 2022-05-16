@@ -49,7 +49,18 @@ set(SCENE
         )
 
 set(LOADER
-        loader/BaseLoader.hpp loader/CameraLoader/CameraLoader.hpp loader/ModelLoader/ModelLoader.hpp loader/SceneLoader/SceneLoader.hpp loader/CameraLoader/FileCameraLoader/FileCameraLoader.hpp loader/ModelLoader/FileModelLoader/FileModelLoader.hpp loader/SceneLoader/FileSceneLoader/FileSceneLoader.hpp loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.cpp loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.hpp)
+        loader/BaseLoader.hpp
+        loader/CameraLoader/CameraLoader.hpp
+        loader/ModelLoader/ModelLoader.hpp
+        loader/SceneLoader/SceneLoader.hpp
+        loader/CameraLoader/FileCameraLoader/FileCameraLoader.hpp
+        loader/ModelLoader/FileModelLoader/FileModelLoader.hpp
+        loader/SceneLoader/FileSceneLoader/FileSceneLoader.hpp
+        loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.cpp
+        loader/CameraLoader/FileCameraLoader/TextFileCameraLoader/TextFileCameraLoader.hpp)
+
+set (BUILDER
+        builder/BaseBuilder.hpp builder/Model/BaseModelBuilder.hpp builder/Model/FrameModelBuilder/FrameModelBuilder.cpp builder/Model/FrameModelBuilder/FrameModelBuilder.hpp builder/Camera/BaseCameraBuilder.hpp builder/Camera/CameraBuilder/CameraBuilder.cpp builder/Camera/CameraBuilder/CameraBuilder.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}
@@ -58,7 +69,8 @@ add_library(${PROJECT_NAME}
         ${OBJECTS}
         ${VISITOR}
         ${SCENE}
-        ${LOADER})
+        ${LOADER}
+        ${BUILDER})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 
