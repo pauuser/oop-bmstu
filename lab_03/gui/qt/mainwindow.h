@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QWidget>
 
 #include "src/facade/Facade.hpp"
 #include "gui/drawer/BaseDrawer.hpp"

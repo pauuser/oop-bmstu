@@ -26,13 +26,11 @@ Point DrawVisitor::_projectPoint(const Point &point)
     double ay = this->_camera->getYangle();
     double az = this->_camera->getZangle();
 
-    res_point.rotate(ax, ay, az);
-    res_point.move(center.getX(), center.getY(), center.getZ());
+    res_point.rotate(-ax, -ay, -az);
+    res_point.move(-center.getX(), -center.getY(), -center.getZ());
 
     // Now we can project the camera image to 2d screen
 
-    //double new_x = res_point.getY() - res_point.getX() * sin(_toRad(45));
-    //double new_y = res_point.getZ() - res_point.getX() * cos(_toRad(45));
     double new_x = res_point.getY();
     double new_y = res_point.getZ();
 
@@ -41,14 +39,6 @@ Point DrawVisitor::_projectPoint(const Point &point)
 
     return res_point;
 }
-
-void DrawVisitor::visit(const Composite &composite) {}
-
-void DrawVisitor::visit(const Scene &scene) {}
-
-void DrawVisitor::visit(const Camera &camera) {}
-
-void DrawVisitor::visit(const Model& model) {}
 
 void DrawVisitor::visit(const FrameModel &model)
 {
@@ -59,6 +49,14 @@ void DrawVisitor::visit(const FrameModel &model)
         this->_drawer->drawLine(
                 this->_projectPoint(points[edge.getFirst()]),
                 this->_projectPoint(points[edge.getSecond()])
-                );
+        );
     }
 }
+
+void DrawVisitor::visit(const Composite &composite) {}
+
+void DrawVisitor::visit(const Scene &scene) {}
+
+void DrawVisitor::visit(const Camera &camera) {}
+
+void DrawVisitor::visit(const Model& model) {}
