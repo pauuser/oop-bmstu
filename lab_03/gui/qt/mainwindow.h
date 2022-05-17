@@ -34,8 +34,9 @@ private slots:
     void on_pushButton_move_3_clicked();
     void on_pushButton_scale_3_clicked();
     void on_pushButton_spin_3_clicked();
-    /*
     void on_pushButton_del_model_cur_clicked();
+    void on_pushButton_del_model_all_clicked();
+    /*
     void on_pushButton_del_model_all_clicked();
     void on_pushButton_camera_move_up_clicked();
     void on_pushButton_camera_move_left_clicked();

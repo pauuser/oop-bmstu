@@ -11,12 +11,24 @@ void ScaleModel::execute()
 {
     auto scene = SceneManagerCreator().getManager()->getScene();
     auto it = scene->begin();
-    std::advance(it, this->_id);
+
+    std::size_t _cur = 0;
+
+    do
+    {
+        if ((*it)->isVisible())
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < _id);
 
     Point move{ 0, 0, 0 };
     Point scale{ _kx, _ky, _kz };
     Point rotate{ 0, 0, 0 };
 
-    (*it)->transform(move, scale, rotate);
+    (*(it--))->transform(move, scale, rotate);
 }
 

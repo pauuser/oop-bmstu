@@ -14,6 +14,4 @@ public:
     virtual void execute() = 0;
 };
 
-// TODO: add load and export (??) everywhere
-
 #endif//LAB_03_BASECOMMAND_HPP

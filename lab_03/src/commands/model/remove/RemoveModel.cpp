@@ -12,7 +12,18 @@ void RemoveModel::execute()
     auto scene = SceneManagerCreator().getManager()->getScene();
     auto it = scene->begin();
 
-    std::advance(it, this->_id);
+    std::size_t _cur = 0;
 
-    scene->removeObject(it);
+    do
+    {
+        if ((*it)->isVisible())
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < _id);
+
+    scene->removeObject(it--);
 }

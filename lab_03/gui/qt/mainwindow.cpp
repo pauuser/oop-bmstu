@@ -51,13 +51,49 @@ void MainWindow::on_pushButton_load_model_clicked()
     std::cout << "Inside!\n";
 
     std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
-    auto file = QFileDialog::getOpenFileName().toStdString();
+    auto _Qfile = QFileDialog::getOpenFileName();
+    auto file = _Qfile.toStdString();
 
     auto load_cmd = std::make_shared<LoadModel>(file, config);
 
     _facade->execute(load_cmd);
 
+    ui->comboBox_models->addItem(QFileInfo(_Qfile.toUtf8().data()).fileName());
+    ui->comboBox_models->setCurrentIndex(ui->comboBox_models->count() - 1);
     updateScene();
+}
+
+#include "commands/model/remove/RemoveModel.hpp"
+
+void MainWindow::on_pushButton_del_model_cur_clicked()
+{
+    // TODO: add check if 1 model is added
+
+    int id = ui->comboBox_models->currentIndex();
+
+    auto remove_cmd = std::make_shared<RemoveModel>(id);
+    _facade->execute(remove_cmd);
+
+    updateScene();
+    ui->comboBox_models->removeItem(ui->comboBox_models->currentIndex());
+    ui->comboBox_models->setCurrentIndex(ui->comboBox_models->count() - 1);
+}
+
+void MainWindow::on_pushButton_del_model_all_clicked()
+{
+    // TODO: add check si les models ne existent pas
+
+    int max_ind = ui->comboBox_models->count() - 1;
+
+    for (int i = 0; i <= max_ind; i++)
+    {
+        auto remove_cmd = std::make_shared<RemoveModel>(0);
+        _facade->execute(remove_cmd);
+        ui->comboBox_models->removeItem(ui->comboBox_models->currentIndex());
+    }
+
+    updateScene();
+    ui->comboBox_models->setCurrentIndex(ui->comboBox_models->count() - 1);
 }
 
 #include "commands/scene/draw/DrawScene.hpp"
@@ -95,7 +131,9 @@ void MainWindow::on_pushButton_spin_clicked()
     double ay = ui->doubleSpinBox_spin_y->value();
     double az = ui->doubleSpinBox_spin_z->value();
 
-    auto rotcmd = std::make_shared<RotateModel>(1, ax, ay, az);
+    int id = ui->comboBox_models->currentIndex();
+
+    auto rotcmd = std::make_shared<RotateModel>(id, ax, ay, az);
     this->_facade->execute(rotcmd);
     updateScene();
 }
@@ -109,7 +147,9 @@ void MainWindow::on_pushButton_scale_clicked()
     double ky = ui->doubleSpinBox_scale_y->value();
     double kz = ui->doubleSpinBox_scale_z->value();
 
-    auto sclcmd = std::make_shared<ScaleModel>(1, kx, ky, kz);
+    int id = ui->comboBox_models->currentIndex();
+
+    auto sclcmd = std::make_shared<ScaleModel>(id, kx, ky, kz);
     this->_facade->execute(sclcmd);
     updateScene();
 }
@@ -118,11 +158,15 @@ void MainWindow::on_pushButton_scale_clicked()
 
 void MainWindow::on_pushButton_move_clicked()
 {
+    // TODO: вставить проверку если модели вообще есть
+
     double dx = ui->doubleSpinBox_move_x->value();
     double dy = ui->doubleSpinBox_move_y->value();
     double dz = ui->doubleSpinBox_move_z->value();
 
-    auto movcmd = std::make_shared<MoveModel>(1, dx, dy, dz); // TODO: fix ID here
+    int id = ui->comboBox_models->currentIndex();
+
+    auto movcmd = std::make_shared<MoveModel>(id, dx, dy, dz); // TODO: fix ID here
     this->_facade->execute(movcmd);
     updateScene();
 }

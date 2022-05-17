@@ -11,7 +11,18 @@ void RemoveCamera::execute()
 {
     auto scene = SceneManagerCreator().getManager()->getScene();
     auto it = scene->begin();
-    std::advance(it, this->_id);
 
-    scene->removeObject(it);
+    std::size_t _cur = 0;
+
+    do
+    {
+        if ((*it)->isVisible())
+        {
+            _cur++;
+        }
+
+        it++;
+    } while (_cur < _id);
+
+    scene->removeObject(it--);
 }
