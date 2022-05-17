@@ -371,3 +371,16 @@ size_t MainWindow::_getModelCount() {
     return *res;
 }
 
+void MainWindow::on_pushButton_clear_scene_clicked() {
+    int max_ind = ui->comboBox_models->count() - 1;
+
+    for (int i = 0; i <= max_ind; i++) {
+        auto remove_cmd = std::make_shared<RemoveModel>(0);
+        _facade->execute(remove_cmd);
+        ui->comboBox_models->removeItem(ui->comboBox_models->currentIndex());
+    }
+
+    updateScene();
+    ui->comboBox_models->setCurrentIndex(ui->comboBox_models->count() - 1);
+}
+

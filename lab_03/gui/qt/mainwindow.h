@@ -40,6 +40,7 @@ private slots:
     void on_pushButton_add_camera_2_clicked();
     void on_pushButton_del_camera_cur_clicked();
     void on_comboBox_cameras_currentIndexChanged(int index);
+    void on_pushButton_clear_scene_clicked();
 
 protected:
     void setupScene();
