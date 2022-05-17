@@ -23,12 +23,12 @@ void ScaleModel::execute()
 
         it++;
     }
-    while (_cur < _id);
+    while (_cur < _id + 1);
 
     Point move{ 0, 0, 0 };
     Point scale{ _kx, _ky, _kz };
     Point rotate{ 0, 0, 0 };
 
-    (*(it--))->transform(move, scale, rotate);
+    (*(it - 1))->transform(move, scale, rotate);
 }
 

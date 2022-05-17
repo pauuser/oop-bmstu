@@ -36,13 +36,15 @@ private slots:
     void on_pushButton_spin_3_clicked();
     void on_pushButton_del_model_cur_clicked();
     void on_pushButton_del_model_all_clicked();
+    void on_pushButton_add_camera_2_clicked();
+    void on_pushButton_del_camera_cur_clicked();
+    void on_comboBox_cameras_currentIndexChanged(int index);
     /*
     void on_pushButton_del_model_all_clicked();
     void on_pushButton_camera_move_up_clicked();
     void on_pushButton_camera_move_left_clicked();
     void on_pushButton_camera_move_down_clicked();
     void on_pushButton_camera_move_right_clicked();
-    void on_pushButton_del_camera_cur_clicked();
     void change_cam();
     */
 

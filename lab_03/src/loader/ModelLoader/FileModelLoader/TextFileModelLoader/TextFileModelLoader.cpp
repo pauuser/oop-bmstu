@@ -71,6 +71,11 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
         _builder->buildEdge(id1, id2);
     }
 
+    double center_x = 0, center_y = 0, center_z = 0;
+    *_file >> center_x >> center_y >> center_z;
+
+    _builder->buildCenter(center_x, center_y, center_z);
+
     // TODO: add build center
 
     close();

@@ -169,7 +169,7 @@
       <double>1000.000000000000000</double>
      </property>
      <property name="value">
-      <double>200.000000000000000</double>
+      <double>0.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -299,7 +299,7 @@
       <double>360.000000000000000</double>
      </property>
      <property name="value">
-      <double>90.000000000000000</double>
+      <double>0.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_31">

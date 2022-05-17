@@ -17,14 +17,20 @@ LoadCamera::LoadCamera(std::string name, std::string config_file)
 
 void LoadCamera::execute()
 {
-    ConfigurationSolution().registration(TextConfigurationCreator(_config_file).getConfiguration());
+    auto configuration_solution = std::make_shared<ConfigurationSolution>();
+    configuration_solution->registration(TextConfigurationCreator(_config_file).getConfiguration());
 
-    ConfigurationSolution().createCreator()->register_framework();
+    configuration_solution->createCreator()->register_framework();
 
     auto manager = LoadManagerCreator().getManager();
     auto director = CameraDirectorCreator().getDirector(this->_name);
     manager->setDirector(director);
 
-    auto model = manager->load();
-    SceneManagerCreator().getManager()->getScene()->addObject(model);
+    auto camera = manager->load();
+
+    auto scene_manager = SceneManagerCreator().getManager();
+    auto scene = scene_manager->getScene();
+
+    scene->addObject(camera);
+    scene_manager->setMainCamera(scene->end() - 1);
 }

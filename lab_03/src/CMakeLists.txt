@@ -22,7 +22,7 @@ set(COMMANDS
         commands/camera/count/CountCamera.cpp commands/camera/count/CountCamera.hpp
         commands/camera/move/MoveCamera.cpp commands/camera/move/MoveCamera.hpp
         commands/scene/draw/DrawScene.cpp commands/scene/draw/DrawScene.hpp
-        commands/camera/remove/RemoveCamera.cpp commands/camera/remove/RemoveCamera.h
+        commands/camera/remove/RemoveCamera.cpp commands/camera/remove/RemoveCamera.hpp
         commands/camera/set/SetCamera.cpp commands/camera/set/SetCamera.hpp
         commands/model/add/AddModel.cpp commands/model/add/AddModel.hpp
         commands/model/count/CountModel.cpp commands/model/count/CountModel.hpp

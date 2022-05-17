@@ -108,7 +108,6 @@ void MainWindow::updateScene()
 
 void MainWindow::on_pushButton_add_camera_clicked()
 {
-    /*
     double x = ui->doubleSpinBox->value();
     double y = ui->doubleSpinBox_2->value();
     double z = ui->doubleSpinBox_3->value();
@@ -116,11 +115,49 @@ void MainWindow::on_pushButton_add_camera_clicked()
     double ax = ui->doubleSpinBox_5->value();
     double ay = ui->doubleSpinBox_6->value();
     double az = ui->doubleSpinBox_4->value();
-    */
 
     std::cout << "Inside add camera!";
-    auto cmd = std::make_shared<AddCamera>(0, 0, 0, 0, 0, 0);
+    auto cmd = std::make_shared<AddCamera>(x, y, z, ax, ay, az);
     this->_facade->execute(cmd);
+
+    ui->comboBox_cameras->addItem("CustomCamera");
+    ui->comboBox_cameras->setCurrentIndex(ui->comboBox_cameras->count() - 1);
+}
+
+#include "commands/camera/load/LoadCamera.hpp"
+
+void MainWindow::on_pushButton_add_camera_2_clicked()
+{
+    std::cout << "Inside111!\n";
+
+    std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
+    auto _Qfile = QFileDialog::getOpenFileName();
+    auto file = _Qfile.toStdString();
+
+    auto load_cmd = std::make_shared<LoadCamera>(file, config);
+
+    _facade->execute(load_cmd);
+
+    ui->comboBox_cameras->addItem(QFileInfo(_Qfile.toUtf8().data()).fileName());
+    ui->comboBox_cameras->setCurrentIndex(ui->comboBox_cameras->count() - 1);
+    updateScene();
+}
+
+#include "commands/camera/remove/RemoveCamera.hpp"
+
+void MainWindow::on_pushButton_del_camera_cur_clicked()
+{
+    // TODO: add camera check
+    // TODO: check if there nodels (can't delete the last one)
+
+    int id = ui->comboBox_cameras->currentIndex();
+
+    auto remove_cmd = std::make_shared<RemoveCamera>(id);
+    _facade->execute(remove_cmd);
+
+    updateScene();
+    ui->comboBox_cameras->removeItem(ui->comboBox_cameras->currentIndex());
+    ui->comboBox_cameras->setCurrentIndex(ui->comboBox_cameras->count() - 1);
 }
 
 #include "commands/model/rotate/RotateModel.hpp"
@@ -172,6 +209,7 @@ void MainWindow::on_pushButton_move_clicked()
 }
 
 #include "commands/camera/move/MoveCamera.hpp"
+#include "commands/camera/set/SetCamera.hpp"
 
 void MainWindow::on_pushButton_move_3_clicked()
 {
@@ -183,8 +221,14 @@ void MainWindow::on_pushButton_move_3_clicked()
     Point scale_params{ 1, 1, 1 };
     Point rotate_params{ 0, 0, 0 };
 
-    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    int id = ui->comboBox_cameras->currentIndex();
+
+    auto set_cmd = std::make_shared<SetCamera>(id);
+    this->_facade->execute(set_cmd);
+
+    auto cmd = std::make_shared<MoveCamera>(id, move_params, scale_params, rotate_params);
     this->_facade->execute(cmd);
+
     updateScene();
 }
 
@@ -198,8 +242,14 @@ void MainWindow::on_pushButton_scale_3_clicked()
     Point scale_params{ kx, ky, kz };
     Point rotate_params{ 0, 0, 0 };
 
-    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    int id = ui->comboBox_cameras->currentIndex();
+
+    auto set_cmd = std::make_shared<SetCamera>(id);
+    this->_facade->execute(set_cmd);
+
+    auto cmd = std::make_shared<MoveCamera>(id, move_params, scale_params, rotate_params);
     this->_facade->execute(cmd);
+
     updateScene();
 }
 
@@ -213,8 +263,22 @@ void MainWindow::on_pushButton_spin_3_clicked()
     Point scale_params{ 1, 1, 1 };
     Point rotate_params{ ax, ay, az };
 
-    auto cmd = std::make_shared<MoveCamera>(0, move_params, scale_params, rotate_params);
+    int id = ui->comboBox_cameras->currentIndex();
+
+    auto set_cmd = std::make_shared<SetCamera>(id);
+    this->_facade->execute(set_cmd);
+
+    auto cmd = std::make_shared<MoveCamera>(id, move_params, scale_params, rotate_params);
     this->_facade->execute(cmd);
+
+    updateScene();
+}
+
+void MainWindow::on_comboBox_cameras_currentIndexChanged(int index)
+{
+    auto set_cmd = std::make_shared<SetCamera>(index);
+    this->_facade->execute(set_cmd);
+
     updateScene();
 }
 

@@ -23,7 +23,7 @@ void RemoveModel::execute()
 
         it++;
     }
-    while (_cur < _id);
+    while (_cur < _id + 1);
 
-    scene->removeObject(it--);
+    scene->removeObject(--it);
 }

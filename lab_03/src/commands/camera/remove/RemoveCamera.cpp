@@ -2,7 +2,7 @@
 // Created by Pavel Ivanov on 14.05.2022.
 //
 
-#include "RemoveCamera.h"
+#include "RemoveCamera.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
 RemoveCamera::RemoveCamera(std::size_t id): _id(id) {}
@@ -16,13 +16,14 @@ void RemoveCamera::execute()
 
     do
     {
-        if ((*it)->isVisible())
+        if (!((*it)->isVisible()))
         {
             _cur++;
         }
 
         it++;
-    } while (_cur < _id);
+    }
+    while (_cur < _id + 1);
 
-    scene->removeObject(it--);
+    scene->removeObject(it - 1);
 }

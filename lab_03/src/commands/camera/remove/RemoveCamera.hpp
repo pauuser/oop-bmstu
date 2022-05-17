@@ -2,8 +2,8 @@
 // Created by Pavel Ivanov on 14.05.2022.
 //
 
-#ifndef LAB_03_REMOVECAMERA_H
-#define LAB_03_REMOVECAMERA_H
+#ifndef LAB_03_REMOVECAMERA_HPP
+#define LAB_03_REMOVECAMERA_HPP
 
 #include <memory>
 
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif//LAB_03_REMOVECAMERA_H
+#endif//LAB_03_REMOVECAMERA_HPP

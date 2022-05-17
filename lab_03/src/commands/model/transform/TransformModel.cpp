@@ -13,8 +13,20 @@ void TransformModel::execute()
 {
     auto scene = SceneManagerCreator().getManager()->getScene();
     auto it = scene->begin();
-    std::advance(it, this->_id);
 
-    TransformManagerCreator().getManager()->transform(*it, this->_move_params,
+    std::size_t _cur = 0;
+
+    do
+    {
+        if ((*it)->isVisible())
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < _id + 1);
+
+    TransformManagerCreator().getManager()->transform(*(it - 1), this->_move_params,
                                                       this->_scale_params, this->_rotate_params);
 }

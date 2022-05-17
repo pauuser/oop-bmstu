@@ -34,6 +34,7 @@ void TextFileCameraLoader::close()
 
 std::shared_ptr<Object> TextFileCameraLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
+    open(); // TODO: ??
     std::shared_ptr<BaseCameraBuilder> _builder = std::dynamic_pointer_cast<BaseCameraBuilder>(builder);
     _builder->build();
 
@@ -44,6 +45,8 @@ std::shared_ptr<Object> TextFileCameraLoader::load(std::shared_ptr<BaseBuilder> 
 
     *_file >> x >> y >> z;
     _builder->buildAngle(x, y, z);
+
+    close();
 
     return _builder->get();
 }

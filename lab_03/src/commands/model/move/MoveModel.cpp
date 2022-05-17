@@ -23,11 +23,11 @@ void MoveModel::execute()
 
         it++;
     }
-    while (_cur < _id);
+    while (_cur < _id + 1);
 
     Point move{ _dx, _dy, _dz };
     Point scale{ 1, 1, 1 };
     Point rotate{ 0, 0, 0 };
 
-    (*(it--))->transform(move, scale, rotate);
+    (*(--it))->transform(move, scale, rotate);
 }

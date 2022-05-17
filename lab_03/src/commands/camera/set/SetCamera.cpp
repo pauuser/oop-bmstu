@@ -12,6 +12,18 @@ void SetCamera::execute()
     auto scene_manager = SceneManagerCreator().getManager();
     auto it = scene_manager->getScene()->begin();
 
-    std::advance(it, this->_id);
-    scene_manager->setMainCamera(it);
+    std::size_t _cur = 0;
+
+    do
+    {
+        if (!((*it)->isVisible()))
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < _id + 1);
+
+    scene_manager->setMainCamera(it - 1);
 }
