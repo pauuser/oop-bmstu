@@ -7,7 +7,6 @@
 #include "objects/Model/FrameModel/FrameModel.hpp"
 #include "objects/Camera/Camera.hpp"
 #include "objects/Composite/Composite.hpp"
-#include <iostream>
 
 DrawVisitor::DrawVisitor(const std::shared_ptr<BaseDrawer>& drawer, const std::shared_ptr<Camera>& camera):
                         _drawer(drawer), _camera(camera){}

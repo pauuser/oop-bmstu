@@ -3,6 +3,7 @@
 //
 
 #include "TextFileCameraLoader.hpp"
+#include "exceptions/loader/LoaderException.hpp"
 
 TextFileCameraLoader::TextFileCameraLoader(std::string &name)
 {
@@ -12,13 +13,11 @@ TextFileCameraLoader::TextFileCameraLoader(std::string &name)
 
 void TextFileCameraLoader::open()
 {
-    // TODO: add exception if (!_file)
-
     _file->open(_filename);
 
     if (!_file)
     {
-        // TODO: add Exception
+        throw NoFileException(__FILE__, __LINE__);
     }
 }
 
@@ -26,7 +25,7 @@ void TextFileCameraLoader::close()
 {
     if (!_file)
     {
-        // TODO add exception
+        throw NoFileException(__FILE__, __LINE__);
     }
 
     _file->close();
@@ -34,7 +33,8 @@ void TextFileCameraLoader::close()
 
 std::shared_ptr<Object> TextFileCameraLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
-    open(); // TODO: ??
+    open();
+
     std::shared_ptr<BaseCameraBuilder> _builder = std::dynamic_pointer_cast<BaseCameraBuilder>(builder);
     _builder->build();
 

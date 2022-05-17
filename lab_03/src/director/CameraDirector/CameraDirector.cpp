@@ -3,6 +3,7 @@
 //
 
 #include "CameraDirector.hpp"
+#include "exceptions/director/DirectorException.hpp"
 
 CameraDirector::CameraDirector(std::string name)
 {
@@ -40,7 +41,15 @@ void CameraDirector::setLoader(std::shared_ptr<BaseLoader> loader)
 
 std::shared_ptr<Object> CameraDirector::load()
 {
-    // TODO: add exception if no loader or builder
+    if (_loader == nullptr)
+    {
+        throw NoLoaderException(__FILE__, __LINE__);
+    }
+
+    if (_builder == nullptr)
+    {
+        throw NoBuilderException(__FILE__, __LINE__);
+    }
 
     auto model = this->_loader->load(this->_builder);
 

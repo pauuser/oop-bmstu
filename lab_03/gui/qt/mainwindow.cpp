@@ -245,7 +245,7 @@ void MainWindow::on_pushButton_move_clicked() {
 
     int id = ui->comboBox_models->currentIndex();
 
-    auto movcmd = std::make_shared<MoveModel>(id, dx, dy, dz);// TODO: fix ID here
+    auto movcmd = std::make_shared<MoveModel>(id, dx, dy, dz);
     this->_facade->execute(movcmd);
     updateScene();
 }

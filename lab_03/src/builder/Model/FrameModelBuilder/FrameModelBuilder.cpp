@@ -3,6 +3,7 @@
 //
 
 #include "FrameModelBuilder.hpp"
+#include "exceptions/builder/BuilderException.hpp"
 
 void FrameModelBuilder::build()
 {
@@ -21,7 +22,10 @@ void FrameModelBuilder::reset()
 
 void FrameModelBuilder::buildPoint(double x, double y, double z)
 {
-    // TODO: add exception if not built
+    if (_modelimp == nullptr)
+    {
+        throw BuildNotStartedException(__FILE__, __LINE__, "...building FrameModel.");
+    }
 
     Point point(x, y, z);
     _modelimp->addPoint(point);
@@ -29,7 +33,10 @@ void FrameModelBuilder::buildPoint(double x, double y, double z)
 
 void FrameModelBuilder::buildEdge(std::size_t id1, std::size_t id2)
 {
-    // TODO: add exception if not built
+    if (_modelimp == nullptr)
+    {
+        throw BuildNotStartedException(__FILE__, __LINE__, "...building FrameModel.");
+    }
 
     Edge edge(id1, id2);
     _modelimp->addEdge(edge);
@@ -42,7 +49,10 @@ std::shared_ptr<Object> FrameModelBuilder::get()
 
 void FrameModelBuilder::buildCenter(double x, double y, double z)
 {
-    // TODO: add exception if not built
+    if (_modelimp == nullptr)
+    {
+        throw BuildNotStartedException(__FILE__, __LINE__, "...building FrameModel.");
+    }
 
     Point point(x, y, z);
     _modelimp->setCenter(point);

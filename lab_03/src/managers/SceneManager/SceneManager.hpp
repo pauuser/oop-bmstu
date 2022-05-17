@@ -25,7 +25,7 @@ public:
     void setScene(std::shared_ptr<Scene>& scene);
 
     std::shared_ptr<Camera> getMainCamera();
-    void setMainCamera(const Iterator& it); // TODO: здесь вопрос конечно
+    void setMainCamera(const Iterator& it);
 
 private:
     std::shared_ptr<Scene> _scene = nullptr;

@@ -3,6 +3,7 @@
 //
 
 #include "BuilderSolution.hpp"
+#include "exceptions/builder/BuilderException.hpp"
 
 bool BuilderSolution::registration(const std::string object_type, std::shared_ptr<BuilderCreator> builder_creator)
 {
@@ -31,7 +32,7 @@ std::shared_ptr<BuilderCreator> BuilderSolution::getBuilderCreator(const std::st
 
     if (it == _callbacks->end())
     {
-        // TODO: throw exception
+        throw BuilderNotRegisteredException(__FILE__, __LINE__);
     }
 
     return it->second;

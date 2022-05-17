@@ -74,7 +74,7 @@ set(CONFIGURATION
         configuration/Solution/ConfigurationSolution.cpp configuration/Solution/ConfigurationSolution.hpp)
 
 set(EXCEPTION
-        exceptions/BaseException.hpp exceptions/ui/UiException.hpp)
+        exceptions/BaseException.hpp exceptions/ui/UiException.hpp exceptions/builder/BuilderException.hpp exceptions/manager/ManagerException.hpp exceptions/director/DirectorException.hpp exceptions/loader/LoaderException.hpp exceptions/configuration/ConfigurationException.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}

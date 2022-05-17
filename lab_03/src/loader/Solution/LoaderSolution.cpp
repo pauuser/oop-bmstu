@@ -3,6 +3,7 @@
 //
 
 #include "LoaderSolution.hpp"
+#include "exceptions/director/DirectorException.hpp"
 
 bool LoaderSolution::registration(const std::string object_type, std::shared_ptr<LoaderCreator> loader_creator)
 {
@@ -31,7 +32,7 @@ std::shared_ptr<LoaderCreator> LoaderSolution::getLoaderCreator(const std::strin
 
     if (it == _callbacks->end())
     {
-        // TODO: throw exception
+        throw NoLoaderException(__FILE__, __LINE__);
     }
 
     return std::shared_ptr<LoaderCreator>(it->second);

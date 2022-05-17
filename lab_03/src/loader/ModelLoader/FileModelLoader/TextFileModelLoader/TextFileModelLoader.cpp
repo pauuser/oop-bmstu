@@ -3,6 +3,7 @@
 //
 
 #include "TextFileModelLoader.hpp"
+#include "exceptions/loader/LoaderException.hpp"
 
 TextFileModelLoader::TextFileModelLoader(std::string &name)
 {
@@ -12,13 +13,11 @@ TextFileModelLoader::TextFileModelLoader(std::string &name)
 
 void TextFileModelLoader::open()
 {
-    // TODO: add exception if (!_file)
-
     _file->open(_filename);
 
     if (!_file)
     {
-        // TODO: add Exception
+        throw NoFileException(__FILE__, __LINE__);
     }
 }
 
@@ -26,7 +25,7 @@ void TextFileModelLoader::close()
 {
     if (!_file)
     {
-        // TODO add exception
+        throw NoFileException(__FILE__, __LINE__);
     }
 
     _file->close();
@@ -34,7 +33,7 @@ void TextFileModelLoader::close()
 
 std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
-    open(); // TODO: ??
+    open();
 
     std::shared_ptr<BaseModelBuilder> _builder = std::dynamic_pointer_cast<BaseModelBuilder>(builder);
     _builder->build();
@@ -44,7 +43,7 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
 
     if (points_count < 1)
     {
-        // TODO : add exception
+        throw IncorrectInputException(__FILE__, __LINE__, "Too few points!");
     }
 
     for (int i = 0; i < points_count; i++)
@@ -60,7 +59,7 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
 
     if (edges_count < 1)
     {
-        // TODO : add exception
+        throw IncorrectInputException(__FILE__, __LINE__, "Too few edges!");
     }
 
     for (int i = 0; i < edges_count; i++)
@@ -75,8 +74,6 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
     *_file >> center_x >> center_y >> center_z;
 
     _builder->buildCenter(center_x, center_y, center_z);
-
-    // TODO: add build center
 
     close();
 

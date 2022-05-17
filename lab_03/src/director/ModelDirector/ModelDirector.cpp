@@ -3,6 +3,7 @@
 //
 
 #include "ModelDirector.hpp"
+#include "exceptions/director/DirectorException.hpp"
 
 ModelDirector::ModelDirector(std::string name)
 {
@@ -21,7 +22,16 @@ void ModelDirector::setLoader(std::shared_ptr<BaseLoader> loader)
 
 std::shared_ptr<Object> ModelDirector::load()
 {
-    // TODO: add exception if loader or builder not set
+    if (_loader == nullptr)
+    {
+        throw NoLoaderException(__FILE__, __LINE__);
+    }
+
+    if (_builder == nullptr)
+    {
+        throw NoBuilderException(__FILE__, __LINE__);
+    }
+
     auto model = this->_loader->load(this->_builder);
 
     return model;

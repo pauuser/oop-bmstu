@@ -3,12 +3,16 @@
 //
 
 #include "SceneManager.hpp"
+#include "exceptions/manager/ManagerException.hpp"
 
 SceneManager::SceneManager() : _scene(std::make_shared<Scene>()) {}
 
 std::shared_ptr<Camera> SceneManager::getMainCamera()
 {
-    // TODO: add exception if nullptr
+    if (_main_camera.lock() == nullptr)
+    {
+        throw NoMainCameraException(__FILE__, __LINE__);
+    }
 
     return this->_main_camera.lock();
 }

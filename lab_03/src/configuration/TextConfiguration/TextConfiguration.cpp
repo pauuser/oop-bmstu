@@ -3,6 +3,7 @@
 //
 
 #include "TextConfiguration.hpp"
+#include "exceptions/configuration/ConfigurationException.hpp"
 
 TextConfiguration::TextConfiguration(std::string filename)
 {
@@ -13,7 +14,7 @@ TextConfiguration::TextConfiguration(std::string filename)
 
     if (!this->_file)
     {
-        // TODO: add Exception
+        throw NoFileException(__FILE__, __LINE__, "...opening" + this->_filename);
     }
 }
 
@@ -26,17 +27,17 @@ void TextConfiguration::read_configuration()
 {
     if (!std::getline(*(this->_file), this->_guilib))
     {
-        // TODO : add exception
+        throw ReadException(__FILE__, __LINE__, "Can't read gui lib configuration");
     }
 
     if (!std::getline(*(this->_file), this->_source))
     {
-        // TODO : add exception
+        throw ReadException(__FILE__, __LINE__, "Can't read source configuration");
     }
 
     if (!std::getline(*(this->_file), this->_modeltype))
     {
-        // TODO : add exception
+        throw ReadException(__FILE__, __LINE__, "Can't read model type configuration");
     }
 }
 
