@@ -16,7 +16,7 @@ using LoaderMap = std::map<const std::string, std::shared_ptr<LoaderCreator>>;
 class LoaderSolution
 {
 public:
-    LoaderSolution() = default;
+    LoaderSolution();
     ~LoaderSolution() = default;
 
     bool registration(const std::string object_type, std::shared_ptr<LoaderCreator> loader_creator);
@@ -24,7 +24,7 @@ public:
     std::shared_ptr<LoaderCreator> getLoaderCreator(const std::string& object_type);
 
 private:
-     static LoaderMap _callbacks;
+     std::shared_ptr<LoaderMap> _callbacks;
 };
 
 

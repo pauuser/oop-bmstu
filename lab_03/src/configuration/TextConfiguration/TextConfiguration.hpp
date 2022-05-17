@@ -22,7 +22,6 @@ public:
     TextConfiguration(std::string filename);
     ~TextConfiguration() override;
 
-    void read_configuration() override;
     virtual void register_framework() override;
 
 private:
@@ -32,6 +31,23 @@ private:
     std::string _guilib;
     std::string _source;
     std::string _modeltype;
+
+    void read_configuration();
+};
+
+class TextConfigurationCreator : public ConfigurationCreator
+{
+public:
+    explicit TextConfigurationCreator(std::string filename);
+    ~TextConfigurationCreator() override = default;
+
+    std::shared_ptr<BaseConfiguration> getConfiguration() override;
+
+private:
+    std::string _filename;
+    std::shared_ptr<TextConfiguration> _configuration;
+
+    void _createConfiguration();
 };
 
 

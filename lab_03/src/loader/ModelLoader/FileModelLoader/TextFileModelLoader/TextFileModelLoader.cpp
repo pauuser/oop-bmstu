@@ -34,6 +34,8 @@ void TextFileModelLoader::close()
 
 std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> builder)
 {
+    open(); // TODO: ??
+
     std::shared_ptr<BaseModelBuilder> _builder = std::dynamic_pointer_cast<BaseModelBuilder>(builder);
     _builder->build();
 
@@ -68,6 +70,10 @@ std::shared_ptr<Object> TextFileModelLoader::load(std::shared_ptr<BaseBuilder> b
 
         _builder->buildEdge(id1, id2);
     }
+
+    // TODO: add build center
+
+    close();
 
     return _builder->get();
 }

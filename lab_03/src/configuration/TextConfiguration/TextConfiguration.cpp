@@ -40,8 +40,31 @@ void TextConfiguration::read_configuration()
     }
 }
 
+TextConfigurationCreator::TextConfigurationCreator(std::string filename)
+{
+    _filename = filename;
+}
+
+void TextConfigurationCreator::_createConfiguration()
+{
+    _configuration = std::make_shared<TextConfiguration>(_filename);
+}
+
+std::shared_ptr<BaseConfiguration> TextConfigurationCreator::getConfiguration()
+{
+    if (_configuration == nullptr)
+    {
+        _createConfiguration();
+    }
+
+    return _configuration;
+}
+
 void TextConfiguration::register_framework()
 {
+    read_configuration();
+
+
     if (_source == "textfile")
     {
         LoaderSolution().registration("camera", std::make_shared<TextFileCameraLoaderCreator>());
@@ -54,3 +77,4 @@ void TextConfiguration::register_framework()
         BuilderSolution().registration("model", std::make_shared<FrameModelBuilderCreator>());
     }
 }
+

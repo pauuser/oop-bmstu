@@ -11,7 +11,7 @@
 #include "loader/Solution/LoaderSolution.hpp"
 #include "builder/Solution/BuilderSolution.hpp"
 
-class CameraDirector : BaseLoadDirector
+class CameraDirector : public BaseLoadDirector
 {
 public:
     explicit CameraDirector(std::string name);

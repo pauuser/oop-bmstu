@@ -28,7 +28,7 @@ set(COMMANDS
         commands/model/count/CountModel.cpp commands/model/count/CountModel.hpp
         commands/model/remove/RemoveModel.cpp commands/model/remove/RemoveModel.hpp
         commands/model/rotate/RotateModel.cpp commands/model/rotate/RotateModel.hpp
-        commands/model/scale/ScaleModel.cpp commands/model/scale/ScaleModel.hpp commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp)
+        commands/model/scale/ScaleModel.cpp commands/model/scale/ScaleModel.hpp commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp commands/camera/load/LoadCamera.cpp commands/camera/load/LoadCamera.hpp)
 
 set(OBJECTS
         objects/Object.hpp
@@ -69,7 +69,9 @@ set(DIRECTOR
         director/ModelDirector/ModelDirector.cpp director/ModelDirector/ModelDirector.hpp)
 
 set(CONFIGURATION
-        configuration/BaseConfiguration.hpp configuration/TextConfiguration/TextConfiguration.cpp configuration/TextConfiguration/TextConfiguration.hpp configuration/Registry/Registry.cpp configuration/Registry/Registry.hpp)
+        configuration/BaseConfiguration.hpp
+        configuration/TextConfiguration/TextConfiguration.cpp configuration/TextConfiguration/TextConfiguration.hpp
+        configuration/Solution/ConfigurationSolution.cpp configuration/Solution/ConfigurationSolution.hpp)
 
 add_library(${PROJECT_NAME}
         ${MANAGERS}

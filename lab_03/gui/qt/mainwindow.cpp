@@ -4,9 +4,13 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_MainWindow.h" resolved
 
+#include <string>
+#include <QFileDialog>
+
 #include "mainwindow.h"
 #include "./ui/ui_mainwindow.h"
-
+#include "../src/configuration/Solution/ConfigurationSolution.hpp"
+#include "../src/configuration/TextConfiguration/TextConfiguration.hpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -40,12 +44,18 @@ void MainWindow::setupScene()
 #include "objects/Model/FrameModel/FrameModel.hpp"
 #include <vector>
 #include "commands/model/add/AddModel.hpp"
+#include "commands/model/load/LoadModel.hpp"
 
 void MainWindow::on_pushButton_load_model_clicked()
 {
     std::cout << "Inside!\n";
 
-    // TODO: fix here
+    std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
+    auto file = QFileDialog::getOpenFileName().toStdString();
+
+    auto load_cmd = std::make_shared<LoadModel>(file, config);
+
+    _facade->execute(load_cmd);
 
     updateScene();
 }
@@ -112,7 +122,7 @@ void MainWindow::on_pushButton_move_clicked()
     double dy = ui->doubleSpinBox_move_y->value();
     double dz = ui->doubleSpinBox_move_z->value();
 
-    auto movcmd = std::make_shared<MoveModel>(1, dx, dy, dz);
+    auto movcmd = std::make_shared<MoveModel>(1, dx, dy, dz); // TODO: fix ID here
     this->_facade->execute(movcmd);
     updateScene();
 }

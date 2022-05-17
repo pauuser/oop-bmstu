@@ -6,19 +6,30 @@
 
 bool LoaderSolution::registration(const std::string object_type, std::shared_ptr<LoaderCreator> loader_creator)
 {
-    return _callbacks.insert(LoaderMap::value_type(object_type, loader_creator)).second;
+    if (check(object_type))
+    {
+        _callbacks->erase(object_type);
+    }
+
+    return _callbacks->insert(LoaderMap::value_type(object_type, loader_creator)).second;
+}
+
+LoaderSolution::LoaderSolution()
+{
+    static auto loader_map = std::make_shared<LoaderMap>();
+    _callbacks = loader_map;
 }
 
 bool LoaderSolution::check(const std::string& object_type)
 {
-    return _callbacks.count(object_type) > 0;
+    return _callbacks->count(object_type) > 0;
 }
 
 std::shared_ptr<LoaderCreator> LoaderSolution::getLoaderCreator(const std::string& object_type)
 {
-    auto it = _callbacks.find(object_type);
+    auto it = _callbacks->find(object_type);
 
-    if (it == _callbacks.end())
+    if (it == _callbacks->end())
     {
         // TODO: throw exception
     }

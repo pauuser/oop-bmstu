@@ -14,7 +14,6 @@ public:
     BaseConfiguration() = default;
     virtual ~BaseConfiguration() = default;
 
-    virtual void read_configuration() = 0;
     virtual void register_framework() = 0;
 };
 

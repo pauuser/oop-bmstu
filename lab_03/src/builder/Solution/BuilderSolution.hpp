@@ -16,7 +16,7 @@ using BuilderMap = std::map<const std::string, std::shared_ptr<BuilderCreator>>;
 class BuilderSolution
 {
 public:
-    BuilderSolution() = default;
+    BuilderSolution();
     ~BuilderSolution() = default;
 
     bool registration(const std::string object_type, std::shared_ptr<BuilderCreator> builder_creator);
@@ -24,7 +24,7 @@ public:
     std::shared_ptr<BuilderCreator> getBuilderCreator(const std::string object_type);
 
 private:
-    static BuilderMap _callbacks;
+    std::shared_ptr<BuilderMap> _callbacks;
 };
 
 #endif//LAB_03_BUILDERSOLUTION_HPP

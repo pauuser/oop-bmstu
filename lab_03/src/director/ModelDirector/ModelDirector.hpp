@@ -13,7 +13,7 @@
 #include "loader/BaseLoader.hpp"
 #include "builder/BaseBuilder.hpp"
 
-class ModelDirector : BaseLoadDirector
+class ModelDirector : public BaseLoadDirector
 {
 public:
     explicit ModelDirector(std::string name);
