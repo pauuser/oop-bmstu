@@ -11,7 +11,7 @@
 
 #include "loader/BaseLoader.hpp"
 
-using CallBackMap = std::map<std::string, std::unique_ptr<LoaderCreator> (*)()>;
+using LoaderMap = std::map<const std::string, std::shared_ptr<LoaderCreator>>;
 
 class LoaderSolution
 {
@@ -19,12 +19,12 @@ public:
     LoaderSolution() = default;
     ~LoaderSolution() = default;
 
-    bool registration(std::string& object_type, std::unique_ptr<LoaderCreator> (*createLoader)());
+    bool registration(const std::string object_type, std::shared_ptr<LoaderCreator> loader_creator);
     bool check(const std::string& object_type);
-    std::unique_ptr<LoaderCreator> getLoaderCreator(std::string object_type);
+    std::shared_ptr<LoaderCreator> getLoaderCreator(const std::string& object_type);
 
 private:
-     static CallBackMap _callbacks;
+     static LoaderMap _callbacks;
 };
 
 

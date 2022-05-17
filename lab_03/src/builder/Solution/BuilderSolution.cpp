@@ -4,9 +4,9 @@
 
 #include "BuilderSolution.hpp"
 
-bool BuilderSolution::registration(std::string &object_type, std::unique_ptr<BuilderCreator> (*createBuilder)())
+bool BuilderSolution::registration(const std::string object_type, std::shared_ptr<BuilderCreator> builder_creator)
 {
-    return _callbacks.insert(CallBackMap::value_type(object_type, createBuilder)).second;
+    return _callbacks.insert(BuilderMap::value_type(object_type, builder_creator)).second;
 }
 
 bool BuilderSolution::check(const std::string &object_type)
@@ -14,7 +14,7 @@ bool BuilderSolution::check(const std::string &object_type)
     return _callbacks.count(object_type) > 0;
 }
 
-std::unique_ptr<BuilderCreator> BuilderSolution::getBuilderCreator(std::string object_type)
+std::shared_ptr<BuilderCreator> BuilderSolution::getBuilderCreator(const std::string object_type)
 {
     auto it = _callbacks.find(object_type);
 
@@ -23,5 +23,5 @@ std::unique_ptr<BuilderCreator> BuilderSolution::getBuilderCreator(std::string o
         // TODO: throw exception
     }
 
-    return std::unique_ptr<BuilderCreator>((it->second)());
+    return std::shared_ptr<BuilderCreator>(it->second);
 }

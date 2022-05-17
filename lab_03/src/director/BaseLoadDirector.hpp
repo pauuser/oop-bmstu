@@ -17,6 +17,7 @@ public:
     virtual std::shared_ptr<Object> load() = 0;
     virtual void setBuilder(std::shared_ptr<BaseBuilder> builder) = 0;
     virtual void setLoader(std::shared_ptr<BaseLoader> loader) = 0;
+    virtual void setName(std::string name) = 0;
 };
 
 

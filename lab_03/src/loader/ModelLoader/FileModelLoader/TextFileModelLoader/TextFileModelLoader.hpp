@@ -29,7 +29,7 @@ class TextFileModelLoaderCreator : public LoaderCreator
 {
 public:
     TextFileModelLoaderCreator() = default;
-    ~TextFileModelLoaderCreator() = default;
+    ~TextFileModelLoaderCreator() override = default;
 
     std::shared_ptr<BaseLoader> createLoader(std::string &name) override;
 };

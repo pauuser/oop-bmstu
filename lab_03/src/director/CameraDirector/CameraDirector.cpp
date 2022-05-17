@@ -4,17 +4,26 @@
 
 #include "CameraDirector.hpp"
 
-void CameraDirectorCreator::_createDirector()
+CameraDirector::CameraDirector(std::string name)
 {
-    this->_director = std::make_shared<CameraDirector>();
+    _name = name;
 }
 
-std::shared_ptr<CameraDirector> CameraDirectorCreator::getDirector()
+void CameraDirectorCreator::_createDirector(std::string name)
+{
+    this->_director = std::make_shared<CameraDirector>(name);
+    this->_director->setBuilder(BuilderSolution().getBuilderCreator("camera")->createBuilder());
+    this->_director->setLoader(LoaderSolution().getLoaderCreator("camera")->createLoader(name));
+}
+
+std::shared_ptr<CameraDirector> CameraDirectorCreator::getDirector(std::string name)
 {
     if (this->_director == nullptr)
     {
-        this->_createDirector();
+        this->_createDirector(name);
     }
+
+    this->_director->setName(name);
 
     return this->_director;
 }
@@ -37,3 +46,9 @@ std::shared_ptr<Object> CameraDirector::load()
 
     return model;
 }
+
+void CameraDirector::setName(std::string name)
+{
+    this->_name = name;
+}
+

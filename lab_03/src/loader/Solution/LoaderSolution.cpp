@@ -4,9 +4,9 @@
 
 #include "LoaderSolution.hpp"
 
-bool LoaderSolution::registration(std::string &object_type, std::unique_ptr<LoaderCreator> (*createLoader)())
+bool LoaderSolution::registration(const std::string object_type, std::shared_ptr<LoaderCreator> loader_creator)
 {
-    return _callbacks.insert(CallBackMap::value_type(object_type, createLoader)).second;
+    return _callbacks.insert(LoaderMap::value_type(object_type, loader_creator)).second;
 }
 
 bool LoaderSolution::check(const std::string& object_type)
@@ -14,7 +14,7 @@ bool LoaderSolution::check(const std::string& object_type)
     return _callbacks.count(object_type) > 0;
 }
 
-std::unique_ptr<LoaderCreator> LoaderSolution::getLoaderCreator(std::string object_type)
+std::shared_ptr<LoaderCreator> LoaderSolution::getLoaderCreator(const std::string& object_type)
 {
     auto it = _callbacks.find(object_type);
 
@@ -23,5 +23,5 @@ std::unique_ptr<LoaderCreator> LoaderSolution::getLoaderCreator(std::string obje
         // TODO: throw exception
     }
 
-    return std::unique_ptr<LoaderCreator>((it->second)());
+    return std::shared_ptr<LoaderCreator>(it->second);
 }

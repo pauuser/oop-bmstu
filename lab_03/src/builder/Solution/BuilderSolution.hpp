@@ -11,7 +11,7 @@
 
 #include "builder/BaseBuilder.hpp"
 
-using CallBackMap = std::map<std::string, std::unique_ptr<BuilderCreator> (*)()>;
+using BuilderMap = std::map<const std::string, std::shared_ptr<BuilderCreator>>;
 
 class BuilderSolution
 {
@@ -19,12 +19,12 @@ public:
     BuilderSolution() = default;
     ~BuilderSolution() = default;
 
-    bool registration(std::string& object_type, std::unique_ptr<BuilderCreator> (*createLoader)());
+    bool registration(const std::string object_type, std::shared_ptr<BuilderCreator> builder_creator);
     bool check(const std::string& object_type);
-    std::unique_ptr<BuilderCreator> getBuilderCreator(std::string object_type);
+    std::shared_ptr<BuilderCreator> getBuilderCreator(const std::string object_type);
 
 private:
-    static CallBackMap _callbacks;
+    static BuilderMap _callbacks;
 };
 
 #endif//LAB_03_BUILDERSOLUTION_HPP

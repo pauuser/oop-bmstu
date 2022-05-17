@@ -29,7 +29,7 @@ class TextFileCameraLoaderCreator : public LoaderCreator
 {
 public:
     TextFileCameraLoaderCreator() = default;
-    ~TextFileCameraLoaderCreator() = default;
+    ~TextFileCameraLoaderCreator() override = default;
 
     std::shared_ptr<BaseLoader> createLoader(std::string &name) override;
 };

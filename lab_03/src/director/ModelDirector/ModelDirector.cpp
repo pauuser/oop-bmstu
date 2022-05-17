@@ -4,6 +4,11 @@
 
 #include "ModelDirector.hpp"
 
+ModelDirector::ModelDirector(std::string name)
+{
+    _name = name;
+}
+
 void ModelDirector::setBuilder(std::shared_ptr<BaseBuilder> builder)
 {
     this->_builder = builder;
@@ -22,17 +27,26 @@ std::shared_ptr<Object> ModelDirector::load()
     return model;
 }
 
-void ModelDirectorCreator::_createDirector()
+void ModelDirectorCreator::_createDirector(std::string name)
 {
-    this->_director = std::make_shared<ModelDirector>();
+    this->_director = std::make_shared<ModelDirector>(name);
+    this->_director->setBuilder(BuilderSolution().getBuilderCreator("model")->createBuilder());
+    this->_director->setLoader(LoaderSolution().getLoaderCreator("model")->createLoader(name));
 }
 
-std::shared_ptr<ModelDirector> ModelDirectorCreator::getDirector()
+void ModelDirector::setName(std::string name)
+{
+    this->_name = name;
+}
+
+std::shared_ptr<ModelDirector> ModelDirectorCreator::getDirector(std::string name)
 {
     if (this->_director == nullptr)
     {
-        _createDirector();
+        _createDirector(name);
     }
+
+    this->_director->setName(name);
 
     return this->_director;
 }
