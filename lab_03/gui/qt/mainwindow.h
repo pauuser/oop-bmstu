@@ -39,14 +39,6 @@ private slots:
     void on_pushButton_add_camera_2_clicked();
     void on_pushButton_del_camera_cur_clicked();
     void on_comboBox_cameras_currentIndexChanged(int index);
-    /*
-    void on_pushButton_del_model_all_clicked();
-    void on_pushButton_camera_move_up_clicked();
-    void on_pushButton_camera_move_left_clicked();
-    void on_pushButton_camera_move_down_clicked();
-    void on_pushButton_camera_move_right_clicked();
-    void change_cam();
-    */
 
 protected:
     void setupScene();
@@ -61,6 +53,9 @@ private:
     std::shared_ptr<Facade> _facade;
     std::shared_ptr<QGraphicsScene> _scene;
     std::shared_ptr<BaseDrawer> _drawer;
+
+    size_t _getModelCount();
+    size_t _getCameraCount();
 };
 
 

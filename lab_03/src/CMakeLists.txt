@@ -73,6 +73,9 @@ set(CONFIGURATION
         configuration/TextConfiguration/TextConfiguration.cpp configuration/TextConfiguration/TextConfiguration.hpp
         configuration/Solution/ConfigurationSolution.cpp configuration/Solution/ConfigurationSolution.hpp)
 
+set(EXCEPTION
+        exceptions/BaseException.hpp exceptions/ui/UiException.hpp)
+
 add_library(${PROJECT_NAME}
         ${MANAGERS}
         ${FACADE}
@@ -83,7 +86,8 @@ add_library(${PROJECT_NAME}
         ${LOADER}
         ${BUILDER}
         ${DIRECTOR}
-        ${CONFIGURATION})
+        ${CONFIGURATION}
+        ${EXCEPTION})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ../src)
 
