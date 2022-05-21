@@ -16,6 +16,8 @@ void MoveCamera::execute()
 
     std::size_t _cur = 0;
 
+    // TODO: move this logic from here
+
     do
     {
         if (!((*it)->isVisible()))

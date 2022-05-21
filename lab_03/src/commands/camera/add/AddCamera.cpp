@@ -15,6 +15,8 @@ void AddCamera::execute()
     auto scene_manager = SceneManagerCreator().getManager();
     auto scene = scene_manager->getScene();
 
+    // TODO: fix here
+
     auto camera = std::make_shared<Camera>(camera_position, _ax, _ay, _az);
     scene->addObject(camera);
 

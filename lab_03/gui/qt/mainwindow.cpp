@@ -31,6 +31,7 @@
 #include "commands/model/count/CountModel.hpp"
 #include "commands/camera/count/CountCamera.hpp"
 #include "exceptions/ui/UiException.hpp"
+#include "commands/config/register/RegisterTextConfiguration.hpp"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -38,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setupScene();
 
     this->_facade = std::make_unique<Facade>();
+
+    std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
+
+    auto reg_cmd = std::make_shared<RegisterTextConfiguration>(config);
+    this->_facade->execute(reg_cmd);
 }
 
 MainWindow::~MainWindow() {
@@ -64,11 +70,10 @@ void MainWindow::on_pushButton_load_model_clicked() {
         return;
     }
 
-    std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
     auto _Qfile = QFileDialog::getOpenFileName();
     auto file = _Qfile.toStdString();
 
-    auto load_cmd = std::make_shared<LoadModel>(file, config);
+    auto load_cmd = std::make_shared<LoadModel>(file);
 
     _facade->execute(load_cmd);
 
@@ -139,11 +144,10 @@ void MainWindow::on_pushButton_add_camera_clicked() {
 
 
 void MainWindow::on_pushButton_add_camera_2_clicked() {
-    std::string config = "C:\\Users\\Pavel Ivanov\\labs\\GitHub\\oop-bmstu\\lab_03\\build\\config.txt";
     auto _Qfile = QFileDialog::getOpenFileName();
     auto file = _Qfile.toStdString();
 
-    auto load_cmd = std::make_shared<LoadCamera>(file, config);
+    auto load_cmd = std::make_shared<LoadCamera>(file);
 
     _facade->execute(load_cmd);
 

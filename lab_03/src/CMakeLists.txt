@@ -6,8 +6,7 @@ set(MANAGERS
         managers/BaseManager/BaseManager.hpp managers/BaseManager/BaseManager.cpp
         managers/TransformManager/TransformManager.cpp managers/TransformManager/TransformManager.hpp
         managers/DrawManager/DrawManager.cpp managers/DrawManager/DrawManager.hpp
-        commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp
-        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp managers/LoadManager/LoadManager.cpp managers/LoadManager/LoadManager.hpp)
+        managers/LoadManager/LoadManager.cpp managers/LoadManager/LoadManager.hpp)
 
 set(FACADE
         facade/Facade.cpp facade/Facade.hpp
@@ -28,7 +27,11 @@ set(COMMANDS
         commands/model/count/CountModel.cpp commands/model/count/CountModel.hpp
         commands/model/remove/RemoveModel.cpp commands/model/remove/RemoveModel.hpp
         commands/model/rotate/RotateModel.cpp commands/model/rotate/RotateModel.hpp
-        commands/model/scale/ScaleModel.cpp commands/model/scale/ScaleModel.hpp commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp commands/camera/load/LoadCamera.cpp commands/camera/load/LoadCamera.hpp)
+        commands/model/scale/ScaleModel.cpp commands/model/scale/ScaleModel.hpp
+        commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp
+        commands/camera/load/LoadCamera.cpp commands/camera/load/LoadCamera.hpp
+        commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp
+        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp commands/config/BaseConfigCommand.hpp commands/config/register/RegisterTextConfiguration.cpp commands/config/register/RegisterTextConfiguration.hpp)
 
 set(OBJECTS
         objects/Object.hpp

@@ -55,8 +55,6 @@ void DrawVisitor::visit(const FrameModel &model)
 
 void DrawVisitor::visit(const Composite &composite) {}
 
-void DrawVisitor::visit(const Scene &scene) {}
-
 void DrawVisitor::visit(const Camera &camera) {}
 
 void DrawVisitor::visit(const Model& model) {}

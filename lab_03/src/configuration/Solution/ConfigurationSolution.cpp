@@ -7,12 +7,12 @@
 
 std::shared_ptr<BaseConfiguration> ConfigurationSolution::createCreator()
 {
-    if (!this->_configuration)
+    if (!_configuration)
     {
         throw NoConfigurationException(__FILE__, __LINE__);
     }
 
-    return this->_configuration;
+    return _configuration;
 }
 
 void ConfigurationSolution::registration(std::shared_ptr<BaseConfiguration> configuration)

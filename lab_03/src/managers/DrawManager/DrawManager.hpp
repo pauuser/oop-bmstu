@@ -21,9 +21,9 @@ public:
 
     ~DrawManager() override = default;
 
-    void draw(const std::shared_ptr<Scene> scene);
-    void setDrawer(const std::shared_ptr<BaseDrawer> drawer);
-    void setCamera(const std::shared_ptr<Camera> camera);
+    void draw(const std::shared_ptr<Scene>& scene);
+    void setDrawer(const std::shared_ptr<BaseDrawer>& drawer);
+    void setCamera(const std::shared_ptr<Camera>& camera);
 
 private:
     std::shared_ptr<BaseDrawer> _drawer = nullptr;

@@ -13,8 +13,8 @@ class LoadCamera : public BaseCameraCommand
 {
 public:
     LoadCamera() = delete;
-    explicit LoadCamera(std::string name, std::string config_file);
-    ~LoadCamera() = default;
+    explicit LoadCamera(std::string name);
+    ~LoadCamera() override = default;
 
     void execute() override;
 
