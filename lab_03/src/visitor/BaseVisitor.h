@@ -29,7 +29,7 @@ public:
     BaseVisitorCreator() = default;
     virtual ~BaseVisitorCreator() = default;
 
-    virtual std::shared_ptr<BaseVisitor> create() = 0;
+    virtual std::unique_ptr<BaseVisitor> create() = 0;
 };
 
 #endif//LAB_03_BASEVISITOR_H

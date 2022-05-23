@@ -14,7 +14,7 @@ void DrawManager::draw()
 
     this->_drawer->clearScene();
 
-    auto visitor = DrawVisitorCreator(this->_drawer, this->_camera).create();
+    std::shared_ptr<BaseVisitor> visitor = DrawVisitorCreator(this->_drawer, this->_camera).create();
 
     for (auto it = scene->begin(); it < scene->end(); it++)
     {

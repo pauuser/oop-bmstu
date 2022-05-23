@@ -59,9 +59,9 @@ DrawVisitorCreator::DrawVisitorCreator(const std::shared_ptr<BaseDrawer> &drawer
     _camera = camera;
 }
 
-std::shared_ptr<BaseVisitor> DrawVisitorCreator::create()
+std::unique_ptr<BaseVisitor> DrawVisitorCreator::create()
 {
-    return std::make_shared<DrawVisitor>(_drawer, _camera);
+    return std::make_unique<DrawVisitor>(_drawer, _camera);
 }
 
 void DrawVisitor::visit(const Composite &composite) {}

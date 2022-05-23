@@ -34,7 +34,7 @@ public:
     DrawVisitorCreator(const std::shared_ptr<BaseDrawer>& drawer, const std::shared_ptr<Camera>& camera);
     ~DrawVisitorCreator() override = default;
 
-    std::shared_ptr<BaseVisitor> create() override;
+    std::unique_ptr<BaseVisitor> create() override;
 
 private:
     std::shared_ptr<BaseDrawer> _drawer;
