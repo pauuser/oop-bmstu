@@ -14,8 +14,8 @@ void DrawManager::draw()
 
     this->_drawer->clearScene();
 
-    auto visitor = std::make_shared<DrawVisitor>(this->_drawer, this->_camera);
-    // TODO: убрать new?
+    auto visitor = DrawVisitorCreator(this->_drawer, this->_camera).create();
+
     for (auto it = scene->begin(); it < scene->end(); it++)
     {
         auto obj = *it;

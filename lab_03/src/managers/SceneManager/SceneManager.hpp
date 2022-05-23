@@ -7,9 +7,9 @@
 
 #include <memory>
 
-#include "managers/BaseManager/BaseManager.hpp"
 #include "../../scene/Scene.hpp"
-#include "../../objects/Camera/Camera.hpp"
+#include "managers/BaseManager/BaseManager.hpp"
+#include "objects/Camera/Camera/Camera.hpp"
 
 class SceneManager : public BaseManager
 {

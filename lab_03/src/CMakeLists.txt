@@ -41,7 +41,7 @@ set(OBJECTS
         objects/Edge/Edge.cpp objects/Edge/Edge.hpp
         objects/Model/FrameModel/FrameModel.cpp objects/Model/FrameModel/FrameModel.hpp
         objects/Model/FrameModelImplementation/FrameModelImplementation.cpp objects/Model/FrameModelImplementation/FrameModelImplementation.hpp
-        objects/Camera/Camera.cpp objects/Camera/Camera.hpp)
+        objects/Camera/Camera/Camera.cpp objects/Camera/Camera/Camera.hpp objects/Camera/BaseCamera.hpp)
 
 set(VISITOR
         visitor/BaseVisitor.h

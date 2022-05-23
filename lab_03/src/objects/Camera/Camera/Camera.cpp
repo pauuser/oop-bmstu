@@ -51,6 +51,19 @@ void Camera::accept(std::shared_ptr<BaseVisitor> visitor)
     visitor->visit(*this);
 }
 
+CameraCreator::CameraCreator(const Point &position, double ax, double ay, double az)
+{
+    _pos = position;
+    _ax = ax;
+    _ay = ay;
+    _az = az;
+}
+
+std::shared_ptr<BaseCamera> CameraCreator::create()
+{
+    return std::make_shared<Camera>(_pos, _ax, _ay, _az);
+}
+
 Point Camera::getPosition()
 {
     return this->_pos;

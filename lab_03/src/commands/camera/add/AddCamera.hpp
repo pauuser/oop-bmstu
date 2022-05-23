@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "commands/camera/BaseCameraCommand.hpp"
-#include "objects/Camera/Camera.hpp"
+#include "objects/Camera/Camera/Camera.hpp"
 
 class AddCamera : public BaseCameraCommand
 {

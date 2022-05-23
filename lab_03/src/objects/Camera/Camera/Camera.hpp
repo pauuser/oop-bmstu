@@ -5,11 +5,12 @@
 #ifndef LAB_03_CAMERA_HPP
 #define LAB_03_CAMERA_HPP
 
-#include "../Object.hpp"
-#include "../Point/Point.hpp"
-#include "../../visitor/DrawVisitor/DrawVisitor.hpp"
+#include "objects/Object.hpp"
+#include "objects/Camera/BaseCamera.hpp"
+#include "objects/Point/Point.hpp"
+#include "visitor/DrawVisitor/DrawVisitor.hpp"
 
-class Camera : public InvisibleObject
+class Camera : public BaseCamera
 {
 public:
     Camera() = default;
@@ -26,12 +27,25 @@ public:
 
 private:
     Point _pos{};
-    double _ax = -45, _ay = 180, _az = 0;
+    double _ax = 0, _ay = 0, _az = 0;
 
     void _move(const Point& move_params);
     void _scale(const Point &scale_params);
     void _rotate(const Point &rotate_params);
 };
+
+class CameraCreator : public BaseCameraCreator
+{
+public:
+    CameraCreator(const Point& position, double ax, double ay, double az);
+    ~CameraCreator() override = default;
+
+    std::shared_ptr<BaseCamera> create() override;
+
+private:
+    Point _pos{};
+    double _ax = 0, _ay = 0, _az = 0;
+};;
 
 
 #endif//LAB_03_CAMERA_HPP

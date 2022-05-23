@@ -28,5 +28,18 @@ private:
     static double _toRad(double degrees);
 };
 
+class DrawVisitorCreator: public BaseVisitorCreator
+{
+public:
+    DrawVisitorCreator(const std::shared_ptr<BaseDrawer>& drawer, const std::shared_ptr<Camera>& camera);
+    ~DrawVisitorCreator() override = default;
+
+    std::shared_ptr<BaseVisitor> create() override;
+
+private:
+    std::shared_ptr<BaseDrawer> _drawer;
+    std::shared_ptr<Camera>     _camera;
+};
+
 
 #endif//LAB_03_DRAWVISITOR_HPP

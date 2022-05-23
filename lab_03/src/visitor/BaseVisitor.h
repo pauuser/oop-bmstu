@@ -23,4 +23,13 @@ public:
     virtual void visit(const Model& model) = 0;
 };
 
+class BaseVisitorCreator
+{
+public:
+    BaseVisitorCreator() = default;
+    virtual ~BaseVisitorCreator() = default;
+
+    virtual std::shared_ptr<BaseVisitor> create() = 0;
+};
+
 #endif//LAB_03_BASEVISITOR_H

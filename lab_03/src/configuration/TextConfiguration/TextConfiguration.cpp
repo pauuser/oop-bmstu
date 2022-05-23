@@ -65,7 +65,6 @@ void TextConfiguration::register_framework()
 {
     read_configuration();
 
-
     if (_source == "textfile")
     {
         LoaderSolution().registration("camera", std::make_shared<TextFileCameraLoaderCreator>());

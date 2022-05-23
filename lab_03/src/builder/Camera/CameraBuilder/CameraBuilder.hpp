@@ -6,7 +6,7 @@
 #define LAB_03_CAMERABUILDER_HPP
 
 #include "builder/Camera/BaseCameraBuilder.hpp"
-#include "objects/Camera/Camera.hpp"
+#include "objects/Camera/Camera/Camera.hpp"
 
 class CameraBuilder : public BaseCameraBuilder
 {

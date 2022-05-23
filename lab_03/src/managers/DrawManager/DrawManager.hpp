@@ -9,7 +9,7 @@
 
 #include "../../gui/drawer/BaseDrawer.hpp"
 #include "managers/BaseManager/BaseManager.hpp"
-#include "objects/Camera/Camera.hpp"
+#include "objects/Camera/Camera/Camera.hpp"
 
 class DrawManager : public BaseManager
 {

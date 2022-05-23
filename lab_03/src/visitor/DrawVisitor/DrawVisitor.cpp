@@ -3,10 +3,10 @@
 //
 
 #include "DrawVisitor.hpp"
-#include "objects/Model/Model.hpp"
-#include "objects/Model/FrameModel/FrameModel.hpp"
-#include "objects/Camera/Camera.hpp"
+#include "objects/Camera/Camera/Camera.hpp"
 #include "objects/Composite/Composite.hpp"
+#include "objects/Model/FrameModel/FrameModel.hpp"
+#include "objects/Model/Model.hpp"
 
 DrawVisitor::DrawVisitor(const std::shared_ptr<BaseDrawer>& drawer, const std::shared_ptr<Camera>& camera):
                         _drawer(drawer), _camera(camera){}
@@ -51,6 +51,17 @@ void DrawVisitor::visit(const FrameModel &model)
                 this->_projectPoint(points[edge.getSecond()])
         );
     }
+}
+
+DrawVisitorCreator::DrawVisitorCreator(const std::shared_ptr<BaseDrawer> &drawer, const std::shared_ptr<Camera> &camera)
+{
+    _drawer = drawer;
+    _camera = camera;
+}
+
+std::shared_ptr<BaseVisitor> DrawVisitorCreator::create()
+{
+    return std::make_shared<DrawVisitor>(_drawer, _camera);
 }
 
 void DrawVisitor::visit(const Composite &composite) {}

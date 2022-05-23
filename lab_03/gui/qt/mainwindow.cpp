@@ -138,6 +138,9 @@ void MainWindow::on_pushButton_add_camera_clicked() {
     auto cmd = std::make_shared<AddCamera>(x, y, z, ax, ay, az);
     this->_facade->execute(cmd);
 
+    auto setmain_cmd = std::make_shared<SetCamera>(ui->comboBox_cameras->count());
+    _facade->execute(setmain_cmd);
+
     ui->comboBox_cameras->addItem("CustomCamera");
     ui->comboBox_cameras->setCurrentIndex(ui->comboBox_cameras->count() - 1);
 }
