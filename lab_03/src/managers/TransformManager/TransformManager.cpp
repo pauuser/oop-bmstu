@@ -3,10 +3,44 @@
 //
 
 #include "TransformManager.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
-void TransformManager::transform(std::shared_ptr<Object> &obj, const Point &move_params, const Point &scale_params, const Point &rotate_params)
+void TransformManager::transformVisible(size_t scene_id, const Point &move_params, const Point &scale_params, const Point &rotate_params)
 {
-    obj->transform(move_params, scale_params, rotate_params);
+    auto it =  SceneManagerCreator().getManager()->getScene()->begin();
+    std::size_t _cur = 0;
+
+    do
+    {
+        if ((*it)->isVisible())
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < scene_id + 1);
+
+    (*(it - 1))->transform(move_params, scale_params, rotate_params);
+}
+
+void TransformManager::transformInvisible(size_t scene_id, const Point &move_params, const Point &scale_params, const Point &rotate_params)
+{
+    auto it = SceneManagerCreator().getManager()->getScene()->begin();
+    std::size_t _cur = 0;
+
+    do
+    {
+        if (!((*it)->isVisible()))
+        {
+            _cur++;
+        }
+
+        it++;
+    }
+    while (_cur < scene_id + 1);
+
+    (*(it - 1))->transform(move_params, scale_params, rotate_params);
 }
 
 void TransformManagerCreator::_createManager()

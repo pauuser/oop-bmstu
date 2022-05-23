@@ -9,5 +9,5 @@ CountCamera::CountCamera(std::shared_ptr<size_t> &size): _count(size) {}
 
 void CountCamera::execute()
 {
-    *(this->_count) = SceneManagerCreator().getManager()->getScene()->getCameraCount();
+    *(this->_count) = SceneManagerCreator().getManager()->getCameraCount();
 }

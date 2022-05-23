@@ -21,9 +21,9 @@ public:
 
     ~TransformManager() override = default;
 
-    // Static because static analyzer suggested so
-    // Understandable because we don't change the Manager
-    static void transform(std::shared_ptr<Object> &obj, const Point& move_params, const Point& scale_params, const Point& rotate_params);
+    void transformVisible(size_t scene_id, const Point& move_params, const Point& scale_params, const Point& rotate_params);
+    void transformInvisible(size_t scene_id, const Point& move_params, const Point& scale_params, const Point& rotate_params);
+
 };
 
 class TransformManagerCreator

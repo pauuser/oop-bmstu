@@ -9,5 +9,5 @@ AddModel::AddModel(std::shared_ptr<Object> obj): _obj(obj) {}
 
 void AddModel::execute()
 {
-    SceneManagerCreator().getManager()->getScene()->addObject(this->_obj);
+    SceneManagerCreator().getManager()->addObject(this->_obj);
 }

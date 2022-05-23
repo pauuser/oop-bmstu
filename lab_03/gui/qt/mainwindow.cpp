@@ -148,8 +148,10 @@ void MainWindow::on_pushButton_add_camera_2_clicked() {
     auto file = _Qfile.toStdString();
 
     auto load_cmd = std::make_shared<LoadCamera>(file);
-
     _facade->execute(load_cmd);
+
+    auto setmain_cmd = std::make_shared<SetCamera>(ui->comboBox_cameras->count());
+    _facade->execute(setmain_cmd);
 
     ui->comboBox_cameras->addItem(QFileInfo(_Qfile.toUtf8().data()).fileName());
     ui->comboBox_cameras->setCurrentIndex(ui->comboBox_cameras->count() - 1);

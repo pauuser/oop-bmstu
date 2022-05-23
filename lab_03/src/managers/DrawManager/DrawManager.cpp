@@ -4,11 +4,18 @@
 
 #include "DrawManager.hpp"
 #include "scene/Scene.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
-void DrawManager::draw(const std::shared_ptr<Scene>& scene)
+void DrawManager::draw()
 {
-    auto visitor = std::make_shared<DrawVisitor>(this->_drawer, this->_camera);
+    auto scene_manager = SceneManagerCreator().getManager();
+    auto scene = scene_manager->getScene();
+    this->setCamera(scene_manager->getMainCamera());
 
+    this->_drawer->clearScene();
+
+    auto visitor = std::make_shared<DrawVisitor>(this->_drawer, this->_camera);
+    // TODO: убрать new?
     for (auto it = scene->begin(); it < scene->end(); it++)
     {
         auto obj = *it;
@@ -32,12 +39,14 @@ void DrawManagerCreator::_createManager()
     this->_manager = manager;
 }
 
-std::shared_ptr<DrawManager> DrawManagerCreator::getManager()
+std::shared_ptr<DrawManager> DrawManagerCreator::getManager(const std::shared_ptr<BaseDrawer>& drawer)
 {
     if (this->_manager == nullptr)
     {
         _createManager();
     }
+
+    this->_manager->setDrawer(drawer);
 
     return this->_manager;
 }

@@ -9,5 +9,5 @@ CountModel::CountModel(std::shared_ptr<size_t> &cnt): _cnt(cnt) {}
 
 void CountModel::execute()
 {
-    *(this->_cnt) = SceneManagerCreator().getManager()->getScene()->getModelCount();
+    *(this->_cnt) = SceneManagerCreator().getManager()->getModelCount();
 }

@@ -16,10 +16,6 @@ LoadModel::LoadModel(std::string name)
 
 void LoadModel::execute()
 {
-    auto manager = LoadManagerCreator().getManager();
     auto director = ModelDirectorCreator().getDirector(this->_name);
-    manager->setDirector(director);
-
-    auto model = manager->load();
-    SceneManagerCreator().getManager()->getScene()->addObject(model);
+    LoadManagerCreator().getManager(director)->load();
 }

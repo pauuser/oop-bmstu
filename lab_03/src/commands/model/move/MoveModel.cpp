@@ -4,30 +4,12 @@
 
 #include "MoveModel.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 MoveModel::MoveModel(std::size_t id, double dx, double dy, double dz): _id(id), _dx(dx), _dy(dy), _dz(dz) {}
 
 void MoveModel::execute()
 {
-    auto scene = SceneManagerCreator().getManager()->getScene();
-    auto it = scene->begin();
-
-    std::size_t _cur = 0;
-
-    do
-    {
-        if ((*it)->isVisible())
-        {
-            _cur++;
-        }
-
-        it++;
-    }
-    while (_cur < _id + 1);
-
-    Point move{ _dx, _dy, _dz };
-    Point scale{ 1, 1, 1 };
-    Point rotate{ 0, 0, 0 };
-
-    (*(--it))->transform(move, scale, rotate);
+    Point move{ _dx, _dy, _dz }, scale{ 1, 1, 1 }, rotate{ 0, 0, 0 };
+    TransformManagerCreator().getManager()->transformVisible(_id, move, scale, rotate);
 }

@@ -22,5 +22,5 @@ void AddCamera::execute()
 
     auto it = scene->end() - 1;
 
-    scene_manager->setMainCamera(it);
+    //scene_manager->setMainCamera(it);
 }

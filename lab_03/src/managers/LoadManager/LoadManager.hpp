@@ -10,6 +10,7 @@
 #include "managers/BaseManager/BaseManager.hpp"
 #include "director/BaseLoadDirector.hpp"
 #include "objects/Object.hpp"
+#include "director/BaseLoadDirector.hpp"
 
 class LoadManager : public BaseManager
 {
@@ -21,7 +22,7 @@ public:
 
     ~LoadManager() override = default;
 
-    std::shared_ptr<Object> load();
+    void load();
     void setDirector(std::shared_ptr<BaseLoadDirector> director);
 
 private:
@@ -31,7 +32,7 @@ private:
 class LoadManagerCreator
 {
 public:
-    std::shared_ptr<LoadManager> getManager();
+    std::shared_ptr<LoadManager> getManager(std::shared_ptr<BaseLoadDirector> director);
 
 private:
     void _createManager();

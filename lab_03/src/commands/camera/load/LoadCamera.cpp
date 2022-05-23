@@ -16,15 +16,6 @@ LoadCamera::LoadCamera(std::string name)
 
 void LoadCamera::execute()
 {
-    auto manager = LoadManagerCreator().getManager();
     auto director = CameraDirectorCreator().getDirector(this->_name);
-    manager->setDirector(director);
-
-    auto camera = manager->load();
-
-    auto scene_manager = SceneManagerCreator().getManager();
-    auto scene = scene_manager->getScene();
-
-    scene->addObject(camera);
-    scene_manager->setMainCamera(scene->end() - 1); // TODO здесь главную сцену можно не делать, а сделать отдельную команду
+    LoadManagerCreator().getManager(director)->load();
 }

@@ -11,22 +11,6 @@ TransformModel::TransformModel(std::size_t id, const Point &move_params, const P
 
 void TransformModel::execute()
 {
-    auto scene = SceneManagerCreator().getManager()->getScene();
-    auto it = scene->begin();
-
-    std::size_t _cur = 0;
-
-    do
-    {
-        if ((*it)->isVisible())
-        {
-            _cur++;
-        }
-
-        it++;
-    }
-    while (_cur < _id + 1);
-
-    TransformManagerCreator().getManager()->transform(*(it - 1), this->_move_params,
+    TransformManagerCreator().getManager()->transformVisible(_id, this->_move_params,
                                                       this->_scale_params, this->_rotate_params);
 }
