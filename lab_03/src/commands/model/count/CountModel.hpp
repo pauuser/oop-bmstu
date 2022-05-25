@@ -16,7 +16,7 @@ public:
     explicit CountModel(std::shared_ptr<size_t>& cnt);
     ~CountModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::shared_ptr<size_t> _cnt;

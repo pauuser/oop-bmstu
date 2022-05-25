@@ -3,13 +3,19 @@
 //
 
 #include "LoadModel.hpp"
+#include "managers/LoadManager/LoadManager.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
+#include "director/ModelDirector/ModelDirector.hpp"
+#include "configuration/TextConfiguration/TextConfiguration.hpp"
+#include "configuration/Solution/ConfigurationSolution.hpp"
 
-LoadModel::LoadModel(std::string name)
+LoadModel::LoadModel(std::string name) : _name(name)
 {
-    _name = name;
+    auto director = ModelDirectorCreator().getDirector(this->_name);
+    _loadmanager->setDirector(director);
 }
 
-void LoadModel::execute(std::shared_ptr<Controller> controller)
+void LoadModel::execute()
 {
-    controller->LoadModel(_name);
+    _loadmanager->load();
 }

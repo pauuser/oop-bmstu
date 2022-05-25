@@ -17,7 +17,7 @@ public:
     DrawScene(std::shared_ptr<BaseDrawer>& drawer);
     ~DrawScene() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::shared_ptr<BaseDrawer> _drawer;

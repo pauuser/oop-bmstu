@@ -16,7 +16,7 @@ public:
     explicit CountCamera(std::shared_ptr<size_t>& size);
     ~CountCamera() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::shared_ptr<size_t> _count;

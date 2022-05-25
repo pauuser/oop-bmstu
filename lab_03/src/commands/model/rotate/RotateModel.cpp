@@ -8,7 +8,8 @@
 
 RotateModel::RotateModel(std::size_t id, double ax, double ay, double az): _id(id), _ax(ax), _ay(ay), _az(az) {}
 
-void RotateModel::execute(std::shared_ptr<Controller> controller)
+void RotateModel::execute()
 {
-    controller->RotateModel(_id, _ax, _ay, _az);
+    Point move{ 0, 0, 0 }, scale{ 1, 1, 1 }, rotate{ _ax, _ay, _az };
+    _transformmanager->transformVisible(_id, move, scale, rotate);
 }

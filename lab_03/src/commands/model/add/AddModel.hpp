@@ -15,7 +15,7 @@ public:
     explicit AddModel(std::shared_ptr<Object> obj);
     ~AddModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::shared_ptr<Object> _obj;

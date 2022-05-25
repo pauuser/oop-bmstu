@@ -7,7 +7,7 @@
 
 SetCamera::SetCamera(std::size_t id): _id(id) {}
 
-void SetCamera::execute(std::shared_ptr<Controller> controller)
+void SetCamera::execute()
 {
-    controller->SetCamera(_id);
+    _scenemanager->setMainCamera(_id);
 }

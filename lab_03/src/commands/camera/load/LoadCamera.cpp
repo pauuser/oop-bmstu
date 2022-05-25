@@ -3,14 +3,15 @@
 //
 
 #include "LoadCamera.hpp"
-#include "managers/LoadManager/LoadManager.hpp"
+#include "director/CameraDirector/CameraDirector.hpp"
 
-LoadCamera::LoadCamera(std::string name)
+LoadCamera::LoadCamera(std::string name) : _name(name)
 {
-    _name = name;
+    auto director = CameraDirectorCreator().getDirector(this->_name);
+    _loadmanager->setDirector(director);
 }
 
-void LoadCamera::execute(std::shared_ptr<Controller> controller)
+void LoadCamera::execute()
 {
-    controller->LoadCamera(this->_name);
+    _loadmanager->load();
 }

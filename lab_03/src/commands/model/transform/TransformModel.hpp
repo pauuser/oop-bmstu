@@ -19,8 +19,7 @@ public:
                                             const Point& rotate_params);
     ~TransformModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
-
+    void execute() override;
 private:
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;

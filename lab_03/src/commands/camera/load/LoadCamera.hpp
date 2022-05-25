@@ -16,7 +16,7 @@ public:
     explicit LoadCamera(std::string name);
     ~LoadCamera() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::string _name{};

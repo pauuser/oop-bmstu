@@ -7,7 +7,7 @@
 
 RemoveCamera::RemoveCamera(std::size_t id): _id(id) {}
 
-void RemoveCamera::execute(std::shared_ptr<Controller> controller)
+void RemoveCamera::execute()
 {
-    controller->RemoveCamera(_id);
+    _scenemanager->removeInvisible(_id);
 }

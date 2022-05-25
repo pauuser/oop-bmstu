@@ -17,7 +17,7 @@ public:
     explicit SetCamera(std::size_t id);
     ~SetCamera() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::size_t _id;

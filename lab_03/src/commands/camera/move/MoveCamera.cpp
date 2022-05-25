@@ -9,7 +9,8 @@
 MoveCamera::MoveCamera(std::size_t id, const Point &move_params, const Point &scale_params, const Point &rotate_params):
                        _id(id), _move_params(move_params), _scale_params(scale_params), _rotate_params(rotate_params) {}
 
-void MoveCamera::execute(std::shared_ptr<Controller> controller)
+void MoveCamera::execute()
 {
-    controller->MoveCamera(_id, _move_params, _scale_params, _rotate_params);
+    _transformmanager->transformInvisible(_id, this->_move_params,
+                                                      this->_scale_params, this->_rotate_params);
 }
