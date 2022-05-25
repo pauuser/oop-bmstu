@@ -7,7 +7,7 @@
 
 RemoveModel::RemoveModel(std::size_t id): _id(id) {}
 
-void RemoveModel::execute()
+void RemoveModel::execute(std::shared_ptr<Controller> controller)
 {
-    SceneManagerCreator().getManager()->removeVisible(_id);
+    controller->RemoveModel(_id);
 }

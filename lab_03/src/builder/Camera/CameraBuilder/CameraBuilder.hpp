@@ -24,7 +24,7 @@ public:
     void buildAngle(double ax, double ay, double az) override;
 
 private:
-    std::shared_ptr<Camera> _camera;
+    std::shared_ptr<CameraImplementation> _camera;
 };
 
 class CameraBuilderCreator : public BuilderCreator

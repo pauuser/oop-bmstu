@@ -7,7 +7,7 @@
 
 AddModel::AddModel(std::shared_ptr<Object> obj): _obj(obj) {}
 
-void AddModel::execute()
+void AddModel::execute(std::shared_ptr<Controller> controller)
 {
-    SceneManagerCreator().getManager()->addObject(this->_obj);
+    controller->AddModel(_obj);
 }

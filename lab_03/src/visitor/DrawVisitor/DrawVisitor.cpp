@@ -9,7 +9,9 @@
 #include "objects/Model/Model.hpp"
 
 DrawVisitor::DrawVisitor(const std::shared_ptr<BaseDrawer>& drawer, const std::shared_ptr<Camera>& camera):
-                        _drawer(drawer), _camera(camera){}
+                        _drawer(drawer){
+    _camera = camera->getImplementation();
+}
 
 double DrawVisitor::_toRad(double degrees)
 {

@@ -6,7 +6,7 @@
 
 void CameraBuilder::build()
 {
-    _camera = std::make_shared<Camera>();
+    _camera = std::make_shared<CameraImplementation>();
 }
 
 bool CameraBuilder::is_built()
@@ -22,24 +22,19 @@ void CameraBuilder::reset()
 void CameraBuilder::buildPosition(double x, double y, double z)
 {
     Point pos(x, y, z);
-    _camera = std::make_shared<Camera>(pos, 0, 0 ,0);
+    _camera->setPoisition(pos);
 }
 
 void CameraBuilder::buildAngle(double ax, double ay, double az)
 {
-    if (_camera != nullptr)
-    {
-        _camera = std::make_shared<Camera>(_camera->getPosition(), ax, ay, az);
-    }
-    else
-    {
-        _camera = std::make_shared<Camera>(Point{0, 0, 0}, ax, ay, az);
-    }
+    _camera->setXangle(ax);
+    _camera->setYangle(ay);
+    _camera->setZangle(az);
 }
 
 std::shared_ptr<Object> CameraBuilder::get()
 {
-    return _camera;
+    return std::make_shared<Camera>(_camera);
 }
 
 std::shared_ptr<BaseBuilder> CameraBuilderCreator::createBuilder()

@@ -7,7 +7,7 @@
 
 CountModel::CountModel(std::shared_ptr<size_t> &cnt): _cnt(cnt) {}
 
-void CountModel::execute()
+void CountModel::execute(std::shared_ptr<Controller> controller)
 {
-    *(this->_cnt) = SceneManagerCreator().getManager()->getModelCount();
+    controller->CountModel(_cnt);
 }

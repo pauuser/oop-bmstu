@@ -4,46 +4,19 @@
 
 #include "Camera.hpp"
 
-Camera::Camera(const Point& position, double ax, double ay, double az):
-               _pos(position), _ax(ax), _ay(ay), _az(az) {}
-
-
-void Camera::_move(const Point& move_params)
+Camera::Camera(std::shared_ptr<CameraImplementation> imp)
 {
-    Point rotate_params(_ax, _ay, _az);
-
-    this->_pos.rotate(-rotate_params.getX(), -rotate_params.getY(), -rotate_params.getZ());
-    this->_pos.move(move_params.getX(), move_params.getY(), move_params.getZ());
-    this->_pos.rotate(rotate_params.getX(), rotate_params.getY(), rotate_params.getZ());
+    this->_implementation = imp;
 }
 
-void Camera::_scale(const Point& scale_params)
+std::shared_ptr<CameraImplementation> Camera::getImplementation() const
 {
-    Point rotate_params(_ax, _ay, _az);
-
-    this->_pos.rotate(-rotate_params.getX(), -rotate_params.getY(), -rotate_params.getZ());
-    this->_pos.scale(scale_params.getX(), scale_params.getY(), scale_params.getZ());
-    this->_pos.rotate(rotate_params.getX(), rotate_params.getY(), rotate_params.getZ());
-}
-
-void Camera::_rotate(const Point &rotate_params)
-{
-    Point init_rotate_params(_ax, _ay, _az);
-
-    this->_pos.rotate(-init_rotate_params.getX(), -init_rotate_params.getY(), -init_rotate_params.getZ());
-    this->_pos.rotate(rotate_params.getX(), rotate_params.getY(), rotate_params.getZ());
-    this->_pos.rotate(init_rotate_params.getX(), init_rotate_params.getY(), init_rotate_params.getZ());
-
-    _ax += rotate_params.getX();
-    _ay += rotate_params.getY();
-    _az += rotate_params.getZ();
+    return this->_implementation;
 }
 
 void Camera::transform(const Point &move_params, const Point &scale_params, const Point &rotate_params)
 {
-    this->_move(move_params);
-    this->_scale(scale_params);
-    this->_rotate(rotate_params);
+    this->_implementation->transform(move_params, scale_params, rotate_params);
 }
 
 void Camera::accept(std::shared_ptr<BaseVisitor> visitor)
@@ -61,25 +34,5 @@ CameraCreator::CameraCreator(const Point &position, double ax, double ay, double
 
 std::shared_ptr<BaseCamera> CameraCreator::create()
 {
-    return std::make_shared<Camera>(_pos, _ax, _ay, _az);
-}
-
-Point Camera::getPosition()
-{
-    return this->_pos;
-}
-
-double Camera::getXangle()
-{
-    return this->_ax;
-}
-
-double Camera::getYangle()
-{
-    return this->_ay;
-}
-
-double Camera::getZangle()
-{
-    return this->_az;
+    return std::make_shared<Camera>(std::make_shared<CameraImplementation>());
 }

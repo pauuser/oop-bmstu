@@ -16,7 +16,7 @@ public:
     explicit RemoveModel(std::size_t id);
     ~RemoveModel() override = default;
 
-    void execute() override;
+    void execute(std::shared_ptr<Controller> controller) override;
 
 private:
     std::size_t _id = 0;

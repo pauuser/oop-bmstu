@@ -8,7 +8,7 @@
 
 DrawScene::DrawScene(std::shared_ptr<BaseDrawer> &drawer) : _drawer(drawer) {}
 
-void DrawScene::execute()
+void DrawScene::execute(std::shared_ptr<Controller> controller)
 {
-    DrawManagerCreator().getManager(this->_drawer)->draw();
+    controller->DrawScene(_drawer);
 }

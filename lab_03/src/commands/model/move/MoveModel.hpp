@@ -16,7 +16,7 @@ public:
     explicit MoveModel(std::size_t id, double dx, double dy, double dz);
     ~MoveModel() override = default;
 
-    void execute() override;
+    void execute(std::shared_ptr<Controller> controller) override;
 
 private:
     std::size_t _id = 0;

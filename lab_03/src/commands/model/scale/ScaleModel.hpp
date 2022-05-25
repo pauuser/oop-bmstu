@@ -16,7 +16,7 @@ public:
     explicit ScaleModel(std::size_t id, double kx, double ky, double kz);
     ~ScaleModel() override = default;
 
-    void execute() override;
+    void execute(std::shared_ptr<Controller> controller) override;
 
 private:
     std::size_t _id = 0;

@@ -31,7 +31,7 @@ set(COMMANDS
         commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp
         commands/camera/load/LoadCamera.cpp commands/camera/load/LoadCamera.hpp
         commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp
-        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp commands/config/BaseConfigCommand.hpp commands/config/register/RegisterTextConfiguration.cpp commands/config/register/RegisterTextConfiguration.hpp)
+        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp commands/config/BaseConfigCommand.hpp commands/config/register/RegisterTextConfiguration.cpp commands/config/register/RegisterTextConfiguration.hpp controller/Controller.cpp controller/Controller.hpp)
 
 set(OBJECTS
         objects/Object.hpp
@@ -41,7 +41,7 @@ set(OBJECTS
         objects/Edge/Edge.cpp objects/Edge/Edge.hpp
         objects/Model/FrameModel/FrameModel.cpp objects/Model/FrameModel/FrameModel.hpp
         objects/Model/FrameModelImplementation/FrameModelImplementation.cpp objects/Model/FrameModelImplementation/FrameModelImplementation.hpp
-        objects/Camera/Camera/Camera.cpp objects/Camera/Camera/Camera.hpp objects/Camera/BaseCamera.hpp)
+        objects/Camera/Camera/Camera.cpp objects/Camera/Camera/Camera.hpp objects/Camera/BaseCamera.hpp objects/Camera/Camera/CameraImplementation/CameraImplementation.cpp objects/Camera/Camera/CameraImplementation/CameraImplementation.hpp)
 
 set(VISITOR
         visitor/BaseVisitor.h

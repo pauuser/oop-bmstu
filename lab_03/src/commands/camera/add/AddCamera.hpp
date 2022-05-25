@@ -18,7 +18,7 @@ public:
                        double ax,   double ay,   double az);
     ~AddCamera() override = default;
 
-    void execute() override;
+    void execute(std::shared_ptr<Controller> controller) override;
 
 private:
     double _posx = 0, _posy = 0, _posz = 0;

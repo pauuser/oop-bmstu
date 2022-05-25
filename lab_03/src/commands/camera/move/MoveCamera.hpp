@@ -19,7 +19,7 @@ public:
                                         const Point& rotate_params);
     ~MoveCamera() override = default;
 
-    void execute() override;
+    void execute(std::shared_ptr<Controller> controller) override;
 private:
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;

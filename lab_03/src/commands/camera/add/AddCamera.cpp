@@ -10,8 +10,7 @@
 AddCamera::AddCamera(double posx, double posy, double posz, double ax, double ay, double az): _posx(posx), _posy(posy), _posz(posz),
                                                              _ax(ax), _ay(ay), _az(az){}
 
-void AddCamera::execute()
+void AddCamera::execute(std::shared_ptr<Controller> controller)
 {
-    auto camera = CameraCreator(Point{_posx, _posy, _posz}, _ax, _ay, _az).create();
-    SceneManagerCreator().getManager()->addObject(camera);
+    controller->addCamera(_posx, _posy, _posz, _ax, _ay, _az);
 }

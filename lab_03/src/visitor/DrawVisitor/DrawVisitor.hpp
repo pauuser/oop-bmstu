@@ -9,6 +9,7 @@
 
 #include "../../gui/drawer/BaseDrawer.hpp"
 #include "../BaseVisitor.h"
+#include "objects/Camera/Camera/CameraImplementation/CameraImplementation.hpp"
 
 class DrawVisitor : public BaseVisitor
 {
@@ -22,7 +23,7 @@ public:
 
 private:
     std::shared_ptr<BaseDrawer> _drawer;
-    std::shared_ptr<Camera> _camera;
+    std::shared_ptr<CameraImplementation> _camera;
 
     Point  _projectPoint(const Point& point);
     static double _toRad(double degrees);
