@@ -4,11 +4,12 @@
 
 #include "DrawScene.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
-#include "managers/DrawManager/DrawManager.hpp"
 
-DrawScene::DrawScene(std::shared_ptr<BaseDrawer> &drawer) : _drawer(drawer) {}
+DrawScene::DrawScene(std::shared_ptr<BaseDrawer> &drawer) : _drawer(drawer) {
+    _manager = DrawManagerCreator().getManager(drawer);
+}
 
 void DrawScene::execute()
 {
-    DrawManagerCreator().getManager(this->_drawer)->draw();
+    _manager->draw();
 }

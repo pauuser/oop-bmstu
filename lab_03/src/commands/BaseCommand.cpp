@@ -4,10 +4,4 @@
 
 #include "BaseCommand.hpp"
 
-BaseCommand::BaseCommand()
-{
-    _drawmanager      = DrawManagerCreator().getManager();
-    _loadmanager      = LoadManagerCreator().getManager();
-    _transformmanager = TransformManagerCreator().getManager();
-    _scenemanager     = SceneManagerCreator().getManager();
-}
+BaseCommand::BaseCommand() = default;

@@ -9,13 +9,12 @@
 #include "configuration/TextConfiguration/TextConfiguration.hpp"
 #include "configuration/Solution/ConfigurationSolution.hpp"
 
-LoadModel::LoadModel(std::string name) : _name(name)
-{
+LoadModel::LoadModel(std::string name) : _name(name) {
     auto director = ModelDirectorCreator().getDirector(this->_name);
-    _loadmanager->setDirector(director);
+    _manager = LoadManagerCreator().getManager(director);
 }
 
 void LoadModel::execute()
 {
-    _loadmanager->load();
+    _manager->load();
 }

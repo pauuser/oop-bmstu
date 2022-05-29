@@ -8,6 +8,7 @@
 #include <string>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/LoadManager/LoadManager.hpp"
 
 class LoadModel : public BaseModelCommand
 {
@@ -20,6 +21,8 @@ public:
 
 private:
     std::string _name{};
+
+    std::shared_ptr<LoadManager> _manager;
 };
 
 

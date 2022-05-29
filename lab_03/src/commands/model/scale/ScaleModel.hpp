@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class ScaleModel : public BaseModelCommand
 {
@@ -21,6 +22,8 @@ public:
 private:
     std::size_t _id = 0;
     double _kx = 0, _ky = 0, _kz = 0;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

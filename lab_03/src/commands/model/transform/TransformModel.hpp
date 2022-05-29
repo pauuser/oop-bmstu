@@ -9,6 +9,7 @@
 
 #include "commands/model/BaseModelCommand.hpp"
 #include "objects/Point/Point.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class TransformModel : public BaseModelCommand
 {
@@ -20,9 +21,12 @@ public:
     ~TransformModel() override = default;
 
     void execute() override;
+
 private:
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

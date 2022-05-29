@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/camera/BaseCameraCommand.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class RemoveCamera : public BaseCameraCommand
 {
@@ -20,6 +21,8 @@ public:
 
 private:
     std::size_t _id;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

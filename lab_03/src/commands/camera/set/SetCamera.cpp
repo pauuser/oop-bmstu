@@ -5,9 +5,11 @@
 #include "SetCamera.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-SetCamera::SetCamera(std::size_t id): _id(id) {}
+SetCamera::SetCamera(std::size_t id): _id(id) {
+    _manager = SceneManagerCreator().getManager();
+}
 
 void SetCamera::execute()
 {
-    _scenemanager->setMainCamera(_id);
+    _manager->setMainCamera(_id);
 }

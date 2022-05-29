@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class RemoveModel : public BaseModelCommand
 {
@@ -20,6 +21,8 @@ public:
 
 private:
     std::size_t _id = 0;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

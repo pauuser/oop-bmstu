@@ -9,6 +9,7 @@
 
 #include "commands/scene/BaseSceneCommand.hpp"
 #include "../../gui/drawer/BaseDrawer.hpp"
+#include "managers/DrawManager/DrawManager.hpp"
 
 class DrawScene : public BaseSceneCommand
 {
@@ -21,6 +22,8 @@ public:
 
 private:
     std::shared_ptr<BaseDrawer> _drawer;
+
+    std::shared_ptr<DrawManager> _manager;
 };
 
 

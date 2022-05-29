@@ -5,9 +5,11 @@
 #include "RemoveModel.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-RemoveModel::RemoveModel(std::size_t id): _id(id) {}
+RemoveModel::RemoveModel(std::size_t id): _id(id) {
+    _manager = SceneManagerCreator().getManager();
+}
 
 void RemoveModel::execute()
 {
-    _scenemanager->removeVisible(_id);
+    _manager->removeVisible(_id);
 }

@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class CountModel : public BaseModelCommand
 {
@@ -20,6 +21,8 @@ public:
 
 private:
     std::shared_ptr<size_t> _cnt;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

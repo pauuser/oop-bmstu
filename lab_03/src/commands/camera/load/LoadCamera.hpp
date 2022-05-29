@@ -8,6 +8,7 @@
 #include <string>
 
 #include "commands/camera/BaseCameraCommand.hpp"
+#include "managers/LoadManager/LoadManager.hpp"
 
 class LoadCamera : public BaseCameraCommand
 {
@@ -21,6 +22,8 @@ public:
 private:
     std::string _name{};
     std::string _config_file{};
+
+    std::shared_ptr<LoadManager> _manager;
 };
 
 

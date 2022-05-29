@@ -9,6 +9,7 @@
 
 #include "commands/camera/BaseCameraCommand.hpp"
 #include "objects/Point/Point.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class MoveCamera : public BaseCameraCommand
 {
@@ -23,6 +24,8 @@ public:
 private:
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

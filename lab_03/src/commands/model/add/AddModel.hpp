@@ -7,6 +7,7 @@
 
 #include "commands/model/BaseModelCommand.hpp"
 #include "objects/Object.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class AddModel : public BaseModelCommand
 {
@@ -19,6 +20,8 @@ public:
 
 private:
     std::shared_ptr<Object> _obj;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

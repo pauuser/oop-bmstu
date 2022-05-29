@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/camera/BaseCameraCommand.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class CountCamera : public BaseCameraCommand
 {
@@ -20,6 +21,7 @@ public:
 
 private:
     std::shared_ptr<size_t> _count;
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

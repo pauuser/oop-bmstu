@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class RotateModel : public BaseModelCommand
 {
@@ -21,6 +22,8 @@ public:
 private:
     std::size_t _id = 0;
     double _ax = 0, _ay = 0, _az = 0;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

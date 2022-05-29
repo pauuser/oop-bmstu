@@ -3,11 +3,12 @@
 //
 
 #include "CountCamera.hpp"
-#include "managers/SceneManager/SceneManager.hpp"
 
-CountCamera::CountCamera(std::shared_ptr<size_t> &size): _count(size) {}
+CountCamera::CountCamera(std::shared_ptr<size_t> &size): _count(size) {
+    _manager = SceneManagerCreator().getManager();
+}
 
 void CountCamera::execute()
 {
-    *(this->_count) = _scenemanager->getCameraCount();
+    *(this->_count) = _manager->getCameraCount();
 }

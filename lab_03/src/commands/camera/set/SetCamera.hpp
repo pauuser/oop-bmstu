@@ -9,6 +9,7 @@
 
 #include "commands/camera/BaseCameraCommand.hpp"
 #include "objects/Camera/Camera/Camera.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class SetCamera : public BaseCameraCommand
 {
@@ -21,6 +22,8 @@ public:
 
 private:
     std::size_t _id;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

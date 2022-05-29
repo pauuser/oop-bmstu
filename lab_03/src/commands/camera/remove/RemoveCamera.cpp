@@ -5,9 +5,11 @@
 #include "RemoveCamera.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-RemoveCamera::RemoveCamera(std::size_t id): _id(id) {}
+RemoveCamera::RemoveCamera(std::size_t id): _id(id) {
+    _manager = SceneManagerCreator().getManager();
+}
 
 void RemoveCamera::execute()
 {
-    _scenemanager->removeInvisible(_id);
+    _manager->removeInvisible(_id);
 }

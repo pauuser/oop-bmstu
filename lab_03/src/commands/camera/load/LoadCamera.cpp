@@ -5,13 +5,12 @@
 #include "LoadCamera.hpp"
 #include "director/CameraDirector/CameraDirector.hpp"
 
-LoadCamera::LoadCamera(std::string name) : _name(name)
-{
+LoadCamera::LoadCamera(std::string name) : _name(name) {
     auto director = CameraDirectorCreator().getDirector(this->_name);
-    _loadmanager->setDirector(director);
+    _manager = LoadManagerCreator().getManager(director);
 }
 
 void LoadCamera::execute()
 {
-    _loadmanager->load();
+    _manager->load();
 }

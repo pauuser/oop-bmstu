@@ -9,6 +9,7 @@
 
 #include "commands/camera/BaseCameraCommand.hpp"
 #include "objects/Camera/Camera/Camera.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class AddCamera : public BaseCameraCommand
 {
@@ -24,7 +25,8 @@ private:
     double _posx = 0, _posy = 0, _posz = 0;
     double _ax = 0, _ay = 0, _az = 0;
 
-    std::shared_ptr<BaseCamera> _camera;
+    std::shared_ptr<BaseCamera>   _camera;
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

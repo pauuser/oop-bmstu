@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class MoveModel : public BaseModelCommand
 {
@@ -21,6 +22,8 @@ public:
 private:
     std::size_t _id = 0;
     double _dx = 0, _dy = 0, _dz = 0;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 
