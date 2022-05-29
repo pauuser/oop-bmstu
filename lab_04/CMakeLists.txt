@@ -19,7 +19,7 @@ set(PROJECT_SOURCES
         gui/mainwindow.cpp
         gui/mainwindow.h
         gui/ui/mainwindow.ui
-        src/button/Button.cpp src/button/Button.hpp)
+        src/button/Button.cpp src/button/Button.hpp src/doors/Doors.cpp src/doors/Doors.hpp src/defines.hpp)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(lab_04

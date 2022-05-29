@@ -18,8 +18,8 @@ class Button : public QPushButton
     };
 
 public:
-    Button(QWidget *parent = nullptr);
-    ~Button() = default;
+    explicit Button(QWidget *parent = nullptr);
+    ~Button() override = default;
 
     void setFloor(size_t floor);
 
