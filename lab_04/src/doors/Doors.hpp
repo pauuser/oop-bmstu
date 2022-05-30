@@ -33,7 +33,7 @@ private slots:
 public slots:
     void open();
     void close();
-    void readyToMove(); // TODO
+    void readyToMove();
 
 private:
     doorsState _state;

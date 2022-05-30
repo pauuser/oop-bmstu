@@ -72,3 +72,11 @@ void Doors::startClosing()
 
     this->_closeTimer.start(DOOR_TIME);
 }
+
+void Doors::readyToMove()
+{
+    if (_state == CLOSED)
+    {
+        emit doorClosed();
+    }
+}
