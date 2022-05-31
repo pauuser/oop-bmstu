@@ -18,7 +18,7 @@ Cabin::Cabin(QObject *parent) : QObject(parent)
 
     QObject::connect(&_doors, SIGNAL(doorClosed()), this, SLOT(moveCabin()));
 
-    QObject::connect(this, SIGNAL(moveCabin()), &_doors, SLOT(readyToMove()));
+    QObject::connect(this, SIGNAL(move()), &_doors, SLOT(readyToMove()));
 
     QObject::connect(&_moveTimer, SIGNAL(timeout()), this, SLOT(moveCabin()));
 }
@@ -79,12 +79,12 @@ void Cabin::updateTarget(size_t floor)
         else if (_curFloor < _targetFloor)
         {
             _dir = UP;
-            emit moved();
+            emit move();
         }
         else
         {
             _dir = DOWN;
-            emit moved();
+            emit move();
         }
     }
 }

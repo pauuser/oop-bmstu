@@ -9,7 +9,7 @@
 Doors::Doors() : _state(CLOSED)
 {
     QObject::connect(&_openTimer, SIGNAL(timeout()), this, SLOT(open())); // timeout() - сигнал из qtimer
-    QObject::connect(&_waitTimer, SIGNAL(timeout()), this, SLOT(startClosing()));
+    QObject::connect(&_waitTimer,  SIGNAL(timeout()), this, SLOT(startClosing()));
     QObject::connect(&_closeTimer, SIGNAL(timeout()), this, SLOT(close()));
 }
 

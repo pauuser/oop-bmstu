@@ -29,7 +29,7 @@ signals:
     void openDoors();
     void stopped(bool = true, size_t = 1);
     void reachFloor(size_t floor, Direction dir);
-    void moved();
+    void move();
 
 public slots:
     void stopCabin(bool last, size_t floor = 1);

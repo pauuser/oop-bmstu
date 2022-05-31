@@ -6,7 +6,7 @@
 
 #include <QDebug>
 
-Controller::Controller(QWidget *parent)
+Controller::Controller(QWidget *parent) : QWidget(parent)
 {
     this->_layout = std::make_unique<QVBoxLayout>();
     this->setLayout(this->_layout.get());

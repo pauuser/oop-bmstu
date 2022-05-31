@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->ui->centralwidget->setLayout(this->layout_.get());
 
-   // this->layout_->addWidget(this->my_lift.widget());
+    this->layout_->addWidget(this->my_lift.widget());
 }
 
 MainWindow::~MainWindow()

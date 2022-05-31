@@ -22,7 +22,7 @@ void Button::setFloor(size_t floor)
 void Button::press()
 {
     // Если кнопка уже нажата, выходим
-    if (this->_state == ACTIVE) return;
+    if (this->_state != INACTIVE) return;
 
     // Визуальное изменение кнопки
     this->setStyleSheet("background-color:red");
@@ -31,7 +31,7 @@ void Button::press()
     qDebug() << "[!] Вызов на этаж №" << this->_curButtonFloor;
 
     // Изменение состояния
-    this->_curButtonFloor = ACTIVE;
+    this->_state = ACTIVE;
     this->setDisabled(true);
 
     // Сигнал всем, что нажата данная кнопка
@@ -44,10 +44,10 @@ void Button::unpress()
     if (this->_state == INACTIVE) return;
 
     // Визуальное изменение кнопки
-    this->setStyleSheet("background-color:blue");
+    this->setStyleSheet("background-color:lightblue");
     this->update();
 
     // Изменение состояния
-    this->_curButtonFloor = INACTIVE;
+    this->_state = INACTIVE;
     this->setDisabled(false);
 }

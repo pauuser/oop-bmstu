@@ -5,6 +5,8 @@
 #include <QVBoxLayout>
 #include <memory>
 
+#include "src/lift/Lift.hpp"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -21,6 +23,6 @@ private:
     Ui::MainWindow *ui;
 
     std::unique_ptr<QVBoxLayout> layout_;
-    //Lift my_lift;
+    Lift my_lift;
 };
 #endif // MAINWINDOW_H
