@@ -13,6 +13,8 @@
 
 class SetCamera : public BaseCameraCommand
 {
+    using Action = void(SceneManager::*)(size_t);
+
 public:
     SetCamera() = delete;
     explicit SetCamera(std::size_t id);
@@ -21,6 +23,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::size_t _id;
 
     std::shared_ptr<SceneManager> _manager;

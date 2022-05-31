@@ -7,9 +7,10 @@
 
 DrawScene::DrawScene(std::shared_ptr<BaseDrawer> &drawer) : _drawer(drawer) {
     _manager = DrawManagerCreator().getManager(drawer);
+    _act = &DrawManager::draw;
 }
 
 void DrawScene::execute()
 {
-    _manager->draw();
+    ((*_manager).*_act)();
 }

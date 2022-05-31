@@ -7,9 +7,10 @@
 
 SetCamera::SetCamera(std::size_t id): _id(id) {
     _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::setMainCamera;
 }
 
 void SetCamera::execute()
 {
-    _manager->setMainCamera(_id);
+    ((*_manager).*_act)(_id);
 }

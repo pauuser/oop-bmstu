@@ -12,9 +12,10 @@
 LoadModel::LoadModel(std::string name) : _name(name) {
     auto director = ModelDirectorCreator().getDirector(this->_name);
     _manager = LoadManagerCreator().getManager(director);
+    _act = &LoadManager::load;
 }
 
 void LoadModel::execute()
 {
-    _manager->load();
+    ((*_manager).*_act)();
 }

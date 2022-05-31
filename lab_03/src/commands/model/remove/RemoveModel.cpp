@@ -7,9 +7,10 @@
 
 RemoveModel::RemoveModel(std::size_t id): _id(id) {
     _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::removeVisible;
 }
 
 void RemoveModel::execute()
 {
-    _manager->removeVisible(_id);
+    ((*_manager).*_act)(_id);
 }

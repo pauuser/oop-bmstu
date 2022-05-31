@@ -7,9 +7,10 @@
 
 RemoveCamera::RemoveCamera(std::size_t id): _id(id) {
     _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::removeInvisible;
 }
 
 void RemoveCamera::execute()
 {
-    _manager->removeInvisible(_id);
+    ((*_manager).*_act)(_id);
 }

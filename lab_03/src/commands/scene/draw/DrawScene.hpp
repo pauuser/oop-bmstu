@@ -13,6 +13,7 @@
 
 class DrawScene : public BaseSceneCommand
 {
+    using Action =  void(DrawManager::*)();
 public:
     DrawScene() = delete;
     DrawScene(std::shared_ptr<BaseDrawer>& drawer);
@@ -21,6 +22,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<BaseDrawer> _drawer;
 
     std::shared_ptr<DrawManager> _manager;

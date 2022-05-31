@@ -12,6 +12,8 @@
 
 class LoadModel : public BaseModelCommand
 {
+    using Action = void(LoadManager::*)();
+
 public:
     LoadModel() = delete;
     explicit LoadModel(std::string name);
@@ -20,6 +22,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::string _name{};
 
     std::shared_ptr<LoadManager> _manager;

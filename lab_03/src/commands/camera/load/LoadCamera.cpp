@@ -8,9 +8,10 @@
 LoadCamera::LoadCamera(std::string name) : _name(name) {
     auto director = CameraDirectorCreator().getDirector(this->_name);
     _manager = LoadManagerCreator().getManager(director);
+    _act = &LoadManager::load;
 }
 
 void LoadCamera::execute()
 {
-    _manager->load();
+    ((*_manager).*_act)();
 }

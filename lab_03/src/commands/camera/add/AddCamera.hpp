@@ -13,6 +13,8 @@
 
 class AddCamera : public BaseCameraCommand
 {
+    using Action = void(SceneManager::*)(const std::shared_ptr<Object> &);
+
 public:
     AddCamera() = delete;
     explicit AddCamera(double posx, double posy, double posz,
@@ -22,6 +24,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     double _posx = 0, _posy = 0, _posz = 0;
     double _ax = 0, _ay = 0, _az = 0;
 

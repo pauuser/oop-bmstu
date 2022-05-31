@@ -12,6 +12,8 @@
 
 class CountModel : public BaseModelCommand
 {
+    using Action = size_t(SceneManager::*)();
+
 public:
     CountModel() = delete;
     explicit CountModel(std::shared_ptr<size_t>& cnt);
@@ -20,6 +22,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<size_t> _cnt;
 
     std::shared_ptr<SceneManager> _manager;

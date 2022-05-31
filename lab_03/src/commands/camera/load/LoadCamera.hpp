@@ -12,6 +12,8 @@
 
 class LoadCamera : public BaseCameraCommand
 {
+    using Action = void(LoadManager::*)();
+
 public:
     LoadCamera() = delete;
     explicit LoadCamera(std::string name);
@@ -20,6 +22,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::string _name{};
     std::string _config_file{};
 

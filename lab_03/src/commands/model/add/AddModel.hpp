@@ -11,6 +11,8 @@
 
 class AddModel : public BaseModelCommand
 {
+    using Action = void(SceneManager::*)(const std::shared_ptr<Object> &);
+
 public:
     AddModel() = delete;
     explicit AddModel(std::shared_ptr<Object> obj);
@@ -19,6 +21,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<Object> _obj;
 
     std::shared_ptr<SceneManager> _manager;

@@ -8,11 +8,11 @@
 
 ScaleModel::ScaleModel(std::size_t id, double kx, double ky, double kz): _id(id), _kx(kx), _ky(ky), _kz(kz) {
     _manager = TransformManagerCreator().getManager();
+    _act = &TransformManager::transformVisible;
 }
 
 void ScaleModel::execute()
 {
-    Point move{ 0, 0, 0 }, scale{ _kx, _ky, _kz }, rotate{ 0, 0, 0 };
-    _manager->transformVisible(_id, move, scale, rotate);
+    ((*_manager).*_act)(_id, {0, 0, 0}, { _kx, _ky, _kz }, {0, 0, 0});
 }
 

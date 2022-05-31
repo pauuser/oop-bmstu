@@ -13,6 +13,8 @@
 
 class MoveCamera : public BaseCameraCommand
 {
+    using Action = void(TransformManager::*)(size_t, const Point &, const Point &, const Point &);
+
 public:
     MoveCamera() = delete;
     explicit MoveCamera(std::size_t id, const Point& move_params,
@@ -21,7 +23,10 @@ public:
     ~MoveCamera() override = default;
 
     void execute() override;
+
 private:
+    Action _act;
+
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;
 

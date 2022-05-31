@@ -12,6 +12,8 @@
 
 class CountCamera : public BaseCameraCommand
 {
+    using Action = size_t(SceneManager::*)();
+
 public:
     CountCamera() = delete;
     explicit CountCamera(std::shared_ptr<size_t>& size);
@@ -20,6 +22,8 @@ public:
     void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<size_t> _count;
     std::shared_ptr<SceneManager> _manager;
 };
