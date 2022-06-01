@@ -23,7 +23,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent)
         _floorsToVisit.push_back(false);
 
         // нажата кнопка => добавляем этаж в цели
-        QObject::connect(new_button.get(), SIGNAL(pressSignal(bool, int)), this, SLOT(newTarget(bool, int)));
+        QObject::connect(new_button.get(), SIGNAL(pressSignal(bool,int)), this, SLOT(newTarget(bool,int)));
     }
 
     QObject::connect(this, SIGNAL(reachFloorSignal()), this, SLOT(reachFloor()));
@@ -31,6 +31,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent)
 
 void Controller::newTarget(bool got_new, int floor)
 {
+    //qDebug() << "HERE!!" << got_new << floor;
     this->_state = BUSY;
     if (got_new)
     {
@@ -39,25 +40,26 @@ void Controller::newTarget(bool got_new, int floor)
         _identifyNewTarget(floor);
         _targetFloor = floor;
         _decideDirection();
-
+        //qDebug() << "direction: " << _direction << "Cur floor" << _curFloor << "Target" << _targetFloor;
         if (_direction == STAY)
         {
             emit reachFloorSignal();
         }
         else
         {
-            _updateFloor();
             emit moveCabinSignal();
         }
     }
-    else
+    else if (_identifyNewTarget(floor))
     {
-        _identifyNewTarget(floor);
         _targetFloor = floor;
         _decideDirection();
 
+        //qDebug() << "direction: " << _direction << "Cur floor" << _curFloor << "Target" << _targetFloor;
+
         if (_direction != STAY)
         {
+            //qDebug() << "HERE!!";
              _updateFloor();
             emit moveCabinSignal();
         }
@@ -65,7 +67,7 @@ void Controller::newTarget(bool got_new, int floor)
         {
             emit reachFloorSignal();
         }
-    }
+     }
 }
 
 void Controller::_decideDirection()
@@ -127,6 +129,7 @@ bool Controller::_identifyNewTarget(int &new_target)
 
 void Controller::reachFloor()
 {
+    //qDebug() << _floorsToVisit;
     // Если контроллер не занят, выходим [лифт не движется]
     if (_state != BUSY) return;
 
@@ -152,14 +155,5 @@ void Controller::_updateFloor()
 {
     _curFloor += _direction;
 
-     qDebug() << "[!] Лифт у этажа № " << _curFloor;
-
-    if (_curFloor == _targetFloor)
-    {
-        emit reachFloorSignal();
-    }
-    else
-    {
-        emit moveCabinSignal();
-    }
+     qDebug() << "... Лифт едет на этаж № " << _curFloor;
 }

@@ -33,8 +33,8 @@ signals:
     void reachFloorSignal();
 
 public slots:
-    void newTarget(bool ,int = 1);  // FREE -> BUSY
-    void reachFloor();                      // BUSY -> FREE
+    void newTarget(bool ,int = 1);  // -> BUSY
+    void reachFloor();                       // -> FREE
 
 private:
     bool _identifyNewTarget(int &new_target);

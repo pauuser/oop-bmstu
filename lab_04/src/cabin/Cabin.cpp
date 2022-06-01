@@ -21,19 +21,18 @@ Cabin::Cabin(QObject *parent) : QObject(parent)
 
 void Cabin::stopCabin()
 {
-    if (_state == MOVING)
-    {
         _state = WAITS;
 
         _moveTimer.stop();
         emit openDoors(); // просьба открыть двери
-    }
-}
+ }
 
 void Cabin::moveCabin()
 {
-    if (_state == FREE)
+   //qDebug() << "STATE of CABIN: " << _state;
+    if (_state == FREE || _state == MOVING)
     {
+        //qDebug() << "Inside!";
         _state = MOVING;
         _moveTimer.start(MOVE_TIME);
     }
@@ -41,9 +40,11 @@ void Cabin::moveCabin()
 
 void Cabin::free()
 {
-    if (_state == WAITS)
+    //qDebug() << "CABIN IS FINISHing!";
+    if (_state != FREE)
     {
         _state = FREE;
+        //qDebug() << "CABIN HAS FINISHED!";
         emit cabinFinished(false);
     }
 }
