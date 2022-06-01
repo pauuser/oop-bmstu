@@ -16,7 +16,7 @@ class Cabin : public QObject
     Q_OBJECT
 
     using cabinState = enum {
-        WAITING,
+        WAITS,
         MOVING,
         FREE
     };
@@ -27,24 +27,18 @@ public:
 
 signals:
     void openDoors();
-    void stopped(bool = true, size_t = 1);
-    void reachFloor(size_t floor, Direction dir);
-    void move();
+    void updateFloorSignal();
+    void readyToMoveSignal();
+    void cabinFinished(bool, int=1);
 
 public slots:
-    void stopCabin(bool last, size_t floor = 1);
-    void moveCabin();
-    void updateTarget(size_t floor);
+    void stopCabin();           // -> WAITS
+    void moveCabin();        // -> MOVING
+    void free();                     // -> FREE
 
 private:
-    size_t _curFloor;
-    size_t _targetFloor;
-
-    Direction _dir;
     cabinState _state;
-
     Doors _doors;
-
     QTimer _moveTimer;
 };
 

@@ -14,7 +14,7 @@ Button::Button(QWidget *parent) : QPushButton(parent)
     _curButtonFloor = 1;
 }
 
-void Button::setFloor(size_t floor)
+void Button::setFloor(int floor)
 {
     _curButtonFloor = floor;
 }
@@ -35,7 +35,7 @@ void Button::press()
     this->setDisabled(true);
 
     // Сигнал всем, что нажата данная кнопка
-    emit pressSignal(this->_curButtonFloor);
+    emit pressSignal(true, this->_curButtonFloor);
 }
 
 void Button::unpress()

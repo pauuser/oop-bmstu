@@ -27,13 +27,12 @@ signals:
     void doorClosed();
 
 private slots:
-    void startClosing();
-    void startOpening();
+    void startClosing();    // -> CLOSING
+    void startOpening();  // -> OPENING
 
 public slots:
-    void open();
-    void close();
-    void readyToMove();
+    void open();                 // -> OPEN
+    void close();                // -> CLOSED
 
 private:
     doorsState _state;

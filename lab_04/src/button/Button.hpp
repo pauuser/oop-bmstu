@@ -21,10 +21,10 @@ public:
     explicit Button(QWidget *parent = nullptr);
     ~Button() override = default;
 
-    void setFloor(size_t floor);
+    void setFloor(int floor);
 
 signals:
-    void pressSignal(size_t floor);
+    void pressSignal(bool, int);
     void unpressSignal();
 
 public slots:

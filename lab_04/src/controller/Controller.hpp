@@ -28,23 +28,26 @@ public:
     ~Controller() override = default;
 
 signals:
-    void newTargetSignal(size_t floor);
-    void stopSignal(bool, size_t floor = 1);
+    void stopCabinSignal();
+    void moveCabinSignal();
+    void reachFloorSignal();
 
 public slots:
-    void newTarget(size_t floor);
-    void reachFloor(size_t floor, Direction dir);
+    void newTarget(bool ,int = 1);  // FREE -> BUSY
+    void reachFloor();                      // BUSY -> FREE
 
 private:
-    bool _identifyNewTarget(size_t &new_target);
+    bool _identifyNewTarget(int &new_target);
+    void _decideDirection();
+    void _updateFloor();
 
 private:
-    size_t _curFloor;
-    size_t _targetFloor;
+    int _curFloor = 1;
+    int _targetFloor = 1;
 
-    Direction _direction;
+    Direction _direction = STAY;
 
-    controllerState _state;
+    controllerState _state = FREE;
     std::vector<bool> _floorsToVisit;
 
     std::vector<std::shared_ptr<Button>> _buttons;

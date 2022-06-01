@@ -41,7 +41,7 @@ void Doors::open()
     // Изменение состояния
     this->_state = OPEN;
 
-    qDebug() << "[!] Двери открыты!";
+    qDebug() << "[*] Двери открыты!";
 
     // Запуск таймера
     this->_waitTimer.start(WAIT_TIME);
@@ -55,7 +55,7 @@ void Doors::close()
     // Изменение состояния
     this->_state = CLOSED;
 
-    qDebug() << "[!] Двери закрылись!";
+    qDebug() << "[*] Двери закрылись!";
 
     // Сообщаем другим, что мы закрылись
     emit doorClosed();
@@ -71,12 +71,4 @@ void Doors::startClosing()
     qDebug() << "Двери закрываются...";
 
     this->_closeTimer.start(DOOR_TIME);
-}
-
-void Doors::readyToMove()
-{
-    if (_state == CLOSED)
-    {
-        emit doorClosed();
-    }
 }

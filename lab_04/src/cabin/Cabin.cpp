@@ -8,82 +8,45 @@
 Cabin::Cabin(QObject *parent) : QObject(parent)
 {
     _state = FREE;
-    _curFloor = 1;
-    _targetFloor = 1;
-    _dir = STAY;
 
+    // Сигнал открывания дверей => просим двери открыть двери
     QObject::connect(this, SIGNAL(openDoors()), &_doors, SLOT(startOpening()));
 
-    QObject::connect(&_doors, SIGNAL(doorClosed()), this, SLOT(moveCabin()));
+    // Кабина закончила движение => она свободна, выдаём сигнал cabinFinished()
+    QObject::connect(&_moveTimer, SIGNAL(timeout()), this, SLOT(free()));
 
-    QObject::connect(this, SIGNAL(move()), &_doors, SLOT(readyToMove()));
-
-    QObject::connect(&_moveTimer, SIGNAL(timeout()), this, SLOT(moveCabin()));
+    // Двери закрылись => кабина освободилась, выдаём сигнал cabinFinished()
+    QObject::connect(&_doors, SIGNAL(doorClosed()), this, SLOT(free()));
 }
 
-void Cabin::stopCabin(bool last, size_t floor)
+void Cabin::stopCabin()
 {
-    if (last)
+    if (_state == MOVING)
     {
-        _state = FREE; // лифт освободился (обслужен последний этаж)
-    }
-    else
-    {
-        _state = WAITING; // ждём действий со стороны двери
-        _targetFloor = floor;
-    }
+        _state = WAITS;
 
-    _moveTimer.stop();
-    emit openDoors(); // просьба открыть двери
+        _moveTimer.stop();
+        emit openDoors(); // просьба открыть двери
+    }
 }
 
 void Cabin::moveCabin()
 {
-    if (_state == MOVING || _state == WAITING)
+    if (_state == FREE)
     {
         _state = MOVING;
         _moveTimer.start(MOVE_TIME);
-
-        qDebug() << "Лифт в пути на этаже №" << _curFloor;
-        emit reachFloor(_curFloor, _dir);
-
-        if (_curFloor != _targetFloor)
-        {
-            if (_targetFloor < _curFloor)
-            {
-                _dir = DOWN;
-                _curFloor -= 1;
-            }
-            else
-            {
-                _dir = UP;
-                _curFloor += 1;
-            }
-        }
     }
 }
 
-void Cabin::updateTarget(size_t floor)
+void Cabin::free()
 {
-    if (_state == FREE)
+    if (_state == WAITS)
     {
-        _state = WAITING;
-        _targetFloor = floor;
-
-        if (_curFloor == _targetFloor)
-        {
-            emit reachFloor(_curFloor, _dir);
-        }
-        else if (_curFloor < _targetFloor)
-        {
-            _dir = UP;
-            emit move();
-        }
-        else
-        {
-            _dir = DOWN;
-            emit move();
-        }
+        _state = FREE;
+        emit cabinFinished(false);
     }
 }
+
+
 
