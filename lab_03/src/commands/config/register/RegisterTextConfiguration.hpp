@@ -16,7 +16,7 @@ public:
     explicit RegisterTextConfiguration(std::string filename);
     ~RegisterTextConfiguration() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
     std::string _filename;

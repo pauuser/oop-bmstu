@@ -7,18 +7,11 @@
 
 #include <memory>
 #include "commands/BaseCommand.hpp"
-#include "controller/Controller.hpp"
 
 class Facade
 {
 public:
-    Facade();
-    ~Facade();
-
     void execute(std::shared_ptr<BaseCommand> command);
-
-private:
-    std::shared_ptr<Controller> _controller;
 };
 
 

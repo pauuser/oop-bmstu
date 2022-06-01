@@ -9,9 +9,12 @@
 
 #include "commands/model/BaseModelCommand.hpp"
 #include "objects/Point/Point.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class TransformModel : public BaseModelCommand
 {
+    using Action = void(TransformManager::*)(size_t, const Point &, const Point &, const Point &);
+
 public:
     TransformModel() = delete;
     explicit TransformModel(std::size_t id, const Point& move_params,
@@ -19,11 +22,15 @@ public:
                                             const Point& rotate_params);
     ~TransformModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
+    Action _act;
+
     const Point& _move_params, _scale_params, _rotate_params;
     std::size_t  _id;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

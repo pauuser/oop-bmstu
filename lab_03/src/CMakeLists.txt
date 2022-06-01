@@ -31,7 +31,7 @@ set(COMMANDS
         commands/model/load/LoadModel.cpp commands/model/load/LoadModel.hpp
         commands/camera/load/LoadCamera.cpp commands/camera/load/LoadCamera.hpp
         commands/model/move/MoveModel.cpp commands/model/move/MoveModel.hpp
-        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp commands/config/BaseConfigCommand.hpp commands/config/register/RegisterTextConfiguration.cpp commands/config/register/RegisterTextConfiguration.hpp controller/Controller.cpp controller/Controller.hpp)
+        commands/model/transform/TransformModel.cpp commands/model/transform/TransformModel.hpp commands/config/BaseConfigCommand.hpp commands/config/register/RegisterTextConfiguration.cpp commands/config/register/RegisterTextConfiguration.hpp commands/BaseCommand.cpp)
 
 set(OBJECTS
         objects/Object.hpp

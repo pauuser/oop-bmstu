@@ -7,18 +7,25 @@
 
 #include "commands/model/BaseModelCommand.hpp"
 #include "objects/Object.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class AddModel : public BaseModelCommand
 {
+    using Action = void(SceneManager::*)(const std::shared_ptr<Object> &);
+
 public:
     AddModel() = delete;
     explicit AddModel(std::shared_ptr<Object> obj);
     ~AddModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<Object> _obj;
+
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

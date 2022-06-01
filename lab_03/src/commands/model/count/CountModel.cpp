@@ -5,9 +5,12 @@
 #include "CountModel.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-CountModel::CountModel(std::shared_ptr<size_t> &cnt): _cnt(cnt) {}
+CountModel::CountModel(std::shared_ptr<size_t> &cnt): _cnt(cnt) {
+    _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::getModelCount;
+}
 
-void CountModel::execute(std::shared_ptr<Controller> controller)
+void CountModel::execute()
 {
-    controller->CountModel(_cnt);
+    *(this->_cnt) = ((*_manager).*_act)();
 }

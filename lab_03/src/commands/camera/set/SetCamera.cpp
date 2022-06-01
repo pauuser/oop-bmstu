@@ -5,9 +5,12 @@
 #include "SetCamera.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-SetCamera::SetCamera(std::size_t id): _id(id) {}
+SetCamera::SetCamera(std::size_t id): _id(id) {
+    _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::setMainCamera;
+}
 
-void SetCamera::execute(std::shared_ptr<Controller> controller)
+void SetCamera::execute()
 {
-    controller->SetCamera(_id);
+    ((*_manager).*_act)(_id);
 }

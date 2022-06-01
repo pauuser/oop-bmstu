@@ -3,12 +3,13 @@
 //
 
 #include "MoveModel.hpp"
-#include "managers/SceneManager/SceneManager.hpp"
-#include "managers/TransformManager/TransformManager.hpp"
 
-MoveModel::MoveModel(std::size_t id, double dx, double dy, double dz): _id(id), _dx(dx), _dy(dy), _dz(dz) {}
+MoveModel::MoveModel(std::size_t id, double dx, double dy, double dz): _id(id), _dx(dx), _dy(dy), _dz(dz) {
+    _manager = TransformManagerCreator().getManager();
+    _act = &TransformManager::transformVisible;
+}
 
-void MoveModel::execute(std::shared_ptr<Controller> controller)
+void MoveModel::execute()
 {
-    controller->MoveModel(_id, _dx, _dy, _dz);
+    ((*_manager).*_act)(_id, { _dx, _dy, _dz }, { 1, 1, 1 }, {0, 0, 0});
 }

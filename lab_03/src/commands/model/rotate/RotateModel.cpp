@@ -6,9 +6,12 @@
 #include "managers/SceneManager/SceneManager.hpp"
 #include "managers/TransformManager/TransformManager.hpp"
 
-RotateModel::RotateModel(std::size_t id, double ax, double ay, double az): _id(id), _ax(ax), _ay(ay), _az(az) {}
+RotateModel::RotateModel(std::size_t id, double ax, double ay, double az): _id(id), _ax(ax), _ay(ay), _az(az) {
+    _manager = TransformManagerCreator().getManager();
+    _act = &TransformManager::transformVisible;
+}
 
-void RotateModel::execute(std::shared_ptr<Controller> controller)
+void RotateModel::execute()
 {
-    controller->RotateModel(_id, _ax, _ay, _az);
+    ((*_manager).*_act)(_id, {0, 0, 0}, { 1, 1, 1 }, { _ax, _ay, _az });
 }

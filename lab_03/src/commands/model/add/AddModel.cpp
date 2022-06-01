@@ -5,9 +5,12 @@
 #include "AddModel.hpp"
 #include "managers/SceneManager/SceneManager.hpp"
 
-AddModel::AddModel(std::shared_ptr<Object> obj): _obj(obj) {}
+AddModel::AddModel(std::shared_ptr<Object> obj): _obj(obj) {
+    _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::addObject;
+}
 
-void AddModel::execute(std::shared_ptr<Controller> controller)
+void AddModel::execute()
 {
-    controller->AddModel(_obj);
+    ((*_manager).*_act)(_obj);
 }

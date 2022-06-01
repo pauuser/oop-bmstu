@@ -8,18 +8,24 @@
 #include <memory>
 
 #include "commands/camera/BaseCameraCommand.hpp"
+#include "managers/SceneManager/SceneManager.hpp"
 
 class CountCamera : public BaseCameraCommand
 {
+    using Action = size_t(SceneManager::*)();
+
 public:
     CountCamera() = delete;
     explicit CountCamera(std::shared_ptr<size_t>& size);
     ~CountCamera() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
+    Action _act;
+
     std::shared_ptr<size_t> _count;
+    std::shared_ptr<SceneManager> _manager;
 };
 
 

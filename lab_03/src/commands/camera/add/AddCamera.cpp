@@ -3,14 +3,15 @@
 //
 
 #include "AddCamera.hpp"
-#include "managers/SceneManager/SceneManager.hpp"
-#include "objects/Camera/BaseCamera.hpp"
-#include "objects/Camera/Camera/Camera.hpp"
 
 AddCamera::AddCamera(double posx, double posy, double posz, double ax, double ay, double az): _posx(posx), _posy(posy), _posz(posz),
-                                                             _ax(ax), _ay(ay), _az(az){}
+                                                             _ax(ax), _ay(ay), _az(az){
+    _camera = CameraCreator(Point{_posx, _posy, _posz}, _ax, _ay, _az).create();
+    _manager = SceneManagerCreator().getManager();
+    _act = &SceneManager::addObject;
+}
 
-void AddCamera::execute(std::shared_ptr<Controller> controller)
+void AddCamera::execute()
 {
-    controller->addCamera(_posx, _posy, _posz, _ax, _ay, _az);
+    ((*_manager).*_act)(_camera);
 }

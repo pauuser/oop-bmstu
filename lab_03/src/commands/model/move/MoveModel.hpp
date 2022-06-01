@@ -8,19 +8,26 @@
 #include <memory>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/TransformManager/TransformManager.hpp"
 
 class MoveModel : public BaseModelCommand
 {
+    using Action = void(TransformManager::*)(size_t, const Point &, const Point &, const Point &);
+
 public:
     MoveModel() = delete;
     explicit MoveModel(std::size_t id, double dx, double dy, double dz);
     ~MoveModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
+    Action _act;
+
     std::size_t _id = 0;
     double _dx = 0, _dy = 0, _dz = 0;
+
+    std::shared_ptr<TransformManager> _manager;
 };
 
 

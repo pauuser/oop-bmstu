@@ -8,18 +8,25 @@
 #include <string>
 
 #include "commands/model/BaseModelCommand.hpp"
+#include "managers/LoadManager/LoadManager.hpp"
 
 class LoadModel : public BaseModelCommand
 {
+    using Action = void(LoadManager::*)();
+
 public:
     LoadModel() = delete;
     explicit LoadModel(std::string name);
     ~LoadModel() override = default;
 
-    void execute(std::shared_ptr<Controller> controller) override;
+    void execute() override;
 
 private:
+    Action _act;
+
     std::string _name{};
+
+    std::shared_ptr<LoadManager> _manager;
 };
 
 
