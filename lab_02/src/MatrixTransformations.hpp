@@ -9,16 +9,19 @@ void Matrix<T>::resize(const size_t new_row, const size_t new_col, const T& fill
         throw SizeError(new_row, new_col, __FILE__, __LINE__);
     }
 
-    _reallocateMatrix(new_row, new_col);
+    auto new_data = _allocateMatrix(new_row, new_col);
 
     for (size_t i = 0; i < new_row; i++)
     {
         for (size_t j = 0; j < new_col; j++)
         {
-            ((i < nrows) && (j < ncols)) ? (*this)[i][j] = (*this)[i][j] :
-                (*this)[i][j] = fill_value;
+            ((i < nrows) && (j < ncols)) ? new_data[i][j] = data[i][j] :
+                new_data[i][j] = fill_value;
         }
     }
+
+    data = new_data;
+    new_data = nullptr;
 
     nrows = new_row;
     ncols = new_col;

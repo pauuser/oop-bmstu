@@ -31,8 +31,8 @@ add_compile_definitions(
 #  SRC  #
 #########
 
-set(SRC_DOMAIN src/)
-set(SRC
+set(SRC_DOMAIN src)
+set(src
         ${SRC_DOMAIN}/ConstIterator.hpp
         ${SRC_DOMAIN}/Iterator.hpp
         ${SRC_DOMAIN}/Matrix.hpp
@@ -40,8 +40,8 @@ set(SRC
         ${SRC_DOMAIN}/BaseMatrix.cpp
         "src/MatrixPrivate.hpp")
 
-set(INC_DOMAIN inc/)
-set(INC
+set(INC_DOMAIN inc)
+set(inc
         ${INC_DOMAIN}/BaseMatrix.h
         ${INC_DOMAIN}/ConstIterator.h
         ${INC_DOMAIN}/Iterator.h

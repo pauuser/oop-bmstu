@@ -65,6 +65,7 @@ public:
 
 private:
     size_t index;
+
     WeakPtr<typename Matrix<T>::MatrixRow[]> data;
 
     bool _isIndexValid() const;

@@ -2,9 +2,8 @@
 
 #include <exception>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <chrono>
-#include <format>
 
 class MatrixException : public std::exception
 {
@@ -14,9 +13,9 @@ public:
     MatrixException(const std::string filename,
         const size_t line, const std::string inf = "Undefined exception occured!")
     {
-        const auto now = std::chrono::system_clock::now();
-        std::string time_f = std::format("{:%d-%m-%Y %H:%M:%OS}", now);
-        errinfo = "Time: " + time_f + " File: " + filename + "\nLine : " + std::to_string(line) + " Message : " + inf;
+        time_t current_time = time(nullptr);
+        auto local_time = localtime(&current_time);
+        errinfo = "Time: " + std::string(asctime(local_time)) + " File: " + filename + "\nLine : " + std::to_string(line) + " Message : " + inf;
     }
 
     virtual ~MatrixException() {};

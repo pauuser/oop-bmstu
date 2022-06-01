@@ -31,31 +31,6 @@ SharedPtr<typename Matrix<T>::MatrixRow[]> Matrix<T>::_allocateMatrix(const size
 }
 
 template <typename T>
-void Matrix<T>::_reallocateMatrix(const size_t rows, const size_t cols)
-{
-    if (rows == 0 || cols == 0)
-    {
-        throw SizeError(rows, cols, __FILE__, __LINE__, "Can't allocate 0!");
-    }
-
-    try
-    {
-        data.get()->reset(new MatrixRow[rows], rows);
-        nrows = rows;
-        ncols = cols;
-        for (size_t i = 0; i < rows; i++)
-        {
-            data[i].reset(new T[cols], cols);
-        }
-    }
-    catch (std::bad_alloc&)
-    {
-        throw MemoryError(__FILE__, __LINE__, "_allocateMatrix failed.");
-    }
-}
-
-
-template <typename T>
 bool Matrix<T>::_isMatrixIndValid(const size_t ind) const
 {
     bool ans = true;
