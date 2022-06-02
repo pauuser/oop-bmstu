@@ -24,14 +24,15 @@ void Button::press()
     // Если кнопка уже нажата, выходим
     if (this->_state != INACTIVE) return;
 
+    // Изменение состояния
+    this->_state = ACTIVE;
+
     // Визуальное изменение кнопки
     this->setStyleSheet("background-color:red");
     this->update();
 
     qDebug() << "[!] Вызов на этаж №" << this->_curButtonFloor;
 
-    // Изменение состояния
-    this->_state = ACTIVE;
     this->setDisabled(true);
 
     // Сигнал всем, что нажата данная кнопка
@@ -43,11 +44,12 @@ void Button::unpress()
     // Если кнопка уже разжата, выходим
     if (this->_state == INACTIVE) return;
 
+    // Изменение состояния
+    this->_state = INACTIVE;
+
     // Визуальное изменение кнопки
     this->setStyleSheet("background-color:lightblue");
     this->update();
 
-    // Изменение состояния
-    this->_state = INACTIVE;
     this->setDisabled(false);
 }

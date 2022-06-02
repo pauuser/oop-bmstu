@@ -31,8 +31,8 @@ Controller::Controller(QWidget *parent) : QWidget(parent)
 
 void Controller::newTarget(bool got_new, int floor)
 {
-    //qDebug() << "HERE!!" << got_new << floor;
     this->_state = BUSY;
+
     if (got_new)
     {
         this->_floorsToVisit[floor - 1] = true;
@@ -40,7 +40,7 @@ void Controller::newTarget(bool got_new, int floor)
         _identifyNewTarget(floor);
         _targetFloor = floor;
         _decideDirection();
-        //qDebug() << "direction: " << _direction << "Cur floor" << _curFloor << "Target" << _targetFloor;
+
         if (_direction == STAY)
         {
             emit reachFloorSignal();
@@ -55,11 +55,8 @@ void Controller::newTarget(bool got_new, int floor)
         _targetFloor = floor;
         _decideDirection();
 
-        //qDebug() << "direction: " << _direction << "Cur floor" << _curFloor << "Target" << _targetFloor;
-
         if (_direction != STAY)
         {
-            //qDebug() << "HERE!!";
              _updateFloor();
             emit moveCabinSignal();
         }
@@ -129,26 +126,17 @@ bool Controller::_identifyNewTarget(int &new_target)
 
 void Controller::reachFloor()
 {
-    //qDebug() << _floorsToVisit;
-    // Если контроллер не занят, выходим [лифт не движется]
     if (_state != BUSY) return;
+
+     _state = FREE;
 
     qDebug() << "[!] Лифт приехал на этаж № " << _targetFloor;
 
     emit _buttons[_targetFloor - 1]->unpressSignal(); // кнопка разжимается
     _floorsToVisit[_targetFloor - 1] = false; // посещать его уже не надо
 
-    // проверим, есть ли ещё цели
-    if (_identifyNewTarget(_targetFloor))
-    {
-        emit stopCabinSignal();
-    }
-    else
-    {
-        // Целей нет
-        _state = FREE; // Контроллер освободился
-        emit stopCabinSignal();
-    }
+    _identifyNewTarget(_targetFloor);
+    emit stopCabinSignal();
 }
 
 void Controller::_updateFloor()

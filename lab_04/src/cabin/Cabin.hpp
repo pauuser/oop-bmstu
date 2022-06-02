@@ -27,8 +27,6 @@ public:
 
 signals:
     void openDoors();
-    void updateFloorSignal();
-    void readyToMoveSignal();
     void cabinFinished(bool, int=1);
 
 public slots:

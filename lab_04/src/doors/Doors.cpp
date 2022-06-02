@@ -18,9 +18,6 @@ void Doors::startOpening()
     // Если двери не закрыты и не закрываются, то начать открывать её не можем
     if (!(_state == CLOSED || _state == CLOSING)) return;
 
-    this->_state = OPENING;
-    qDebug() << "Двери открываются...";
-
     if (_state == CLOSED)
     {
         this->_openTimer.start(DOOR_TIME);
@@ -31,6 +28,10 @@ void Doors::startOpening()
         _closeTimer.stop();
         this->_openTimer.start(DOOR_TIME - timer);
     }
+
+    this->_state = OPENING;
+
+    qDebug() << "Двери открываются...";
 }
 
 void Doors::open()
