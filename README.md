@@ -1,13 +1,13 @@
 # Object-oriented programming course
 
-Вот такой курс на 8000+ строк.
+These are assignments of OOP course taken during my BMSTU studies. The assignments turned out be 8000+ lines of C++20 code. The course covered lots of topics from fundamentals of OOP and lots of patterns from GoF to event modelling in C++ and object-oriented analysis.
 
-| №   | Lab                                                                                                    | Status |
+| №   | Assignment                                                                                                    | Status |
 |-----|--------------------------------------------------------------------------------------------------------|--------|
-| 1   | Структурный подход: программа для просмотра каркасных моделей                                          | ✅      |
-| 2   | Реализация контейнерного класса (Матрица)                                                              | ✅      |
-| 3   | ООП: программа для просмотра каркасных моделей (см. 1)                                                 | ✅      |
-| 4   | Асинхронное взаимодействие: моделирование работы лифта                                                 | ✅      |
-| 5   | Объектно-ориентированный анализ: объектное проектирование составляющих мультиварки и их взаимодействия | ✅      |
+| 1   | Structured programming: 3D wireframe model viewer                                          | ✅      |
+| 2   | Matrix contaier class implementation with rich operations set                                                              | ✅      |
+| 3   | Object-oriented programming: 3D wireframe model viewer, now using OOP principles and patterns                                                 | ✅      |
+| 4   | Asynchronous interaction: elevator modelling                                                 | ✅      |
+| 5   | Object-oriented analysis: object design of a slow cooker and its elements interaction | ✅      |
 
 
